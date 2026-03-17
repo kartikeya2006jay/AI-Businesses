@@ -9,6 +9,7 @@ import SalesView from '../components/SalesView';
 import InventoryView from '../components/InventoryView';
 import SettingsView from '../components/SettingsView';
 import AboutView from '../components/AboutView';
+import InsightsView from '../components/InsightsView';
 import { getSummaries, getInventory, getTransactions } from '../services/api';
 import '../styles/global.css';
 import '../styles/dashboard.css';
@@ -95,12 +96,7 @@ const Dashboard = () => {
             case 'inventory':
                 return <InventoryView inventory={inventory} fetchData={fetchData} />;
             case 'insights':
-                return (
-                    <div className="insights-hub glass" style={{ padding: '2rem' }}>
-                        <h2>AI Insights Hub</h2>
-                        <p>Ask our AI Copilot in the chat bubble for detailed financial advice and forecasting!</p>
-                    </div>
-                );
+                return <InsightsView inventory={inventory} transactions={recentTransactions} summaries={summaries} />;
             case 'settings':
                 return <SettingsView />;
             case 'about':

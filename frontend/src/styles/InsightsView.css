@@ -1,0 +1,235 @@
+/* InsightsView.css */
+
+.insights-view {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.insights-hero {
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(0, 186, 242, 0.1) 0%, rgba(0, 46, 110, 0.05) 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(0, 186, 242, 0.2);
+}
+
+.zap-icon {
+    color: #ff9933;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 8px rgba(255, 153, 51, 0.4));
+}
+
+.insights-hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #00baf2, #002e6e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+.insights-hero p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    max-width: 500px;
+}
+
+.hero-stats {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.quick-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #a0aec0;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #2d3748;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.insight-card {
+    padding: 2rem;
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #edf2f7;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.insight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 186, 242, 0.08);
+    border-color: rgba(0, 186, 242, 0.3);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.icon-p {
+    color: #00baf2;
+}
+
+.icon-y {
+    color: #f6ad55;
+}
+
+.icon-g {
+    color: #48bb78;
+}
+
+.insight-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a202c;
+}
+
+.insight-desc {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.card-footer {
+    margin-top: auto;
+}
+
+.tag {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.tag.blue {
+    background: #ebf8ff;
+    color: #3182ce;
+}
+
+.tag.orange {
+    background: #fffaf0;
+    color: #dd6b20;
+}
+
+.tag.green {
+    background: #f0fff4;
+    color: #38a169;
+}
+
+.text-warning {
+    color: #dd6b20;
+    font-weight: 700;
+}
+
+.text-success {
+    color: #38a169;
+    font-weight: 700;
+}
+
+.ai-cta-banner {
+    padding: 2rem;
+    background: linear-gradient(90deg, #1a202c 0%, #2d3748 100%);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.cta-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cta-info h4 {
+    margin: 0 0 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.cta-info p {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.cta-button {
+    padding: 0.8rem 2rem;
+    background: #00baf2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cta-button:hover {
+    background: #0099cc;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
