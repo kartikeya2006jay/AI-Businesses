@@ -19,40 +19,58 @@
 }
 
 /* PAID Stamp Effect */
-.paid-stamp {
+.paid-stamp-container {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
+    inset: 0;
+    background: rgba(255, 255, 255, 0.98);
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #059669;
-    font-weight: 900;
-    font-size: 4rem;
-    z-index: 10;
-    border: 8px solid #059669;
-    padding: 1rem 2rem;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    opacity: 0.9;
-    animation: stampIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    justify-content: center;
+    z-index: 50;
+    animation: fadeIn 0.3s ease;
 }
 
-@keyframes stampIn {
-    from {
-        transform: translate(-50%, -50%) scale(2) rotate(-30deg);
+.paid-stamp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #48bb78;
+    font-weight: 900;
+    border: 5px solid #48bb78;
+    padding: 1rem 3rem;
+    border-radius: 12px;
+    transform: rotate(-5deg);
+    animation: stampBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes stampBounce {
+    0% {
+        transform: scale(2) rotate(-15deg);
         opacity: 0;
     }
 
-    to {
-        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
-        opacity: 0.9;
+    100% {
+        transform: scale(1) rotate(-5deg);
+        opacity: 1;
     }
 }
 
 .paid-stamp span {
-    letter-spacing: 5px;
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+}
+
+.success-receipt-info {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.bill-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-weight: 700;
 }
 
 /* Header */
@@ -80,11 +98,24 @@
     letter-spacing: 1.5px;
 }
 
+.invoice-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .invoice-no {
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-weight: 700;
     color: #718096;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+}
+
+.gstin {
+    font-size: 0.7rem;
+    color: #00baf2;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 /* Input Fields */
@@ -279,6 +310,12 @@
 .summary-row.ink {
     font-weight: 600;
     color: #4a5568;
+}
+
+.summary-row.gst-row {
+    font-size: 0.85rem;
+    color: #718096;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .ink-total {

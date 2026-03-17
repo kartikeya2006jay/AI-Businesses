@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Plus, Trash2, Printer, CheckCircle } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText } from 'lucide-react';
 import { addTransaction } from '../services/api';
 import '../styles/SaleEntryForm.css';
 
@@ -10,6 +10,7 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [lastBillTime, setLastBillTime] = useState(null);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -51,10 +52,14 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
     const handleFinalizeSale = async () => {
         if (cart.length === 0) return;
         setLoading(true);
+        const billTime = new Date().toLocaleString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
+
         try {
             // Process each item in the cart
-            // Since the current API only supports single transaction per call, we loop.
-            // In a real scenario, a batch endpoint would be better.
             for (const item of cart) {
                 await addTransaction({
                     product: item.product,
@@ -64,13 +69,15 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                 });
             }
 
+            setLastBillTime(billTime);
             setSuccess(true);
+
             setTimeout(() => {
                 setCart([]);
                 setCustomerName('');
                 setSuccess(false);
                 onSaleSuccess();
-            }, 3000);
+            }, 5000); // 5 seconds for "PAID" view
 
         } catch (error) {
             alert("Error recording sale: " + (error.response?.data?.detail || error.message));
@@ -79,31 +86,42 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
         }
     };
 
-    const totalAmount = cart.reduce((sum, item) => sum + item.amount, 0);
+    const subtotal = cart.reduce((sum, item) => sum + item.amount, 0);
+    const cgst = Math.round(subtotal * 0.09);
+    const sgst = Math.round(subtotal * 0.09);
+    const totalWithGst = subtotal + cgst + sgst;
 
     return (
         <section className={`sales-entry billing-form ${success ? 'sale-success' : ''}`}>
             {success && (
-                <div className="paid-stamp">
-                    <CheckCircle size={80} />
-                    <span>PAID</span>
+                <div className="paid-stamp-container">
+                    <div className="paid-stamp">
+                        <CheckCircle size={60} />
+                        <span>PAID</span>
+                    </div>
+                    <div className="success-receipt-info">
+                        <p className="bill-time">Indian Live GST Time: {lastBillTime}</p>
+                    </div>
                 </div>
             )}
 
             <div className="receipt-header">
                 <div className="receipt-title">
-                    <ShoppingCart size={20} />
-                    <h3>Billing Invoice</h3>
+                    <FileText size={20} className="icon-blue" />
+                    <h3>Tax Invoice</h3>
                 </div>
-                <span className="invoice-no">INV-{Math.floor(1000 + Math.random() * 9000)}</span>
+                <div className="invoice-meta">
+                    <span className="invoice-no">INV-{Math.floor(1000 + Math.random() * 9000)}</span>
+                    <span className="gstin">GSTIN: 07PYTM1234ZC</span>
+                </div>
             </div>
 
             <div className="billing-details">
                 <div className="form-group ink-border">
-                    <label>Bill To</label>
+                    <label>Customer Name</label>
                     <input
                         type="text"
-                        placeholder="Customer Name"
+                        placeholder="Anonymous Customer"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
                         disabled={loading || success}
@@ -113,13 +131,13 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
 
             <form onSubmit={handleAddToCart} className="add-item-row">
                 <div className="form-group ink-border flex-2">
-                    <label>Select Item</label>
+                    <label>Item Selection</label>
                     <select
                         value={selectedProduct}
                         onChange={(e) => setSelectedProduct(e.target.value)}
                         disabled={loading || success}
                     >
-                        <option value="">Choose a product...</option>
+                        <option value="">Search Products...</option>
                         {inventory.map(item => (
                             <option key={item.product} value={item.product} disabled={item.quantity === 0}>
                                 {item.product} (₹{item.price})
@@ -146,9 +164,9 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
 
             <div className="itemized-list">
                 <div className="list-header-row">
-                    <span className="col-desc">Description</span>
-                    <span className="col-qty">Qty</span>
-                    <span className="col-amt">Amount</span>
+                    <span className="col-desc">Details</span>
+                    <span className="col-qty">#</span>
+                    <span className="col-amt">Amt</span>
                     <span className="col-action"></span>
                 </div>
                 <div className="list-body">
@@ -156,17 +174,17 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                         <div key={index} className="item-row">
                             <div className="col-desc">
                                 <span className="p-name">{item.product}</span>
-                                <span className="p-price">₹{item.price} per unit</span>
+                                <span className="p-price">@ ₹{item.price}</span>
                             </div>
                             <span className="col-qty">{item.quantity}</span>
-                            <span className="col-amt">₹{item.amount.toLocaleString()}</span>
+                            <span className="col-amt">₹{item.amount}</span>
                             <button className="remove-item-btn" onClick={() => handleRemoveFromCart(index)} disabled={loading || success}>
                                 <Trash2 size={14} />
                             </button>
                         </div>
                     ))}
                     {cart.length === 0 && (
-                        <div className="empty-cart-msg">No items added to bill yet.</div>
+                        <div className="empty-cart-msg">Add items to generate invoice.</div>
                     )}
                 </div>
             </div>
@@ -176,15 +194,19 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
             <div className="billing-summary">
                 <div className="summary-row ink">
                     <span className="label">Subtotal</span>
-                    <span className="val">₹{totalAmount.toLocaleString()}</span>
+                    <span className="val">₹{subtotal.toLocaleString()}</span>
                 </div>
-                <div className="summary-row ink">
-                    <span className="label">Tax (0%)</span>
-                    <span className="val">₹0</span>
+                <div className="summary-row gst-row">
+                    <span className="label">CGST (9%)</span>
+                    <span className="val">₹{cgst.toLocaleString()}</span>
+                </div>
+                <div className="summary-row gst-row">
+                    <span className="label">SGST (9%)</span>
+                    <span className="val">₹{sgst.toLocaleString()}</span>
                 </div>
                 <div className="summary-row total ink-total">
-                    <span className="label">Total Amount</span>
-                    <span className="val highlight">₹{totalAmount.toLocaleString()}</span>
+                    <span className="label">Grand Total</span>
+                    <span className="val highlight">₹{totalWithGst.toLocaleString()}</span>
                 </div>
             </div>
 
@@ -195,16 +217,16 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                 disabled={loading || success || cart.length === 0}
             >
                 {loading ? (
-                    'Processing...'
+                    'Recording...'
                 ) : (
                     <>
                         <Printer size={18} />
-                        Finalize & Generate Receipt
+                        Finalize GST Bill
                     </>
                 )}
             </button>
 
-            <p className="billing-footer">Thank you for your business!</p>
+            <p className="billing-footer">Invoice generated at: {new Date().toLocaleDateString('en-IN')}</p>
         </section>
     );
 };
