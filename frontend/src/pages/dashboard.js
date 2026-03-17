@@ -51,7 +51,7 @@ const Dashboard = () => {
 
                         <div className="dashboard-content">
                             <div className="left-column">
-                                <RevenueChart />
+                                <RevenueChart transactions={recentTransactions} />
                                 <div className="stats-row">
                                     <div className="mini-card glass recent-list">
                                         <h3>Recent Activity</h3>
