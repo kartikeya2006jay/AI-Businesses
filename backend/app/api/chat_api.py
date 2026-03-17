@@ -1,6 +1,8 @@
 from fastapi import APIRouter
-from datetime import datetime
+from pydantic import BaseModel
+from datetime import datetime, timedelta
 import re
+import pandas as pd
 
 from app.utils.data_loader import load_transactions
 from app.services.openai_service import ask_ai
@@ -8,10 +10,11 @@ from app.services.chat_history_service import get_history, add_message
 
 router = APIRouter()
 
+class ChatRequest(BaseModel):
+    session_id: str
+    question: str
 
-def extract_date(question: str):
-    """Extract date like '14 march 2026' or '14th march 2026'."""
-
+def extract_specific_date(question: str):
     pattern = r'(\d{1,2})(st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})'
     match = re.search(pattern, question.lower())
 
@@ -27,47 +30,49 @@ def extract_date(question: str):
 
     return None
 
-
 @router.post("/chat")
-def chat(session_id: str, question: str):
-
+def chat(request: ChatRequest):
+    session_id = request.session_id
+    question = request.question
+    
     df = load_transactions()
+    df["date"] = pd.to_datetime(df["date"]).dt.date
+    # ... (rest of the chat logic)
 
-    query_date = extract_date(question)
+    q = question.lower()
 
-    # If question contains a specific date
-    if query_date:
-
-        df["date"] = df["date"].dt.date
-
-        filtered = df[df["date"] == query_date]
-
-        if filtered.empty:
-            response = f"No sales were recorded on {query_date}."
+    # ---------- REVENUE SUMMARIES ----------
+    if "how much" in q or "revenue" in q or "sales" in q:
+        from app.api.transactions_api import get_summaries
+        summaries = get_summaries()
+        
+        if "today" in q or "daily" in q:
+            response = f"Your revenue today is ₹{summaries['daily']}."
+        elif "week" in q:
+            response = f"Your revenue this week is ₹{summaries['weekly']}."
+        elif "month" in q:
+            response = f"Your revenue this month is ₹{summaries['monthly']}."
         else:
+            response = f"Your current summaries are: Daily: ₹{summaries['daily']}, Weekly: ₹{summaries['weekly']}, Monthly: ₹{summaries['monthly']}."
+        
+        return {"session_id": session_id, "response": response}
 
-            total_sales = filtered["amount"].sum()
+    # ---------- SPECIFIC DATE ----------
+    query_date = extract_specific_date(question)
+    if query_date:
+        filtered = df[df["date"] == query_date]
+        if filtered.empty:
+            response = f"No sales recorded on {query_date}."
+        else:
+            total = filtered["amount"].sum()
+            products = ", ".join(filtered["product"].astype(str).tolist())
+            response = f"Sales on {query_date}: ₹{total}. Products sold: {products}"
+        return {"session_id": session_id, "response": response}
 
-            products = filtered["product"].tolist()
-
-            response = (
-                f"Sales on {query_date}:\n"
-                f"Total revenue: ₹{total_sales}\n"
-                f"Products sold: {', '.join(products)}"
-            )
-
-        return {
-            "session_id": session_id,
-            "response": response
-        }
-
-    # Otherwise send question to AI
+    # ---------- OTHERWISE USE AI ----------
     history = get_history(session_id)
-
     add_message(session_id, "user", question)
-
     ai_response = ask_ai(question, df)
-
     add_message(session_id, "assistant", ai_response)
 
     return {

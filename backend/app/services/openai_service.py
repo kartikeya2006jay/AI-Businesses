@@ -1,17 +1,22 @@
 import os
+import sys
 from datetime import datetime, timedelta
 import pandas as pd
-
 from openai import OpenAI
 from dotenv import load_dotenv
 
-load_dotenv()
+# Robust .env loading
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), '.env')
+load_dotenv(dotenv_path=env_path)
 
 API_KEY = os.getenv("OPENAI_API_KEY")
-if not API_KEY:
-    raise ValueError("OPENAI_API_KEY not found in .env")
 
-client = OpenAI(api_key=API_KEY)
+def get_client():
+    if not API_KEY:
+        return None
+    return OpenAI(api_key=API_KEY)
+
+client = get_client()
 
 
 # ---------- ANALYTICS FUNCTIONS ----------
@@ -91,59 +96,47 @@ def ask_ai(question: str, df: pd.DataFrame):
     q = question.lower()
 
     try:
+        if not client:
+            return "AI service is currently unavailable. Please check your API key in the .env file."
 
         result = None
 
         if "yesterday" in q:
             result = sales_yesterday(df)
-
         elif "week" in q:
             result = sales_this_week(df)
-
         elif "month" in q:
             result = sales_this_month(df)
-
         elif "top product" in q or "best product" in q:
             result = top_product(df)
 
-        # If analytics question
         if result:
+            prompt = f"You are an AI merchant analytics assistant. Explain the following business result clearly: {result}. Respond with 'Insight:', 'Reason:', and 'Recommendation:'."
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": "You help merchants understand analytics."},
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                return f"AI Insight temporarily unavailable. Low-level result: {result}. (Error: {str(e)})"
 
-            prompt = f"""
-You are an AI merchant analytics assistant.
-
-Explain the following business result clearly.
-
-Data Result:
-{result}
-
-Respond with:
-
-Insight:
-Reason:
-Recommendation:
-"""
-
+        try:
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
-                    {"role": "system", "content": "You help merchants understand analytics."},
-                    {"role": "user", "content": prompt}
+                    {"role": "system", "content": "You are a friendly AI assistant for merchants. Respond concisely and professionally."},
+                    {"role": "user", "content": question}
                 ]
             )
-
             return response.choices[0].message.content
-
-        # Normal conversation
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are a friendly AI assistant for merchants."},
-                {"role": "user", "content": question}
-            ]
-        )
-
-        return response.choices[0].message.content
+        except Exception as e:
+            if "rate_limit" in str(e).lower():
+                return "AI service is currently busy (rate limit exceeded). Please try again in internal or simplified mode."
+            raise e
 
     except Exception as e:
         return f"Error processing request: {str(e)}"
