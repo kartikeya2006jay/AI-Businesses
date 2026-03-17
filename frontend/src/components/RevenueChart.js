@@ -1,5 +1,6 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import '../styles/RevenueChart.css';
 
 const data = [
     { name: 'Mon', revenue: 4000 },
@@ -40,26 +41,6 @@ const RevenueChart = () => {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-            <style jsx>{`
-        .chart-container {
-          padding: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        .chart-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.5rem;
-        }
-        .chart-header h3 { margin: 0; color: var(--secondary); font-size: 1.1rem; }
-        .chart-filter {
-          padding: 0.4rem 0.8rem;
-          border-radius: 8px;
-          border: 1px solid #eee;
-          font-size: 0.8rem;
-          outline: none;
-        }
-      `}</style>
         </div>
     );
 };

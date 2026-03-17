@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/AlertsPanel.css';
 
 const AlertsPanel = () => {
     const alerts = [
@@ -16,16 +17,6 @@ const AlertsPanel = () => {
                     </div>
                 ))}
             </div>
-            <style jsx>{`
-        .alert-item {
-          padding: 0.8rem 1rem;
-          border-radius: 8px;
-          margin-bottom: 0.8rem;
-          font-size: 0.9rem;
-        }
-        .alert-item.warning { background: #fffbeb; border: 1px solid #fef3c7; color: #92400e; }
-        .alert-item.info { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; }
-      `}</style>
         </div>
     );
 };

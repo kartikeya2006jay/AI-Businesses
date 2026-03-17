@@ -1,0 +1,138 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: white;
+    border-right: 1px solid #edf2f7;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-header {
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    background: var(--secondary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px -4px rgba(0, 46, 110, 0.3);
+}
+
+.brand-logo h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.brand-name {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+}
+
+.sidebar-nav {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.nav-section-label {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #a0aec0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: none;
+    background: transparent;
+    color: #718096;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover {
+    background: #f7fafc;
+    color: var(--secondary);
+    transform: translateX(4px);
+}
+
+.nav-item.active {
+    background: #f0f9ff;
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 186, 242, 0.08);
+}
+
+.item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.sidebar-footer {
+    padding: 2rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.merchant-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.merchant-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.merchant-info h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.merchant-info p {
+    margin: 0;
+    font-size: 0.7rem;
+    color: #a0aec0;
+    font-weight: 600;
+}

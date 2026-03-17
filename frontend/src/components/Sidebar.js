@@ -1,5 +1,6 @@
 import React from 'react';
 import { LayoutDashboard, ShoppingCart, Package, Info, Settings, LogOut } from 'lucide-react';
+import '../styles/Sidebar.css';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const menuItems = [
@@ -19,13 +20,26 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       </div>
 
       <nav className="sidebar-nav">
-        {menuItems.map(item => (
+        <div className="nav-section-label">Main Menu</div>
+        {menuItems.slice(0, 3).map(item => (
           <button
             key={item.id}
             className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
             onClick={() => setActiveTab(item.id)}
           >
-            {item.icon}
+            <div className="item-icon">{item.icon}</div>
+            <span>{item.label}</span>
+          </button>
+        ))}
+
+        <div className="nav-section-label" style={{ marginTop: '1.5rem' }}>Insights & Support</div>
+        {menuItems.slice(3).map(item => (
+          <button
+            key={item.id}
+            className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+            onClick={() => setActiveTab(item.id)}
+          >
+            <div className="item-icon">{item.icon}</div>
             <span>{item.label}</span>
           </button>
         ))}
@@ -33,88 +47,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
       <div className="sidebar-footer">
         <button className="nav-item logout">
-          <LogOut size={20} />
+          <div className="item-icon"><LogOut size={20} /></div>
           <span>Logout</span>
         </button>
       </div>
 
-      <style jsx>{`
-        .sidebar {
-          width: 260px;
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          padding: 2rem 1.5rem;
-          border-radius: 0 24px 24px 0;
-          position: fixed;
-          left: 0;
-          top: 0;
-          z-index: 1000;
-        }
-        .sidebar-brand {
-          display: flex;
-          align-items: center;
-          gap: 0.8rem;
-          margin-bottom: 3rem;
-          padding: 0 0.5rem;
-        }
-        .brand-logo {
-          width: 32px;
-          height: 32px;
-          background: var(--primary);
-          color: white;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 800;
-        }
-        .sidebar-brand span {
-          font-weight: 700;
-          font-size: 1.1rem;
-          color: var(--secondary);
-        }
-        .sidebar-nav {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        .nav-item {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          padding: 0.8rem 1rem;
-          border: none;
-          background: transparent;
-          border-radius: 12px;
-          color: #666;
-          cursor: pointer;
-          transition: all 0.2s;
-          text-align: left;
-          width: 100%;
-        }
-        .nav-item:hover {
-          background: rgba(0, 186, 242, 0.05);
-          color: var(--primary);
-        }
-        .nav-item.active {
-          background: var(--primary);
-          color: white;
-          box-shadow: 0 4px 12px rgba(0, 186, 242, 0.3);
-        }
-        .sidebar-footer {
-          border-top: 1px solid rgba(0,0,0,0.05);
-          padding-top: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        .logout:hover {
-          color: var(--error);
-          background: rgba(239, 68, 68, 0.05);
-        }
-      `}</style>
     </div>
   );
 };

@@ -117,77 +117,22 @@ const Dashboard = () => {
             <main className="dashboard-main">
                 <header className="main-header">
                     <div className="header-info">
-                        <h1>Apex Retail <span>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</span></h1>
-                        <p>Managing your business with intelligence.</p>
+                        <h1>Business Overview <span className="tab-pill">{activeTab}</span></h1>
+                        <p>Welcome back! Here's what's happening with your store today.</p>
                     </div>
-                    <div className="header-date glass">
-                        {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    <div className="header-actions">
+                        <div className="header-date glass">
+                            {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </div>
                     </div>
                 </header>
 
-                {renderContent()}
+                <div className="content-framer">
+                    {renderContent()}
+                </div>
             </main>
 
             <ChatBox />
-
-            <style jsx>{`
-        .dashboard-layout {
-          display: flex;
-          min-height: 100vh;
-          background: #f8fafc;
-        }
-        .dashboard-main {
-          margin-left: 260px;
-          flex: 1;
-          padding: 2.5rem;
-          max-width: calc(100vw - 260px);
-        }
-        .main-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 2.5rem;
-        }
-        .header-info h1 { font-size: 1.8rem; margin: 0; color: var(--secondary); }
-        .header-info h1 span { color: var(--primary); }
-        .header-info p { margin: 0.5rem 0 0; color: #666; font-size: 0.9rem; }
-        .header-date {
-          padding: 0.6rem 1.2rem;
-          font-weight: 600;
-          font-size: 0.9rem;
-          border-radius: 12px;
-          color: var(--secondary);
-        }
-        .dashboard-content {
-          display: grid;
-          grid-template-columns: 1fr 340px;
-          gap: 2rem;
-        }
-        .stats-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-        }
-        .mini-card { padding: 1.5rem; }
-        .mini-card h3 { font-size: 1rem; margin-top: 0; color: #666; }
-        .growth-val { font-size: 2rem; font-weight: 800; color: var(--success); margin: 0.5rem 0; }
-        .mini-card p { font-size: 0.8rem; color: #888; margin: 0; }
-        .inventory-preview { padding: 1.5rem; margin-top: 1.5rem; }
-        .inventory-preview h3 { font-size: 1rem; margin-top: 0; margin-bottom: 1rem; }
-        .stock-list { display: flex; flex-direction: column; gap: 0.8rem; }
-        .stock-item { display: flex; justify-content: space-between; font-size: 0.9rem; }
-        .stock-count.warning { color: var(--error); font-weight: 700; }
-        .mini-t-item {
-          display: flex;
-          justify-content: space-between;
-          padding: 0.5rem 0;
-          border-bottom: 1px solid rgba(0,0,0,0.02);
-          font-size: 0.85rem;
-        }
-        .mini-t-amount { font-weight: 700; color: var(--primary); }
-        .recent-list { overflow-y: auto; max-height: 200px; }
-        .empty-hint { font-size: 0.8rem; color: #999; margin: 1rem 0; }
-      `}</style>
         </div>
     );
 };
