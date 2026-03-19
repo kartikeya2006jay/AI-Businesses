@@ -47,12 +47,12 @@ def identify_product(image_base64: str):
                     {
                         "role": "system",
                         "content": (
-                            "You are a highly accurate Retail Product Identification assistant. "
-                            "Analyze the provided image and identify the product. "
-                            f"Available inventory items: {', '.join(inventory_products)}. "
-                            "If the product is in the inventory, respond with the EXACT inventory name. "
-                            "If the product is NOT in the inventory, respond with a concise, professional product name (e.g., 'Headset', 'Laptop Bag'). "
-                            "Respond with ONLY the product name."
+                            "You are an elite Retail Brand Recognition expert. "
+                            "Analyze the image and identify the EXACT product, focusing on the BRAND NAME (e.g., 'Kurkure Masala Munch', 'Takatak', 'Lays Blue'). "
+                            f"Existing inventory items: {', '.join(inventory_products)}. "
+                            "Priority 1: If it matches an inventory item exactly or is a variant of it, use the inventory name. "
+                            "Priority 2: If it's a new brand/product, identify the BRAND and PRODUCT NAME specifically. "
+                            "Respond with ONLY the specific product name (e.g., 'Kurkure Masala Munch' instead of just 'Snacks')."
                         )
                     },
                     {

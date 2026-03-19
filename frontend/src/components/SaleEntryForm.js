@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText, Camera } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText, Camera, X } from 'lucide-react';
 import { addTransaction } from '../services/api';
 import ProductScanner from './ProductScanner';
 import '../styles/SaleEntryForm.css';
@@ -13,6 +13,8 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
     const [success, setSuccess] = useState(false);
     const [lastBillTime, setLastBillTime] = useState(null);
     const [showScanner, setShowScanner] = useState(false);
+    const [showReceipt, setShowReceipt] = useState(false);
+    const [lastBillData, setLastBillData] = useState(null);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -72,14 +74,26 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
             }
 
             setLastBillTime(billTime);
+            setLastBillData({
+                customer: customerName || 'Anonymous',
+                items: [...cart],
+                subtotal,
+                cgst,
+                sgst,
+                total: totalWithGst,
+                time: billTime,
+                invoiceNo: `INV-${Math.floor(1000 + Math.random() * 9000)}`
+            });
             setSuccess(true);
+            setShowReceipt(true);
 
-            setTimeout(() => {
-                setCart([]);
-                setCustomerName('');
-                setSuccess(false);
-                onSaleSuccess();
-            }, 5000); // 5 seconds for "PAID" view
+            // Don't auto-clear if we want to print
+            // setTimeout(() => {
+            //     setCart([]);
+            //     setCustomerName('');
+            //     setSuccess(false);
+            //     onSaleSuccess();
+            // }, 5000); 
 
         } catch (error) {
             alert("Error recording sale: " + (error.response?.data?.detail || error.message));
@@ -240,12 +254,76 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
 
             <p className="billing-footer">Invoice generated at: {new Date().toLocaleDateString('en-IN')}</p>
 
-            {showScanner && (
-                <ProductScanner
-                    inventory={inventory}
-                    onScanSuccess={(productName) => setSelectedProduct(productName)}
-                    onClose={() => setShowScanner(false)}
-                />
+            {showReceipt && lastBillData && (
+                <div className="receipt-modal-overlay">
+                    <div className="receipt-modal glass">
+                        <div className="receipt-modal-header">
+                            <h3>Digital Receipt</h3>
+                            <button className="close-receipt" onClick={() => {
+                                setShowReceipt(false);
+                                setSuccess(false);
+                                setCart([]);
+                                setCustomerName('');
+                                onSaleSuccess();
+                            }}><X size={20} /></button>
+                        </div>
+
+                        <div id="printable-receipt" className="receipt-content">
+                            <div className="receipt-biz-header">
+                                <h2>PAYTM MERCHANT</h2>
+                                <p>Digital Retail Solutions</p>
+                                <p>GSTIN: 07PYTM1234ZC</p>
+                            </div>
+
+                            <hr />
+
+                            <div className="receipt-info">
+                                <p><strong>Invoice:</strong> {lastBillData.invoiceNo}</p>
+                                <p><strong>Date:</strong> {lastBillData.time}</p>
+                                <p><strong>Customer:</strong> {lastBillData.customer}</p>
+                            </div>
+
+                            <table className="receipt-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Amt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {lastBillData.items.map((item, i) => (
+                                        <tr key={i}>
+                                            <td>{item.product}</td>
+                                            <td>{item.quantity}</td>
+                                            <td>₹{item.price}</td>
+                                            <td>₹{item.amount}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            <hr />
+
+                            <div className="receipt-totals">
+                                <div className="total-row"><span>Subtotal</span><span>₹{lastBillData.subtotal}</span></div>
+                                <div className="total-row"><span>CGST (9%)</span><span>₹{lastBillData.cgst}</span></div>
+                                <div className="total-row"><span>SGST (9%)</span><span>₹{lastBillData.sgst}</span></div>
+                                <div className="total-row grand-total"><span>Total</span><span>₹{lastBillData.total}</span></div>
+                            </div>
+
+                            <div className="receipt-footer">
+                                <p>Thank you for shopping with us!</p>
+                                <p>This is a computer generated invoice.</p>
+                            </div>
+                        </div>
+
+                        <button className="print-btn main-submit" onClick={() => window.print()}>
+                            <Printer size={18} /> Print Invoice
+                        </button>
+                    </div>
+                </div>
             )}
         </section>
     );
