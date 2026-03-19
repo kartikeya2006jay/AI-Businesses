@@ -276,8 +276,34 @@
     font-weight: 500;
     border: 2px solid #edf2f7;
     padding: 1rem;
+    padding-right: 3.5rem;
     border-radius: 12px;
     transition: border-color 0.2s;
+}
+
+.form-group {
+    position: relative;
+}
+
+.inline-scan-btn {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    background: rgba(0, 186, 242, 0.1);
+    border: none;
+    color: #00baf2;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.inline-scan-btn:hover {
+    background: #00baf2;
+    color: white;
 }
 
 .form-group input:focus {

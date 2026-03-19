@@ -4,3 +4,5 @@ pandas
 scikit-learn
 openai
 python-dotenv
+opencv-python-headless
+numpy

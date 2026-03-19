@@ -145,6 +145,40 @@
     font-size: 0.9rem !important;
     color: #2d3748 !important;
     transition: all 0.2s;
+    position: relative;
+}
+
+.ink-border {
+    position: relative;
+}
+
+.inline-scan-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #00baf2;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 5;
+    margin-top: 10px;
+    /* Adjust for label height */
+}
+
+.inline-scan-btn:hover:not(:disabled) {
+    color: #0070e0;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.inline-scan-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .billing-form input:focus,
@@ -189,6 +223,7 @@
     background: #00baf2;
     transform: scale(1.05);
 }
+
 
 .add-to-bill-btn:disabled {
     opacity: 0.3;

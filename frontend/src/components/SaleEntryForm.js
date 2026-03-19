@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText, Camera } from 'lucide-react';
 import { addTransaction } from '../services/api';
+import ProductScanner from './ProductScanner';
 import '../styles/SaleEntryForm.css';
 
 const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
@@ -11,6 +12,7 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [lastBillTime, setLastBillTime] = useState(null);
+    const [showScanner, setShowScanner] = useState(false);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -144,6 +146,16 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                             </option>
                         ))}
                     </select>
+                    <button
+                        type="button"
+                        className="inline-scan-btn"
+                        onClick={() => setShowScanner(true)}
+                        disabled={loading || success}
+                        title="Scan Product"
+                        style={{ right: '10px' }}
+                    >
+                        <Camera size={18} />
+                    </button>
                 </div>
                 <div className="form-group ink-border flex-1">
                     <label>Qty</label>
@@ -227,6 +239,14 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
             </button>
 
             <p className="billing-footer">Invoice generated at: {new Date().toLocaleDateString('en-IN')}</p>
+
+            {showScanner && (
+                <ProductScanner
+                    inventory={inventory}
+                    onScanSuccess={(productName) => setSelectedProduct(productName)}
+                    onClose={() => setShowScanner(false)}
+                />
+            )}
         </section>
     );
 };

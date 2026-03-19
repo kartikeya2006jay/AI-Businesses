@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Package, Trash2, Edit3, Plus, X } from 'lucide-react';
+import { Package, Trash2, Edit3, Plus, X, Camera } from 'lucide-react';
 import { updateInventory, deleteInventory } from '../services/api';
+import ProductScanner from './ProductScanner';
 import '../styles/Inventory.css';
 
 const InventoryView = ({ inventory, fetchData }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newProduct, setNewProduct] = useState({ product: '', price: '', quantity: '' });
   const [loading, setLoading] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +66,15 @@ const InventoryView = ({ inventory, fetchData }) => {
                   value={newProduct.product}
                   onChange={e => setNewProduct({ ...newProduct, product: e.target.value })}
                 />
+                <button
+                  type="button"
+                  className="inline-scan-btn"
+                  onClick={() => setShowScanner(true)}
+                  disabled={loading}
+                  title="Identify Product"
+                >
+                  <Camera size={18} />
+                </button>
               </div>
               <div className="form-row">
                 <div className="form-group">
@@ -131,6 +142,13 @@ const InventoryView = ({ inventory, fetchData }) => {
         })}
       </div>
 
+      {showScanner && (
+        <ProductScanner
+          onScanSuccess={(name) => setNewProduct(prev => ({ ...prev, product: name }))}
+          onClose={() => setShowScanner(false)}
+          inventory={inventory}
+        />
+      )}
     </div>
   );
 };
