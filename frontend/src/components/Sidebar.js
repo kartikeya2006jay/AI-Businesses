@@ -1,8 +1,10 @@
 import React from 'react';
 import { LayoutDashboard, ShoppingCart, Package, Info, Settings, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import '../styles/Sidebar.css';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
+  const { logout } = useAuth();
   const menuItems = [
     { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
     { id: 'sales', icon: <ShoppingCart size={20} />, label: 'Sales' },
@@ -46,7 +48,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       </nav>
 
       <div className="sidebar-footer">
-        <button className="nav-item logout">
+        <button className="nav-item logout" onClick={logout}>
           <div className="item-icon"><LogOut size={20} /></div>
           <span>Logout</span>
         </button>
