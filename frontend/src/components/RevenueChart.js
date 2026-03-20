@@ -199,18 +199,18 @@ const RevenueChart = ({ transactions = [] }) => {
                                 </filter>
                             </defs>
 
-                            <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                            <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="var(--glass-border)" />
                             <XAxis
                                 dataKey="name"
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }}
+                                tick={{ fill: 'var(--text-muted)', fontSize: 12, fontWeight: 600 }}
                                 padding={{ left: 10, right: 10 }}
                             />
                             <YAxis
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#94a3b8', fontSize: 11 }}
+                                tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
                                 tickFormatter={v => v >= 1000 ? `₹${(v / 1000).toFixed(0)}k` : `₹${v}`}
                             />
                             <Tooltip

@@ -1,29 +1,29 @@
 .alerts-panel {
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .alerts-panel h3 {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    color: var(--secondary);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--secondary);
 }
 
 .alert-item {
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
-    font-weight: 500;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .alert-item.warning {
-    background: #fffbeb;
-    border: 1px solid #fef3c7;
-    color: #92400e;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
 }
 
 .alert-item.info {
-    background: #eff6ff;
-    border: 1px solid #dbeafe;
-    color: #1e40af;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
 }

@@ -3,11 +3,12 @@
 .chart-container {
     padding: 2rem;
     margin-bottom: 2rem;
-    background: #ffffff !important;
-    backdrop-filter: none !important;
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
     border-radius: 24px !important;
-    border: 1.5px solid #e2e8f0 !important;
-    box-shadow: 0 8px 32px rgba(0, 46, 110, 0.08) !important;
+    border: 1.5px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
     overflow: hidden;
     position: relative;
 }
@@ -56,7 +57,7 @@
 
 .chart-title-group h3 {
     margin: 0 0 0.2rem;
-    color: #1e293b;
+    color: var(--secondary);
     font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: -0.3px;
@@ -72,13 +73,13 @@
 .chart-filter {
     padding: 0.55rem 1rem;
     border-radius: 12px;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid var(--glass-border);
     font-size: 0.82rem;
     outline: none;
     font-family: inherit;
     font-weight: 600;
-    color: #334155;
-    background: #f8fafc;
+    color: var(--text-main);
+    background: var(--bg);
     cursor: pointer;
     transition: border-color 0.2s;
 }
@@ -95,9 +96,9 @@
     gap: 1.5rem;
     margin-bottom: 1.8rem;
     padding: 1rem 1.4rem;
-    background: linear-gradient(135deg, #f0f7ff, #f8fafc);
+    background: var(--glass);
     border-radius: 16px;
-    border: 1px solid #dde8f5;
+    border: 1px solid var(--glass-border);
 }
 
 .chart-stat {
@@ -117,7 +118,7 @@
 .stat-num {
     font-size: 1.3rem;
     font-weight: 800;
-    color: #1e293b;
+    color: var(--secondary);
     letter-spacing: -0.5px;
 }
 
@@ -148,11 +149,12 @@
 
 /* ── Tooltip ─────────────────────────────── */
 .chart-tooltip {
-    background: white;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
     border-radius: 14px;
     padding: 0.9rem 1.2rem;
-    box-shadow: 0 10px 30px rgba(0, 46, 110, 0.12);
-    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-bold);
+    border: 1px solid var(--glass-border);
     min-width: 130px;
 }
 
@@ -168,7 +170,7 @@
 .tooltip-value {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #1e293b;
+    color: var(--secondary);
     margin: 0 0 0.3rem;
     letter-spacing: -0.5px;
 }
