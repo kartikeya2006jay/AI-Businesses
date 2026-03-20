@@ -1,90 +1,83 @@
 .revenue-card {
-    padding: 2.5rem;
-    border-top: 3px solid var(--primary);
+    padding: 1.8rem;
     position: relative;
     overflow: hidden;
-}
-
-.revenue-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-}
-
-.card-header {
     display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-height: 160px;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+}
+
+.card-glare {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+    transform: rotate(30deg);
 }
 
 .card-title {
-    color: var(--text-muted);
+    font-size: 0.85rem;
     font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
 }
 
-.trend {
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 800;
-}
-
-.trend.up {
-    background: rgba(34, 197, 94, 0.15);
-    color: #22c55e;
-}
-
-.trend.down {
-    background: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
+.card-amount-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .card-amount {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    color: var(--secondary);
-    margin-bottom: 1rem;
+    color: var(--primary);
+    margin: 0;
     letter-spacing: -1px;
 }
 
-.card-footer {
+.card-trend {
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    font-weight: 600;
+    gap: 4px;
 }
 
-.indicator {
-    width: 8px;
-    height: 8px;
-    background: var(--success);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--success);
-    animation: pulse_indicator 2s infinite;
+.card-trend.pos {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
 }
 
-@keyframes pulse_indicator {
-    0% {
-        transform: scale(0.8);
-        opacity: 0.5;
-    }
+.card-trend.neg {
+    background: rgba(244, 63, 94, 0.1);
+    color: var(--error);
+}
 
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
+.card-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
 
-    100% {
-        transform: scale(0.8);
-        opacity: 0.5;
-    }
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+[data-theme='dark'] .card-progress-bar {
+    background: rgba(0, 0, 0, 0.2);
 }
