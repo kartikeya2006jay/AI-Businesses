@@ -91,52 +91,47 @@ def top_product(df):
 
 # ---------- MAIN AI LOGIC ----------
 
-def ask_ai(question: str, df: pd.DataFrame):
+def ask_ai(question: str, transactions_df: pd.DataFrame, inventory_df: pd.DataFrame = None):
+    """Ultimate Merchant AI with full context awareness."""
+    
+    if not client:
+        return "AI service is currently unavailable. Please check your API key in the .env file."
 
-    q = question.lower()
+    # Prepare context strings
+    inventory_context = "N/A"
+    if inventory_df is not None:
+        inventory_context = inventory_df.to_json(orient='records')
+
+    # Quick summaries for the prompt
+    today = datetime.now().date()
+    yesterday = today - timedelta(days=1)
+    
+    # System Instruction
+    system_prompt = (
+        "You are the Paytm AI Merchant Copilot, a world-class business advisor and analyst. "
+        "You have full access to the store's data provided below. "
+        "Your goal is to help the merchant grow their business, manage inventory, and understand sales. "
+        "Be professional, encouraging, and highly specific. "
+        "\n\nBUSINESS DATA CONTEXT:\n"
+        f"1. Current Date: {today}\n"
+        f"2. Inventory Status: {inventory_context}\n"
+        "3. Transactions (Last 10): " + transactions_df.tail(10).to_json(orient='records') + "\n"
+        "\nSTRICT RULES:\n"
+        "- If asked about stock, refer to 'Inventory Status'.\n"
+        "- If asked about sales, refer to 'Transactions'.\n"
+        "- If asked about GST or Tax, explain the 18% (9% CGST + 9% SGST) rule used in this app.\n"
+        "- Also help with general merchant queries like 'how to increase sales' or coding help if it relates to the dashboard API."
+        "- Keep responses concise but impactful."
+    )
 
     try:
-        if not client:
-            return "AI service is currently unavailable. Please check your API key in the .env file."
-
-        result = None
-
-        if "yesterday" in q:
-            result = sales_yesterday(df)
-        elif "week" in q:
-            result = sales_this_week(df)
-        elif "month" in q:
-            result = sales_this_month(df)
-        elif "top product" in q or "best product" in q:
-            result = top_product(df)
-
-        if result:
-            prompt = f"You are an AI merchant analytics assistant. Explain the following business result clearly: {result}. Respond with 'Insight:', 'Reason:', and 'Recommendation:'."
-            try:
-                response = client.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=[
-                        {"role": "system", "content": "You help merchants understand analytics."},
-                        {"role": "user", "content": prompt}
-                    ]
-                )
-                return response.choices[0].message.content
-            except Exception as e:
-                return f"AI Insight temporarily unavailable. Low-level result: {result}. (Error: {str(e)})"
-
-        try:
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are a friendly AI assistant for merchants. Respond concisely and professionally."},
-                    {"role": "user", "content": question}
-                ]
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            if "rate_limit" in str(e).lower():
-                return "AI service is currently busy (rate limit exceeded). Please try again in internal or simplified mode."
-            raise e
-
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": question}
+            ]
+        )
+        return response.choices[0].message.content
     except Exception as e:
-        return f"Error processing request: {str(e)}"
+        return f"Merchant AI is thinking... but ran into an error: {str(e)}"

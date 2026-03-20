@@ -35,44 +35,21 @@ def chat(request: ChatRequest):
     session_id = request.session_id
     question = request.question
     
-    df = load_transactions()
-    df["date"] = pd.to_datetime(df["date"]).dt.date
-    # ... (rest of the chat logic)
+    from app.utils.data_loader import load_transactions, load_inventory
+    df_trans = load_transactions()
+    df_inv = load_inventory()
+    
+    # Ensure dates are correct
+    df_trans["date"] = pd.to_datetime(df_trans["date"]).dt.date
 
-    q = question.lower()
-
-    # ---------- REVENUE SUMMARIES ----------
-    if "how much" in q or "revenue" in q or "sales" in q:
-        from app.api.transactions_api import get_summaries
-        summaries = get_summaries()
-        
-        if "today" in q or "daily" in q:
-            response = f"Your revenue today is ₹{summaries['daily']}."
-        elif "week" in q:
-            response = f"Your revenue this week is ₹{summaries['weekly']}."
-        elif "month" in q:
-            response = f"Your revenue this month is ₹{summaries['monthly']}."
-        else:
-            response = f"Your current summaries are: Daily: ₹{summaries['daily']}, Weekly: ₹{summaries['weekly']}, Monthly: ₹{summaries['monthly']}."
-        
-        return {"session_id": session_id, "response": response}
-
-    # ---------- SPECIFIC DATE ----------
-    query_date = extract_specific_date(question)
-    if query_date:
-        filtered = df[df["date"] == query_date]
-        if filtered.empty:
-            response = f"No sales recorded on {query_date}."
-        else:
-            total = filtered["amount"].sum()
-            products = ", ".join(filtered["product"].astype(str).tolist())
-            response = f"Sales on {query_date}: ₹{total}. Products sold: {products}"
-        return {"session_id": session_id, "response": response}
-
-    # ---------- OTHERWISE USE AI ----------
+    # ---------- USE AI FOR EVERYTHING ----------
     history = get_history(session_id)
     add_message(session_id, "user", question)
-    ai_response = ask_ai(question, df)
+    
+    # We pass session_id and history as well if we want context, 
+    # but for now ask_ai handles the immediate question with full data.
+    ai_response = ask_ai(question, df_trans, df_inv)
+    
     add_message(session_id, "assistant", ai_response)
 
     return {
