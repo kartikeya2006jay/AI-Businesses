@@ -15,4 +15,8 @@ export const deleteInventory = (productName) => api.delete(`/inventory/${product
 export const chatWithAI = (session_id, question) => api.post('/chat', { session_id, question });
 export const recognizeProduct = (image) => api.post('/vision/recognize', { image });
 
+export const getSettings = () => api.get('/settings');
+export const updateSettings = (data) => api.post('/settings', data);
+export const changePassword = (data) => api.post('/settings/change-password', data);
+
 export default api;
