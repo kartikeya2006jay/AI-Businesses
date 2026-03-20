@@ -1,7 +1,7 @@
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #eef2ff 0%, #f0f7ff 40%, #f8fafc 100%);
+  background: var(--bg);
 }
 
 .dashboard-main {
@@ -45,15 +45,32 @@
   font-weight: 500;
 }
 
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  color: var(--secondary);
+  background: var(--card-bg);
+}
+
+.theme-toggle:hover {
+  background: var(--primary);
+  color: white;
+}
+
 .header-date {
   padding: 0.7rem 1.4rem;
   font-weight: 700;
   font-size: 0.9rem;
   border-radius: 14px;
   color: var(--secondary);
-  background: white;
-  border: 1px solid #edf2f7;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
 }
 
 .content-framer {
@@ -122,10 +139,11 @@
   justify-content: space-between;
   font-size: 0.95rem;
   padding: 0.8rem 1rem;
-  background: rgba(239, 68, 68, 0.04);
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   font-weight: 600;
-  color: #4a5568;
+  color: var(--text-main);
 }
 
 .stock-count.warning {
@@ -137,10 +155,10 @@
   display: flex;
   justify-content: space-between;
   padding: 0.8rem 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--glass-border);
   font-size: 0.9rem;
   font-weight: 600;
-  color: #4a5568;
+  color: var(--text-main);
 }
 
 .mini-t-amount {

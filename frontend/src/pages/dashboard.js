@@ -11,6 +11,7 @@ import SettingsView from '../components/SettingsView';
 import AboutView from '../components/AboutView';
 import InsightsView from '../components/InsightsView';
 import { getSummaries, getInventory, getTransactions } from '../services/api';
+import { Moon, Sun } from 'lucide-react';
 import '../styles/global.css';
 import '../styles/dashboard.css';
 
@@ -19,6 +20,12 @@ const Dashboard = () => {
     const [summaries, setSummaries] = useState({ daily: 0, weekly: 0, monthly: 0 });
     const [inventory, setInventory] = useState([]);
     const [recentTransactions, setRecentTransactions] = useState([]);
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
 
     useEffect(() => {
         fetchData();
@@ -117,6 +124,13 @@ const Dashboard = () => {
                         <p>Welcome back! Here's what's happening with your store today.</p>
                     </div>
                     <div className="header-actions">
+                        <button
+                            className="theme-toggle glass"
+                            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+                        >
+                            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                        </button>
                         <div className="header-date glass">
                             {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </div>
