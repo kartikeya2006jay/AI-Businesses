@@ -31,3 +31,6 @@ date,product,amount,customer_name,is_credit
 2026-03-20,Cadbury 5 Star,200.0,abhishek,False
 2026-03-20,oreo biscuit,10.0,ujjwal,False
 2026-03-20,soap -dove,50.0,ujjwal,True
+2026-03-20,Cadbury 5 Star,20.0,rohan,False
+2026-03-20,soap -dove,50.0,rohan,False
+2026-03-20,Cadbury 5 Star,20.0,rakshak,True

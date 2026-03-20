@@ -1,54 +1,88 @@
-/* SaleEntryForm.css - Premium Billing/Receipt Style with Multi-Product Support */
+/* ═══════════════════════════════════════════════════════════════
+   OFFICIAL TAX INVOICE  –  MAXIMUM PREMIUM BILLING PANEL
+   The flagship component of the merchant copilot
+═══════════════════════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── Root Container ───────────────────────────────────────────── */
 .sales-entry.billing-form {
-    padding: 2rem;
-    border-radius: 20px;
+    padding: 0;
+    border-radius: 24px;
     background: var(--card-bg);
-    box-shadow: var(--shadow-soft);
+    box-shadow:
+        0 0 0 1px var(--glass-border),
+        0 24px 64px -12px rgba(0, 46, 110, 0.18),
+        0 8px 24px -4px rgba(0, 0, 0, 0.08);
     position: relative;
-    border: 1px solid var(--glass-border);
-    font-family: 'Inter', -apple-system, sans-serif;
     color: var(--text-main);
     overflow: hidden;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(20px);
+    transition: box-shadow 0.3s ease;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.sales-entry.billing-form:hover {
+    box-shadow:
+        0 0 0 1px rgba(0, 186, 242, 0.3),
+        0 30px 80px -12px rgba(0, 46, 110, 0.22),
+        0 10px 30px -4px rgba(0, 0, 0, 0.1);
 }
 
 .sales-entry.billing-form.sale-success {
-    opacity: 0.8;
+    opacity: 0.7;
     pointer-events: none;
 }
 
-/* PAID Stamp Effect */
+/* ── PAID Stamp Overlay ───────────────────────────────────────── */
 .paid-stamp-container {
     position: absolute;
     inset: 0;
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 50;
-    animation: fadeIn 0.3s ease;
+    gap: 1.2rem;
+    animation: fadeOverlay 0.3s ease;
+}
+
+[data-theme='dark'] .paid-stamp-container {
+    background: rgba(11, 15, 26, 0.93);
+}
+
+@keyframes fadeOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .paid-stamp {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #48bb78;
+    gap: 0.6rem;
     font-weight: 900;
-    border: 5px solid #48bb78;
-    padding: 1rem 3rem;
-    border-radius: 12px;
+    border: 5px solid #16a34a;
+    color: #16a34a;
+    padding: 1.4rem 4rem;
+    border-radius: 18px;
     transform: rotate(-5deg);
-    animation: stampBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: stampBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    letter-spacing: 8px;
+    text-transform: uppercase;
 }
 
 @keyframes stampBounce {
     0% {
-        transform: scale(2) rotate(-15deg);
+        transform: scale(2.2) rotate(-18deg);
         opacity: 0;
     }
 
@@ -59,129 +93,199 @@
 }
 
 .paid-stamp span {
-    font-size: 3.5rem;
-    letter-spacing: 4px;
-}
-
-.success-receipt-info {
-    margin-top: 2rem;
-    text-align: center;
+    font-size: 2.8rem;
 }
 
 .bill-time {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
-    font-weight: 700;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.5px;
 }
 
-/* Header */
+/* ════════════════════════════════════════════════════════════════
+   DOCUMENT HEADER BAND — The Crown of the Invoice
+════════════════════════════════════════════════════════════════ */
 .receipt-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--secondary);
+    align-items: flex-start;
+    padding: 2rem 2.2rem 1.8rem;
+    background: linear-gradient(135deg,
+            rgba(0, 46, 110, 0.92) 0%,
+            rgba(0, 80, 160, 0.88) 50%,
+            rgba(0, 186, 242, 0.8) 100%);
+    overflow: hidden;
+}
+
+/* Decorative circles in header */
+.receipt-header::before {
+    content: '';
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 40px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    top: -70px;
+    right: -30px;
+    pointer-events: none;
+}
+
+.receipt-header::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 30px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -40px;
+    left: 60px;
+    pointer-events: none;
 }
 
 .receipt-title {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    color: var(--text-main);
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
 }
 
-.receipt-title h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--secondary);
+.invoice-icon-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
+}
+
+.invoice-title-text h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: white;
+    margin: 0 0 4px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.invoice-title-text span {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
 }
 
 .invoice-meta {
     text-align: right;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
     align-items: flex-end;
+    position: relative;
+    z-index: 1;
 }
 
 .invoice-no {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
     font-weight: 700;
-    color: #718096;
-    font-size: 0.8rem;
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
 }
 
 .gstin {
-    font-size: 0.7rem;
-    color: #00baf2;
-    font-weight: 800;
     font-family: 'JetBrains Mono', monospace;
-}
-
-/* Input Fields */
-.billing-details {
-    margin-bottom: 1.5rem;
-}
-
-.ink-border label {
-    display: block;
-    text-transform: uppercase;
-    font-size: 0.7rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.65);
     letter-spacing: 1px;
-    font-weight: 800;
-    color: #4a5568;
-    margin-bottom: 0.4rem;
 }
 
-.billing-form input,
-.billing-form select {
-    width: 100%;
-    border: 1px solid var(--glass-border) !important;
-    background: var(--bg) !important;
-    border-radius: 12px !important;
-    padding: 0.7rem 0.9rem !important;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-weight: 600 !important;
-    font-size: 0.9rem !important;
-    color: var(--text-main) !important;
-    transition: all 0.2s;
-    position: relative;
+/* ════════════════════════════════════════════════════════════════
+   INVOICE SECTIONS
+════════════════════════════════════════════════════════════════ */
+.invoice-section {
+    padding: 1.6rem 2.2rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.invoice-section:last-of-type {
+    border-bottom: none;
+}
+
+.invoice-section-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-muted);
+    margin-bottom: 1.1rem;
+}
+
+.invoice-section-label svg {
+    color: var(--primary);
+    opacity: 0.8;
+}
+
+/* ── Customer Input ───────────────────────────────────────────── */
+.billing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .ink-border {
     position: relative;
 }
 
-.inline-scan-btn {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #00baf2;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    z-index: 5;
-    margin-top: 10px;
-    /* Adjust for label height */
+.ink-border label {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    margin-bottom: 0.55rem;
 }
 
-.inline-scan-btn:hover:not(:disabled) {
-    color: #0070e0;
-    transform: translateY(-50%) scale(1.1);
+.billing-form input,
+.billing-form select {
+    width: 100%;
+    border: 1.5px solid var(--glass-border) !important;
+    background: var(--bg) !important;
+    border-radius: 12px !important;
+    padding: 0.85rem 1rem !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    color: var(--text-main) !important;
+    transition: all 0.2s ease;
 }
 
-.inline-scan-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.billing-form input::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.6;
+    font-weight: 400 !important;
+    font-size: 0.85rem !important;
 }
 
 .billing-form input:focus,
@@ -189,13 +293,82 @@
     border-color: var(--primary) !important;
     background: var(--card-bg) !important;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 186, 242, 0.1) !important;
+    box-shadow: 0 0 0 3px rgba(0, 186, 242, 0.12) !important;
 }
 
-/* Add Item Row */
+/* ── Udhaar Toggle ────────────────────────────────────────────── */
+.udhaar-premium-toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    border: 1.5px dashed var(--glass-border);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 1rem;
+    background: transparent;
+    user-select: none;
+}
+
+.udhaar-premium-toggle:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    background: rgba(245, 158, 11, 0.03);
+}
+
+.udhaar-premium-toggle.active {
+    border: 1.5px solid #f59e0b;
+    background: linear-gradient(135deg,
+            rgba(245, 158, 11, 0.10) 0%,
+            rgba(245, 158, 11, 0.03) 100%);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.14);
+}
+
+.custom-checkbox {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 2px solid var(--text-muted);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox.active {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.udhaar-label-main {
+    display: block;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin-bottom: 2px;
+    transition: color 0.2s;
+}
+
+.udhaar-label-main.credit-active {
+    color: #d97706;
+}
+
+.udhaar-label-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* ── Add Item Row ─────────────────────────────────────────────── */
 .add-item-row {
     display: flex;
-    gap: 1rem;
+    gap: 0.9rem;
     align-items: flex-end;
 }
 
@@ -207,69 +380,125 @@
     flex: 1;
 }
 
+.inline-scan-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 5;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.inline-scan-btn:hover:not(:disabled) {
+    opacity: 1;
+    color: var(--secondary);
+    transform: translateY(-50%) scale(1.15);
+}
+
+.inline-scan-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .add-to-bill-btn {
-    height: 42px;
-    width: 42px;
-    border-radius: 8px;
+    height: 44px;
+    width: 44px;
+    border-radius: 12px;
     background: var(--secondary);
-    color: var(--bg);
+    color: white;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(0, 46, 110, 0.28);
 }
 
 .add-to-bill-btn:hover:not(:disabled) {
     background: var(--primary);
-    transform: scale(1.05);
+    transform: scale(1.1) rotate(3deg);
+    box-shadow: 0 6px 18px rgba(0, 186, 242, 0.4);
 }
-
 
 .add-to-bill-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.22;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
+/* ── Separator ────────────────────────────────────────────────── */
 .bill-separator {
-    margin: 1.5rem 0;
-    border-top: 1px dashed var(--glass-border);
+    margin: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--glass-border) 15%,
+            var(--glass-border) 85%,
+            transparent 100%);
+    border: none;
 }
 
-/* Itemized List */
+/* ════════════════════════════════════════════════════════════════
+   ITEMIZED LIST  — The core table area
+════════════════════════════════════════════════════════════════ */
 .itemized-list {
-    min-height: 100px;
+    min-height: 90px;
 }
 
 .list-header-row {
     display: grid;
-    grid-template-columns: 1fr 60px 100px 30px;
-    gap: 1rem;
-    padding: 0.5rem 0;
-    font-size: 0.7rem;
+    grid-template-columns: 1fr 50px 88px 28px;
+    gap: 0.75rem;
+    padding: 0 0 0.7rem;
+    font-size: 0.6rem;
     font-weight: 800;
     text-transform: uppercase;
+    letter-spacing: 1.4px;
     color: var(--text-muted);
-    border-bottom: 1px solid var(--glass-border);
-    margin-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--glass-border);
+    margin-bottom: 0.3rem;
+}
+
+.list-header-row .col-amt {
+    text-align: right;
 }
 
 .item-row {
     display: grid;
-    grid-template-columns: 1fr 60px 100px 30px;
-    gap: 1rem;
+    grid-template-columns: 1fr 50px 88px 28px;
+    gap: 0.75rem;
     align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--glass-border);
-    animation: slideIn 0.2s ease;
+    padding: 0.8rem 0.7rem;
+    border-radius: 10px;
+    margin: 0 -0.7rem;
+    border-bottom: 1px solid transparent;
+    cursor: default;
+    animation: rowSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background 0.18s ease;
 }
 
-@keyframes slideIn {
+.item-row:hover {
+    background: rgba(0, 186, 242, 0.05);
+    border-radius: 10px;
+}
+
+@keyframes rowSlide {
     from {
         opacity: 0;
-        transform: translateX(-5px);
+        transform: translateX(-8px);
     }
 
     to {
@@ -281,141 +510,553 @@
 .col-desc {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 2px;
+    min-width: 0;
 }
 
 .p-name {
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    color: var(--secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .p-price {
     font-size: 0.7rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .col-qty {
+    display: flex;
+    justify-content: center;
+}
+
+.qty-badge {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(0, 186, 242, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(0, 186, 242, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .col-amt {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 800;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    color: var(--secondary);
     text-align: right;
 }
 
 .remove-item-btn {
     background: none;
     border: none;
-    color: var(--error);
+    color: rgba(244, 63, 94, 0.3);
     cursor: pointer;
     padding: 0.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    border-radius: 6px;
 }
 
 .remove-item-btn:hover:not(:disabled) {
-    color: #e53e3e;
-    transform: scale(1.2);
+    color: var(--error);
+    background: rgba(244, 63, 94, 0.1);
+    transform: scale(1.15);
 }
 
 .empty-cart-msg {
-    text-align: center;
-    padding: 2rem 0;
-    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2.2rem 0;
     color: var(--text-muted);
+    font-size: 0.83rem;
+    font-weight: 500;
     font-style: italic;
+    text-align: center;
+    opacity: 0.75;
 }
 
-/* Summary Box */
+/* ════════════════════════════════════════════════════════════════
+   TAX SUMMARY
+════════════════════════════════════════════════════════════════ */
 .billing-summary {
     background: transparent;
-    padding: 1.25rem 0;
+    margin-bottom: 1.4rem;
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.6rem;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 0.42rem 0;
+    font-size: 0.87rem;
 }
 
-.summary-row.ink {
-    font-weight: 600;
-    color: var(--text-main);
-}
-
-.summary-row.gst-row {
-    font-size: 0.85rem;
+.summary-row .label {
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
 }
 
+.summary-row .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 0.87rem;
+}
+
+.summary-row.gst-row .label,
+.summary-row.gst-row .val {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Grand Total Row */
 .ink-total {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 2px solid var(--secondary);
+    margin-top: 0.8rem;
+    padding: 1rem 1.4rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg,
+            rgba(0, 46, 110, 0.05) 0%,
+            rgba(0, 186, 242, 0.05) 100%);
+    border: 1.5px solid rgba(0, 186, 242, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .ink-total .label {
+    font-size: 0.72rem;
+    font-weight: 900;
     text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    color: var(--secondary) !important;
 }
 
 .ink-total .val.highlight {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: 900;
-    color: var(--primary);
+    color: var(--primary) !important;
     font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -1.5px;
+    line-height: 1;
 }
 
-/* Finalize Button */
+/* ════════════════════════════════════════════════════════════════
+   FINALIZE BUTTON  — CTA
+════════════════════════════════════════════════════════════════ */
 .main-submit {
     width: 100%;
-    margin-top: 1.5rem;
     padding: 1.1rem;
-    background: var(--secondary) !important;
-    color: var(--bg) !important;
+    background: linear-gradient(135deg, var(--secondary) 0%, #003580 100%) !important;
+    color: white !important;
     border: none;
-    border-radius: 12px !important;
+    border-radius: 14px !important;
+    font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.88rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2.5px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+        0 8px 24px rgba(0, 46, 110, 0.3),
+        0 2px 8px rgba(0, 46, 110, 0.15) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glowing shimmer on hover */
+.main-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 14px;
 }
 
 .main-submit:hover:not(:disabled) {
-    background: var(--primary) !important;
-    color: white !important;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px);
+    box-shadow:
+        0 14px 36px rgba(0, 186, 242, 0.36),
+        0 4px 12px rgba(0, 46, 110, 0.2) !important;
+}
+
+.main-submit:hover:not(:disabled)::before {
+    opacity: 1;
+}
+
+.main-submit>* {
+    position: relative;
+    z-index: 1;
+}
+
+.main-submit:active:not(:disabled) {
+    transform: translateY(0px);
 }
 
 .main-submit:disabled {
-    opacity: 0.2;
+    opacity: 0.18;
     cursor: not-allowed;
     transform: none;
     box-shadow: none !important;
 }
 
+/* Footer */
 .billing-footer {
     text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    padding: 0.8rem 2.2rem 1.1rem;
+    font-style: italic;
+    letter-spacing: 0.2px;
+    opacity: 0.65;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RECEIPT MODAL  — Premium print preview
+════════════════════════════════════════════════════════════════ */
+.receipt-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 10, 30, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: overlayFade 0.25s ease;
+    padding: 1.5rem;
+}
+
+@keyframes overlayFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.receipt-modal {
+    width: 100%;
+    max-width: 440px;
+    border-radius: 24px !important;
+    position: relative;
+    animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+    max-height: 88vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: var(--card-bg) !important;
+}
+
+.receipt-modal::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Modal Header */
+.receipt-modal-header {
+    padding: 2.5rem 2rem 1.8rem;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg,
+            rgba(0, 46, 110, 0.06) 0%,
+            rgba(0, 186, 242, 0.02) 100%);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.receipt-success-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    color: white;
+    position: relative;
+}
+
+.receipt-success-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    opacity: 0.2;
+}
+
+.receipt-modal-header h2 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--secondary);
+    margin: 0 0 0.4rem;
+    letter-spacing: 1px;
+}
+
+.receipt-modal-header p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.close-receipt {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-receipt:hover {
+    background: var(--error);
+    color: white;
+    border-color: transparent;
+}
+
+/* Receipt Document Body */
+.receipt-content {
+    padding: 1.6rem 2rem 1rem;
+    position: relative;
+}
+
+/* Watermark */
+.receipt-content::before {
+    content: 'PAYTM';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--primary);
+    opacity: 0.03;
+    pointer-events: none;
+    letter-spacing: 8px;
+    white-space: nowrap;
+}
+
+.receipt-biz-header {
+    text-align: center;
+    padding: 0 0 1.2rem;
+    border-bottom: 1px dashed var(--glass-border);
+    margin-bottom: 1.2rem;
+}
+
+.receipt-biz-header h2 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--secondary);
+    margin: 0 0 0.3rem;
+    letter-spacing: 2px;
+}
+
+.receipt-biz-header p {
     font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 1.5rem;
+    margin: 0.1rem 0;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.receipt-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px dashed var(--glass-border);
+}
+
+.receipt-info p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.receipt-info p strong {
+    display: block;
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 1px;
+}
+
+/* Receipt Table */
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.receipt-table thead th {
+    text-align: left;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    padding: 0 0 0.6rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.receipt-table thead th:last-child,
+.receipt-table thead th:nth-child(2),
+.receipt-table thead th:nth-child(3) {
+    text-align: right;
+}
+
+.receipt-table tbody tr {
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.receipt-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.receipt-table tbody td {
+    padding: 0.6rem 0;
+    color: var(--text-main);
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.receipt-table tbody td:not(:first-child) {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+}
+
+/* Receipt Totals */
+.receipt-totals {
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--glass-border);
+    margin-top: 0.5rem;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 0.28rem 0;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.total-row span:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+}
+
+.total-row.grand-total {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--secondary);
+    background: linear-gradient(135deg, rgba(0, 46, 110, 0.05), rgba(0, 186, 242, 0.05));
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-top: 0.6rem;
+}
+
+.total-row.grand-total span:last-child {
+    color: var(--primary);
+    font-size: 1.15rem;
+}
+
+/* Receipt Footer */
+.receipt-footer {
+    text-align: center;
+    padding: 1.2rem 0 0;
+    border-top: 1px dashed var(--glass-border);
+    margin-top: 1rem;
+}
+
+.receipt-footer p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin: 0.15rem 0;
     font-style: italic;
-    opacity: 0.8;
+    font-weight: 500;
+}
+
+/* Print Button */
+.print-btn {
+    margin: 1.2rem 2rem 2rem;
+    width: calc(100% - 4rem);
+}
+
+/* Print styles */
+@media print {
+    .receipt-modal-overlay {
+        position: static;
+        background: none;
+        backdrop-filter: none;
+    }
+
+    .receipt-modal {
+        box-shadow: none !important;
+        max-height: none;
+        border-radius: 0 !important;
+    }
+
+    .receipt-modal-header,
+    .close-receipt,
+    .print-btn {
+        display: none;
+    }
+
+    .receipt-content::before {
+        display: none;
+    }
 }
