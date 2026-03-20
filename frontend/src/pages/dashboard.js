@@ -10,8 +10,9 @@ import InventoryView from '../components/InventoryView';
 import SettingsView from '../components/SettingsView';
 import AboutView from '../components/AboutView';
 import InsightsView from '../components/InsightsView';
+import LendingView from '../components/LendingView';
 import { getSummaries, getInventory, getTransactions } from '../services/api';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, BookOpen, Clock, User } from 'lucide-react';
 import '../styles/global.css';
 import '../styles/dashboard.css';
 
@@ -59,14 +60,19 @@ const Dashboard = () => {
 
                         <div className="dashboard-content">
                             <div className="left-column">
-                                <RevenueChart transactions={recentTransactions} />
+                                <RevenueChart transactions={recentTransactions} summaries={summaries} />
                                 <div className="stats-row">
                                     <div className="mini-card glass recent-list">
                                         <h3>Recent Activity</h3>
                                         <div className="mini-transactions">
                                             {recentTransactions.slice(0, 5).map((t, i) => (
                                                 <div key={i} className="mini-t-item">
-                                                    <span>{t.product}</span>
+                                                    <div className="mini-t-left">
+                                                        <span className="mini-t-product">{t.product}</span>
+                                                        <span className="mini-t-customer">
+                                                            <User size={10} /> {t.customer_name || 'Anonymous'}
+                                                        </span>
+                                                    </div>
                                                     <span className="mini-t-amount">₹{t.amount}</span>
                                                 </div>
                                             ))}
@@ -102,6 +108,8 @@ const Dashboard = () => {
                 return <SalesView inventory={inventory} fetchData={fetchData} summaries={summaries} />;
             case 'inventory':
                 return <InventoryView inventory={inventory} fetchData={fetchData} />;
+            case 'lending':
+                return <LendingView />;
             case 'insights':
                 return <InsightsView inventory={inventory} transactions={recentTransactions} summaries={summaries} />;
             case 'settings':

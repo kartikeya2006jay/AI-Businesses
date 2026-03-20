@@ -109,13 +109,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 /* ── Component ──────────────────────────────────────────── */
-const RevenueChart = ({ transactions = [] }) => {
+const RevenueChart = ({ transactions = [], summaries = {} }) => {
     const [range, setRange] = useState('week');
 
     const data = useMemo(() => buildChartData(transactions, range), [transactions, range]);
 
     const total = data.reduce((s, d) => s + d.revenue, 0);
-    const prevTotal = data.reduce((s, d) => s + d.prev, 0);
+    const prevTotal = summaries.prev_weekly || data.reduce((s, d) => s + d.prev, 0);
     const growth = prevTotal > 0 ? (((total - prevTotal) / prevTotal) * 100).toFixed(1) : null;
     const isUp = growth === null || Number(growth) >= 0;
     const avgPerBucket = data.length > 0 ? Math.round(total / data.length) : 0;

@@ -15,6 +15,7 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
     const [showScanner, setShowScanner] = useState(false);
     const [showReceipt, setShowReceipt] = useState(false);
     const [lastBillData, setLastBillData] = useState(null);
+    const [isCredit, setIsCredit] = useState(false);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -69,7 +70,8 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                     product: item.product,
                     quantity: item.quantity,
                     amount: item.amount,
-                    customerName: customerName || 'Anonymous'
+                    customer_name: customerName || 'Anonymous',
+                    is_credit: isCredit
                 });
             }
 
@@ -82,19 +84,11 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                 sgst,
                 total: totalWithGst,
                 time: billTime,
+                isCredit: isCredit,
                 invoiceNo: `INV-${Math.floor(1000 + Math.random() * 9000)}`
             });
             setSuccess(true);
             setShowReceipt(true);
-
-            // Don't auto-clear if we want to print
-            // setTimeout(() => {
-            //     setCart([]);
-            //     setCustomerName('');
-            //     setSuccess(false);
-            //     onSaleSuccess();
-            // }, 5000); 
-
         } catch (error) {
             alert("Error recording sale: " + (error.response?.data?.detail || error.message));
         } finally {
@@ -111,9 +105,9 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
         <section className={`sales-entry billing-form ${success ? 'sale-success' : ''}`}>
             {success && (
                 <div className="paid-stamp-container">
-                    <div className="paid-stamp">
+                    <div className="paid-stamp" style={{ borderColor: isCredit ? '#f59e0b' : '#48bb78', color: isCredit ? '#f59e0b' : '#48bb78' }}>
                         <CheckCircle size={60} />
-                        <span>PAID</span>
+                        <span>{isCredit ? 'UDHAAR' : 'PAID'}</span>
                     </div>
                     <div className="success-receipt-info">
                         <p className="bill-time">Indian Live GST Time: {lastBillTime}</p>
@@ -121,27 +115,74 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
                 </div>
             )}
 
-            <div className="receipt-header">
+            <div className="receipt-header" style={{ borderBottom: '3px solid var(--secondary)', marginBottom: '1.5rem' }}>
                 <div className="receipt-title">
-                    <FileText size={20} className="icon-blue" />
-                    <h3>Tax Invoice</h3>
+                    <FileText size={24} className="icon-blue" style={{ color: 'var(--primary)' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', letterSpacing: '1px' }}>OFFICIAL TAX INVOICE</h3>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>GST COMPLIANT BILLING</span>
+                    </div>
                 </div>
                 <div className="invoice-meta">
-                    <span className="invoice-no">INV-{Math.floor(1000 + Math.random() * 9000)}</span>
+                    <span className="invoice-no" style={{ fontSize: '1rem', color: 'var(--secondary)' }}>#INV-{Math.floor(10000 + Math.random() * 90000)}</span>
                     <span className="gstin">GSTIN: 07PYTM1234ZC</span>
                 </div>
             </div>
 
             <div className="billing-details">
                 <div className="form-group ink-border">
-                    <label>Customer Name</label>
+                    <label style={{ color: 'var(--primary)', fontWeight: 700 }}>BILL TO (CUSTOMER NAME)</label>
                     <input
                         type="text"
-                        placeholder="Anonymous Customer"
+                        placeholder="Enter customer name for Khata/Bill..."
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
                         disabled={loading || success}
+                        style={{ border: '2px solid var(--glass-border)', fontSize: '1rem' }}
                     />
+                </div>
+
+                <div className="udhaar-premium-toggle" style={{
+                    marginTop: '1.5rem',
+                    marginBottom: '1.5rem',
+                    padding: '16px',
+                    background: isCredit ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%)' : 'rgba(255,255,255,0.03)',
+                    borderRadius: '16px',
+                    border: isCredit ? '2px solid #f59e0b' : '2px dashed var(--glass-border)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: isCredit ? '0 10px 20px rgba(245, 158, 11, 0.15)' : 'none'
+                }} onClick={() => !loading && !success && setIsCredit(!isCredit)}>
+                    <div className={`custom-checkbox ${isCredit ? 'active' : ''}`} style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '8px',
+                        border: '2px solid ' + (isCredit ? '#f59e0b' : 'var(--text-muted)'),
+                        background: isCredit ? '#f59e0b' : 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        flexShrink: 0
+                    }}>
+                        {isCredit && <CheckCircle size={18} strokeWidth={3} />}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <span style={{
+                            display: 'block',
+                            fontWeight: 800,
+                            fontSize: '1.05rem',
+                            color: isCredit ? '#f59e0b' : 'var(--text-main)'
+                        }}>
+                            Mark as Udhaar (Credit Sale)
+                        </span>
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                            This will automatically add the amount to <strong>{customerName || 'Customer'}'s Khata Book</strong>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -254,78 +295,98 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
 
             <p className="billing-footer">Invoice generated at: {new Date().toLocaleDateString('en-IN')}</p>
 
-            {showReceipt && lastBillData && (
-                <div className="receipt-modal-overlay">
-                    <div className="receipt-modal glass">
-                        <div className="receipt-modal-header">
-                            <h3>Digital Receipt</h3>
-                            <button className="close-receipt" onClick={() => {
-                                setShowReceipt(false);
-                                setSuccess(false);
-                                setCart([]);
-                                setCustomerName('');
-                                onSaleSuccess();
-                            }}><X size={20} /></button>
-                        </div>
+            {
+                showReceipt && lastBillData && (
+                    <div className="receipt-modal-overlay">
+                        <div className="receipt-modal glass">
+                            <div className="receipt-modal-header" style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+                                <div className="success-icon" style={{
+                                    background: lastBillData.isCredit ? '#f59e0b' : '#10b981',
+                                    width: '60px',
+                                    height: '60px',
+                                    borderRadius: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    margin: '0 auto 1rem',
+                                    color: 'white',
+                                    boxShadow: '0 0 20px rgba(0,0,0,0.2)'
+                                }}>
+                                    <CheckCircle size={32} />
+                                </div>
+                                <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-main)', margin: 0 }}>
+                                    {lastBillData.isCredit ? 'UDHAAR RECORDED' : 'PAYMENT SUCCESS'}
+                                </h2>
+                                <p style={{ color: 'var(--text-muted)', margin: '0.5rem 0' }}>Official Tax Invoice # {lastBillData.invoiceNo}</p>
 
-                        <div id="printable-receipt" className="receipt-content">
-                            <div className="receipt-biz-header">
-                                <h2>PAYTM MERCHANT</h2>
-                                <p>Digital Retail Solutions</p>
-                                <p>GSTIN: 07PYTM1234ZC</p>
+                                <button className="close-receipt" style={{ position: 'absolute', right: '20px', top: '20px' }} onClick={() => {
+                                    setShowReceipt(false);
+                                    setSuccess(false);
+                                    setCart([]);
+                                    setCustomerName('');
+                                    onSaleSuccess();
+                                }}><X size={24} /></button>
                             </div>
 
-                            <hr />
+                            <div id="printable-receipt" className="receipt-content">
+                                <div className="receipt-biz-header">
+                                    <h2>PAYTM MERCHANT</h2>
+                                    <p>Digital Retail Solutions</p>
+                                    <p>GSTIN: 07PYTM1234ZC</p>
+                                </div>
 
-                            <div className="receipt-info">
-                                <p><strong>Invoice:</strong> {lastBillData.invoiceNo}</p>
-                                <p><strong>Date:</strong> {lastBillData.time}</p>
-                                <p><strong>Customer:</strong> {lastBillData.customer}</p>
-                            </div>
+                                <hr />
 
-                            <table className="receipt-table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Amt</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {lastBillData.items.map((item, i) => (
-                                        <tr key={i}>
-                                            <td>{item.product}</td>
-                                            <td>{item.quantity}</td>
-                                            <td>₹{item.price}</td>
-                                            <td>₹{item.amount}</td>
+                                <div className="receipt-info">
+                                    <p><strong>Invoice:</strong> {lastBillData.invoiceNo}</p>
+                                    <p><strong>Date:</strong> {lastBillData.time}</p>
+                                    <p><strong>Customer:</strong> {lastBillData.customer}</p>
+                                </div>
+
+                                <table className="receipt-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Amt</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {lastBillData.items.map((item, i) => (
+                                            <tr key={i}>
+                                                <td>{item.product}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>₹{item.price}</td>
+                                                <td>₹{item.amount}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
 
-                            <hr />
+                                <hr />
 
-                            <div className="receipt-totals">
-                                <div className="total-row"><span>Subtotal</span><span>₹{lastBillData.subtotal}</span></div>
-                                <div className="total-row"><span>CGST (9%)</span><span>₹{lastBillData.cgst}</span></div>
-                                <div className="total-row"><span>SGST (9%)</span><span>₹{lastBillData.sgst}</span></div>
-                                <div className="total-row grand-total"><span>Total</span><span>₹{lastBillData.total}</span></div>
+                                <div className="receipt-totals">
+                                    <div className="total-row"><span>Subtotal</span><span>₹{lastBillData.subtotal}</span></div>
+                                    <div className="total-row"><span>CGST (9%)</span><span>₹{lastBillData.cgst}</span></div>
+                                    <div className="total-row"><span>SGST (9%)</span><span>₹{lastBillData.sgst}</span></div>
+                                    <div className="total-row grand-total"><span>Total</span><span>₹{lastBillData.total}</span></div>
+                                </div>
+
+                                <div className="receipt-footer">
+                                    <p>Thank you for shopping with us!</p>
+                                    <p>This is a computer generated invoice.</p>
+                                </div>
                             </div>
 
-                            <div className="receipt-footer">
-                                <p>Thank you for shopping with us!</p>
-                                <p>This is a computer generated invoice.</p>
-                            </div>
+                            <button className="print-btn main-submit" onClick={() => window.print()}>
+                                <Printer size={18} /> Print Invoice
+                            </button>
                         </div>
-
-                        <button className="print-btn main-submit" onClick={() => window.print()}>
-                            <Printer size={18} /> Print Invoice
-                        </button>
                     </div>
-                </div>
-            )}
-        </section>
+                )
+            }
+        </section >
     );
 };
 

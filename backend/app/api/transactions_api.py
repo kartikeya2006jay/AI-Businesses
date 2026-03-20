@@ -13,6 +13,8 @@ class Transaction(BaseModel):
     product: str
     amount: float
     quantity: int = 1
+    customer_name: str = "Anonymous"
+    is_credit: bool = False
 
 @router.post("/transactions")
 def add_transaction(transaction: Transaction):
@@ -38,23 +40,51 @@ def add_transaction(transaction: Transaction):
     new_data = {
         "date": [datetime.now().strftime("%Y-%m-%d")],
         "product": [transaction.product],
-        "amount": [transaction.amount]
+        "amount": [transaction.amount],
+        "customer_name": [transaction.customer_name],
+        "is_credit": [transaction.is_credit]
     }
     
     new_df = pd.DataFrame(new_data)
     
+    # 3. Handle Lending (Khata) if it's a credit sale
+    if transaction.is_credit:
+        LENDING_FILE = "data/lending.csv"
+        if not os.path.exists(LENDING_FILE):
+            ldf = pd.DataFrame(columns=["customer_name", "balance", "last_transaction"])
+        else:
+            ldf = pd.read_csv(LENDING_FILE)
+        
+        if transaction.customer_name in ldf['customer_name'].values:
+            lidx = ldf[ldf['customer_name'] == transaction.customer_name].index[0]
+            ldf.at[lidx, 'balance'] += transaction.amount
+            ldf.at[lidx, 'last_transaction'] = datetime.now().strftime("%Y-%m-%d")
+        else:
+            new_l_row = pd.DataFrame([{
+                "customer_name": transaction.customer_name,
+                "balance": transaction.amount,
+                "last_transaction": datetime.now().strftime("%Y-%m-%d")
+            }])
+            ldf = pd.concat([ldf, new_l_row], ignore_index=True)
+        ldf.to_csv(LENDING_FILE, index=False)
+
     if os.path.exists(TRANSACTIONS_FILE):
-        # Ensure the file ends with a newline before appending
-        with open(TRANSACTIONS_FILE, 'r') as f:
-            content = f.read()
-            if content and not content.endswith('\n'):
-                with open(TRANSACTIONS_FILE, 'a') as fa:
-                    fa.write('\n')
-        new_df.to_csv(TRANSACTIONS_FILE, mode='a', header=False, index=False)
+        # Check if header matches (migration for existing files)
+        check_df = pd.read_csv(TRANSACTIONS_FILE, nrows=0)
+        if "customer_name" not in check_df.columns:
+            # File exists but old format - need to update it or just create new
+            main_df = pd.read_csv(TRANSACTIONS_FILE)
+            main_df["customer_name"] = "Legacy User"
+            main_df["is_credit"] = False
+            main_df = pd.concat([main_df, new_df], ignore_index=True)
+            main_df.to_csv(TRANSACTIONS_FILE, index=False)
+        else:
+            with open(TRANSACTIONS_FILE, 'a') as f:
+                new_df.to_csv(f, header=False, index=False)
     else:
         new_df.to_csv(TRANSACTIONS_FILE, index=False)
         
-    return {"message": "Transaction recorded and inventory updated", "product": transaction.product, "remaining_stock": int(inventory_df.at[idx, 'quantity'])}
+    return {"message": "Transaction recorded", "product": transaction.product}
 
 class InventoryItem(BaseModel):
     product: str
@@ -103,27 +133,48 @@ def get_transactions():
 @router.get("/summaries")
 def get_summaries():
     if not os.path.exists(TRANSACTIONS_FILE):
-        return {"daily": 0, "weekly": 0, "monthly": 0}
+        return {
+            "daily": 0, "prev_daily": 0,
+            "weekly": 0, "prev_weekly": 0,
+            "monthly": 0, "prev_monthly": 0
+        }
     
     df = pd.read_csv(TRANSACTIONS_FILE)
     df['date'] = pd.to_datetime(df['date'])
     today = datetime.now().date()
     
-    # Daily
-    daily_revenue = df[df['date'].dt.date == today]['amount'].sum()
+    # helper for range sums
+    def get_sum(start, end):
+        return df[(df['date'].dt.date >= start) & (df['date'].dt.date <= end)]['amount'].sum()
+
+    # Current periods
+    daily = get_sum(today, today)
     
-    # Weekly
     start_of_week = today - pd.Timedelta(days=today.weekday())
-    weekly_revenue = df[df['date'].dt.date >= start_of_week]['amount'].sum()
+    weekly = get_sum(start_of_week, today)
     
-    # Monthly
     start_of_month = today.replace(day=1)
-    monthly_revenue = df[df['date'].dt.date >= start_of_month]['amount'].sum()
+    monthly = get_sum(start_of_month, today)
+    
+    # Previous periods
+    prev_day = today - pd.Timedelta(days=1)
+    prev_daily = get_sum(prev_day, prev_day)
+    
+    prev_week_start = start_of_week - pd.Timedelta(days=7)
+    prev_week_end = start_of_week - pd.Timedelta(days=1)
+    prev_weekly = get_sum(prev_week_start, prev_week_end)
+    
+    last_month_end = start_of_month - pd.Timedelta(days=1)
+    prev_month_start = last_month_end.replace(day=1)
+    prev_monthly = get_sum(prev_month_start, last_month_end)
     
     return {
-        "daily": float(daily_revenue),
-        "weekly": float(weekly_revenue),
-        "monthly": float(monthly_revenue)
+        "daily": float(daily),
+        "prev_daily": float(prev_daily),
+        "weekly": float(weekly),
+        "prev_weekly": float(prev_weekly),
+        "monthly": float(monthly),
+        "prev_monthly": float(prev_monthly)
     }
 
 @router.get("/inventory")
