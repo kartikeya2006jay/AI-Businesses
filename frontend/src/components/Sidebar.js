@@ -18,8 +18,21 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   return (
     <div className="sidebar glass">
       <div className="sidebar-brand">
-        <div className="brand-logo">M</div>
-        <span>Merchant Copilot</span>
+        <div className="brand-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 26V6L16 16L26 6V26" stroke="url(#logo_grad)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="16" cy="16" r="3" fill="white">
+              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <defs>
+              <linearGradient id="logo_grad" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#00baf2" />
+                <stop offset="1" stopColor="#002e6e" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span className="brand-name">Merchant Copilot</span>
       </div>
 
       <nav className="sidebar-nav">

@@ -216,37 +216,166 @@
 }
 
 /* ───────────────────────────────────────────────
-   SALES TIP CARD
+   AI SALES TIP CARD - Premium Redesign
 ─────────────────────────────────────────────── */
-.sales-tips {
-    padding: 1.6rem 1.8rem;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #fffbeb, #fef9c3);
-    border: 1px solid #fde68a;
-    box-shadow: 0 6px 20px -4px rgba(245, 158, 11, 0.15);
+.ai-tip-card {
+    padding: 2rem;
+    border-radius: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.sales-tips h3 {
+.ai-tip-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 186, 242, 0.05) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.ai-tip-card.loading {
+    opacity: 0.8;
+}
+
+.tip-header {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
-    font-size: 0.78rem;
-    font-weight: 700;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tip-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin: 0 0 0.9rem;
-    color: #b45309;
-}
-
-.sales-tips p {
-    font-size: 0.9rem;
-    color: #78350f;
-    line-height: 1.65;
+    letter-spacing: 1.5px;
     margin: 0;
-    font-weight: 500;
+    color: var(--primary);
 }
 
-.sales-tips strong {
-    color: #d97706;
+.sparkle-icon {
+    color: var(--primary);
+    filter: drop-shadow(0 0 5px rgba(0, 186, 242, 0.5));
+}
+
+.refresh-tip-btn {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.refresh-tip-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: white;
+    transform: rotate(180deg);
+}
+
+.refresh-tip-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tip-content {
+    font-size: 1.05rem;
+    color: var(--text-main);
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.ai-badge {
+    display: inline-block;
+    font-size: 0.7rem;
     font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 4px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Loading States */
+.tip-loading-state {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.pulse-skeleton {
+    height: 1rem;
+    background: var(--glass);
+    border-radius: 4px;
+    width: 100%;
+    animation: skeleton-pulse 1.5s infinite ease-in-out;
+}
+
+.pulse-skeleton.short {
+    width: 60%;
+}
+
+@keyframes skeleton-pulse {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

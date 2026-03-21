@@ -246,6 +246,12 @@
     opacity: 0.8;
 }
 
+[data-theme='dark'] .invoice-section-label svg {
+    color: #00baf2;
+    /* Brighter Paytm blue for dark mode */
+    opacity: 1;
+}
+
 /* ── Customer Input ───────────────────────────────────────────── */
 .billing-details {
     display: flex;
@@ -430,6 +436,11 @@
     background: var(--primary);
     transform: scale(1.1) rotate(3deg);
     box-shadow: 0 6px 18px rgba(0, 186, 242, 0.4);
+}
+
+[data-theme='dark'] .add-to-bill-btn {
+    background: #00baf2;
+    box-shadow: 0 4px 14px rgba(0, 186, 242, 0.4);
 }
 
 .add-to-bill-btn:disabled {

@@ -21,5 +21,6 @@ export const changePassword = (data) => api.post('/settings/change-password', da
 
 export const getLending = () => api.get('/lending');
 export const payLending = (data) => api.post('/lending/pay', data);
+export const getSalesTip = () => api.get('/sales-tip');
 
 export default api;

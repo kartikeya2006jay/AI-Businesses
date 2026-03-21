@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import SaleEntryForm from './SaleEntryForm';
-import { ShoppingBag, TrendingUp, History, Calendar, Package } from 'lucide-react';
-import { getTransactions } from '../services/api';
+import { ShoppingBag, TrendingUp, History, Calendar, Package, Sparkles, RefreshCw } from 'lucide-react';
+import { getTransactions, getSalesTip } from '../services/api';
 import '../styles/SalesView.css';
 
 const SalesView = ({ inventory, fetchData, summaries }) => {
   const [history, setHistory] = useState([]);
+  const [tip, setTip] = useState(null);
+  const [loadingTip, setLoadingTip] = useState(false);
 
   useEffect(() => {
     loadTransactions();
+    fetchTip();
   }, []);
 
   const loadTransactions = async () => {
@@ -20,13 +23,26 @@ const SalesView = ({ inventory, fetchData, summaries }) => {
     }
   };
 
+  const fetchTip = async () => {
+    setLoadingTip(true);
+    try {
+      const res = await getSalesTip();
+      setTip(res.data.tip);
+    } catch (error) {
+      console.error("Error fetching sales tip:", error);
+      setTip("Focus on your best-sellers to ensure they never go out of stock!");
+    } finally {
+      setLoadingTip(false);
+    }
+  };
+
   const onSale = () => {
     fetchData();
     loadTransactions();
   };
 
   return (
-    <div className="sales-view">
+    <div className="sales-view app-root">
 
       {/* Header */}
       <div className="view-header">
@@ -47,7 +63,7 @@ const SalesView = ({ inventory, fetchData, summaries }) => {
         <div className="sales-main">
           <div className="recent-transactions glass shadow-soft">
             <div className="list-header">
-              <h3><History size={14} />Transaction History</h3>
+              <h3><History size={16} />Transaction History</h3>
               {history.length > 0 && (
                 <span className="transaction-count-badge">{history.length} records</span>
               )}
@@ -85,12 +101,29 @@ const SalesView = ({ inventory, fetchData, summaries }) => {
         <div className="sales-sidebar">
           <SaleEntryForm inventory={inventory} onSaleSuccess={onSale} />
 
-          <div className="sales-tips">
-            <h3><TrendingUp size={13} />Sales Tip</h3>
-            <p>
-              Your best selling product is usually <strong>Cold Drinks</strong> during late
-              afternoons. Consider keeping extra stock ready!
-            </p>
+          <div className={`sales-tips glass ai-tip-card ${loadingTip ? 'loading' : ''}`}>
+            <div className="tip-header">
+              <h3><Sparkles size={16} className="sparkle-icon" /> AI Sales Tip</h3>
+              <button
+                className="refresh-tip-btn"
+                onClick={fetchTip}
+                disabled={loadingTip}
+                title="Refresh Insight"
+              >
+                <RefreshCw size={14} className={loadingTip ? 'spin' : ''} />
+              </button>
+            </div>
+            {loadingTip ? (
+              <div className="tip-loading-state">
+                <div className="pulse-skeleton"></div>
+                <div className="pulse-skeleton short"></div>
+              </div>
+            ) : (
+              <p className="tip-content">
+                {tip || "Analyzing your business data for the perfect insight..."}
+              </p>
+            )}
+            <div className="ai-badge">Powered by Merchant AI</div>
           </div>
         </div>
 

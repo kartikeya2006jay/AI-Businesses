@@ -415,7 +415,7 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
             {showScanner && (
                 <ProductScanner
                     inventory={inventory}
-                    onProductFound={(productName) => {
+                    onScanSuccess={(productName) => {
                         setSelectedProduct(productName);
                         setShowScanner(false);
                     }}

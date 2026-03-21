@@ -1,0 +1,97 @@
+.reports-view {
+    padding: 1.5rem;
+    animation: fadeIn 0.4s ease;
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.report-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-bold);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.report-card h3 {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.report-value {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -1px;
+}
+
+.report-value.profit {
+    color: #10b981;
+}
+
+.report-value.loss {
+    color: #f43f5e;
+}
+
+.report-value.expense {
+    color: #ef4444;
+}
+
+.report-detail {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.eod-summary {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-bold);
+}
+
+.eod-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.eod-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.eod-row:last-child {
+    border-bottom: none;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.eod-row.cash {
+    color: #10b981;
+}
+
+.eod-row.credit {
+    color: #f59e0b;
+}
+
+.eod-row.expense {
+    color: #ef4444;
+}

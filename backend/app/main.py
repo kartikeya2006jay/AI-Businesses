@@ -8,6 +8,7 @@ from app.api.auth_api import router as auth_router
 from app.api.vision_api import router as vision_router
 from app.api.settings_api import router as settings_router
 from app.api.lending_api import router as lending_router
+from app.api.insights_api import router as insights_router
 
 app = FastAPI(
     title="Paytm AI Merchant Copilot",
