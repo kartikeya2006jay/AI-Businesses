@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 const ProtectedRoute = ({ children }) => {
     const { token, loading } = useAuth();
@@ -23,23 +24,25 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
     return (
         <AuthProvider>
-            <BrowserRouter>
-                <div className="app-root">
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route
-                            path="/"
-                            element={
-                                <ProtectedRoute>
-                                    <Dashboard />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route path="*" element={<Navigate to="/" />} />
-                    </Routes>
-                </div>
-            </BrowserRouter>
+            <ThemeProvider>
+                <BrowserRouter>
+                    <div className="app-root">
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route
+                                path="/"
+                                element={
+                                    <ProtectedRoute>
+                                        <Dashboard />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route path="*" element={<Navigate to="/" />} />
+                        </Routes>
+                    </div>
+                </BrowserRouter>
+            </ThemeProvider>
         </AuthProvider>
     );
 };

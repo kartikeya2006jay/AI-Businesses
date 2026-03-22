@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-:root {
+:root,
+[data-theme='glass'] {
     --primary: #00baf2;
     --primary-dark: #0099cc;
     --secondary: #002e6e;
@@ -33,9 +34,24 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.4);
     --shadow-bold: 0 25px 60px rgba(0, 0, 0, 0.6);
-    --grad-1: rgba(0, 186, 242, 0.2);
-    --grad-2: rgba(0, 46, 110, 0.15);
+    --grad-1: rgba(0, 186, 242, 0.3);
+    --grad-2: rgba(0, 46, 110, 0.2);
     --sidebar-bg: #151d2e;
+}
+
+[data-theme='light'] {
+    --bg: #ffffff;
+    --card-bg: #f1f5f9;
+    --secondary: #0f172a;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --glass: rgba(255, 255, 255, 0.95);
+    --glass-border: #e2e8f0;
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-bold: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --grad-1: rgba(0, 186, 242, 0.05);
+    --grad-2: rgba(0, 46, 110, 0.03);
+    --sidebar-bg: #f8fafc;
 }
 
 * {
