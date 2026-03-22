@@ -1,0 +1,284 @@
+/* MarginsView.css — Premium Profit Margin Analyzer */
+
+.margins-view {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.loading-text {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-muted);
+}
+
+.margins-empty {
+    text-align: center;
+    padding: 5rem 2rem;
+    border-radius: 28px;
+}
+
+.margins-empty h3 {
+    margin: 1rem 0 0.5rem;
+    color: var(--text-main);
+}
+
+.margins-empty p {
+    color: var(--text-muted);
+}
+
+/* ── Hero ── */
+.margins-hero {
+    padding: 2.5rem;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.margins-hero .hero-left {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.margins-hero .hero-icon {
+    color: var(--primary);
+    background: rgba(0, 186, 242, 0.1);
+    padding: 14px;
+    border-radius: 18px;
+}
+
+.margins-hero h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text-main);
+}
+
+.margins-hero p {
+    margin: 0;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.margin-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+.m-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2rem;
+    background: var(--glass);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.m-stat-val {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.m-stat-val.green {
+    color: #10b981;
+}
+
+.m-stat-lbl {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.2rem;
+}
+
+/* ── Highlights ── */
+.margin-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.highlight-card {
+    padding: 1.8rem 2rem;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+.highlight-card.best svg {
+    color: #10b981;
+}
+
+.highlight-card.worst svg {
+    color: #f59e0b;
+}
+
+.hl-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    font-weight: 700;
+    display: block;
+}
+
+.hl-product {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+    display: block;
+    text-transform: capitalize;
+    margin: 0.15rem 0;
+}
+
+.hl-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: block;
+}
+
+.hl-value.green {
+    color: #10b981;
+}
+
+.hl-value.amber {
+    color: #f59e0b;
+}
+
+/* ── Bar Chart ── */
+.margins-chart-card {
+    padding: 2rem 2.5rem;
+    border-radius: 28px;
+    animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.margins-chart-card h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.8rem;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.bars-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.bar-row {
+    animation: slideUp 0.5s ease-out both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+}
+
+.bar-product {
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: capitalize;
+}
+
+.bar-margin {
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.bar-track {
+    position: relative;
+    height: 28px;
+    background: var(--glass);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 2%;
+}
+
+.bar-amount {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.bar-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-weight: 500;
+}
+
+.profit-tag {
+    font-weight: 700;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .margin-stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .margin-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .margins-hero,
+    .margins-chart-card {
+        padding: 1.5rem;
+    }
+}

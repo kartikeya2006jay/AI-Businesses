@@ -1,0 +1,169 @@
+/* CashDrawer.css — Premium Daily Cash Drawer */
+
+.cash-drawer-card {
+    border-radius: 22px;
+    padding: 1.8rem;
+    animation: fadeIn 0.6s ease-out 0.15s both;
+}
+
+.cd-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.cd-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text-main);
+}
+
+.cd-date {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--glass);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* ── Flow Items ── */
+.cd-flow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.cd-flow-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 12px;
+    background: var(--glass);
+    transition: all 0.2s ease;
+}
+
+.cd-flow-item:hover {
+    transform: translateX(4px);
+}
+
+.cd-flow-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cd-flow-item.neutral .cd-flow-icon {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+}
+
+.cd-flow-item.inflow .cd-flow-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.cd-flow-item.credit .cd-flow-icon {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.cd-flow-item.outflow .cd-flow-icon {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.cd-flow-label {
+    flex: 1;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.cd-flow-value {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.cd-flow-item.inflow .cd-flow-value {
+    color: #10b981;
+}
+
+.cd-flow-item.outflow .cd-flow-value {
+    color: #ef4444;
+}
+
+.cd-flow-item.credit .cd-flow-value {
+    color: #f59e0b;
+}
+
+/* ── Divider ── */
+.cd-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    margin: 1rem 0;
+    border-radius: 2px;
+}
+
+/* ── Closing Balance ── */
+.cd-closing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+}
+
+.cd-closing.positive {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.cd-closing.negative {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.cd-closing-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-main);
+}
+
+.cd-closing-value {
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.cd-closing.positive .cd-closing-value {
+    color: #10b981;
+}
+
+.cd-closing.negative .cd-closing-value {
+    color: #ef4444;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

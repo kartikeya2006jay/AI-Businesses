@@ -90,18 +90,22 @@ class InventoryItem(BaseModel):
     product: str
     price: float
     quantity: int
+    cost_price: float = 0.0
 
 @router.post("/inventory")
 def update_inventory(item: InventoryItem):
     if not os.path.exists(INVENTORY_FILE):
-        df = pd.DataFrame(columns=["product", "price", "quantity"])
+        df = pd.DataFrame(columns=["product", "price", "quantity", "cost_price"])
     else:
         df = pd.read_csv(INVENTORY_FILE)
+        if "cost_price" not in df.columns:
+            df["cost_price"] = df["price"] * 0.7  # Initial migration
     
     if item.product in df["product"].values:
         idx = df[df["product"] == item.product].index[0]
         df.at[idx, "price"] = item.price
         df.at[idx, "quantity"] = item.quantity
+        df.at[idx, "cost_price"] = item.cost_price
     else:
         new_row = pd.DataFrame([item.dict()])
         df = pd.concat([df, new_row], ignore_index=True)

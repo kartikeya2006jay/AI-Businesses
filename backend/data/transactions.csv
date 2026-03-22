@@ -37,3 +37,4 @@ date,product,amount,customer_name,is_credit
 2026-03-21,oreo biscuit,10.0,roy,False
 2026-03-21,soap -dove,1000.0,Anonymous,False
 2026-03-22,Cadbury 5 Star,60.0,rocky,False
+2026-03-22,Fair&lovely,900.0,rajesh,False

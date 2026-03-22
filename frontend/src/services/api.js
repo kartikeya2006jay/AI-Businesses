@@ -22,5 +22,8 @@ export const changePassword = (data) => api.post('/settings/change-password', da
 export const getLending = () => api.get('/lending');
 export const payLending = (data) => api.post('/lending/pay', data);
 export const getSalesTip = () => api.get('/sales-tip');
+export const getReportsMargins = () => api.get('/reports/margins');
+export const getCustomerAnalytics = () => api.get('/customers/analytics');
+export const getCashDrawer = () => api.get('/reports/cash-drawer');
 
 export default api;

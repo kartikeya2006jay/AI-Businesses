@@ -10,6 +10,9 @@ import SettingsView from '../components/SettingsView';
 import AboutView from '../components/AboutView';
 import InsightsView from '../components/InsightsView';
 import LendingView from '../components/LendingView';
+import MarginsView from '../components/MarginsView';
+import CustomersView from '../components/CustomersView';
+import CashDrawer from '../components/CashDrawer';
 import { getSummaries, getInventory, getTransactions } from '../services/api';
 import { Moon, Sun, User, AlertCircle, Package } from 'lucide-react';
 
@@ -139,7 +142,10 @@ const Dashboard = () => {
                                         </div>
                                     )}
                                 </div>
-
+                                {/* Cash Drawer Waterfall */}
+                                <div className="cash-drawer-preview glass shadow-soft">
+                                    <CashDrawer />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -153,6 +159,10 @@ const Dashboard = () => {
                 return <LendingView />;
             case 'insights':
                 return <InsightsView inventory={inventory} transactions={recentTransactions} summaries={summaries} />;
+            case 'margins':
+                return <MarginsView />;
+            case 'customers':
+                return <CustomersView />;
             case 'settings':
                 return <SettingsView />;
             case 'about':

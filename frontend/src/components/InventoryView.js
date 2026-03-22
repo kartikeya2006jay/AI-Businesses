@@ -6,7 +6,7 @@ import '../styles/Inventory.css';
 
 const InventoryView = ({ inventory, fetchData }) => {
   const [isAdding, setIsAdding] = useState(false);
-  const [newProduct, setNewProduct] = useState({ product: '', price: '', quantity: '' });
+  const [newProduct, setNewProduct] = useState({ product: '', price: '', quantity: '', cost_price: '' });
   const [loading, setLoading] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
 
@@ -17,9 +17,10 @@ const InventoryView = ({ inventory, fetchData }) => {
       await updateInventory({
         product: newProduct.product,
         price: parseFloat(newProduct.price),
-        quantity: parseInt(newProduct.quantity)
+        quantity: parseInt(newProduct.quantity),
+        cost_price: parseFloat(newProduct.cost_price || (newProduct.price * 0.7))
       });
-      setNewProduct({ product: '', price: '', quantity: '' });
+      setNewProduct({ product: '', price: '', quantity: '', cost_price: '' });
       setIsAdding(false);
       fetchData();
     } catch (error) {
@@ -78,7 +79,7 @@ const InventoryView = ({ inventory, fetchData }) => {
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Price (₹)</label>
+                  <label>Selling Price (₹)</label>
                   <input
                     type="number"
                     required
@@ -87,14 +88,24 @@ const InventoryView = ({ inventory, fetchData }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Initial Stock</label>
+                  <label>Buying Price (₹)</label>
                   <input
                     type="number"
                     required
-                    value={newProduct.quantity}
-                    onChange={e => setNewProduct({ ...newProduct, quantity: e.target.value })}
+                    placeholder="Cost per unit"
+                    value={newProduct.cost_price}
+                    onChange={e => setNewProduct({ ...newProduct, cost_price: e.target.value })}
                   />
                 </div>
+              </div>
+              <div className="form-group">
+                <label>Initial Stock</label>
+                <input
+                  type="number"
+                  required
+                  value={newProduct.quantity}
+                  onChange={e => setNewProduct({ ...newProduct, quantity: e.target.value })}
+                />
               </div>
               <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? 'Adding...' : 'Save Product'}
@@ -114,9 +125,14 @@ const InventoryView = ({ inventory, fetchData }) => {
                 <div className={`status-badge ${isOut ? 'out' : isLow ? 'low' : 'good'}`}>
                   {isOut ? 'Out of Stock' : isLow ? 'Low Stock' : 'In Stock'}
                 </div>
+                {item.cost_price > 0 && (
+                  <div className="margin-badge">
+                    {Math.round(((item.price - item.cost_price) / item.price) * 100)}% Margin
+                  </div>
+                )}
                 <div className="card-actions">
                   <button className="action-btn" title="Edit Product" onClick={() => {
-                    setNewProduct({ product: item.product, price: item.price, quantity: item.quantity });
+                    setNewProduct({ product: item.product, price: item.price, quantity: item.quantity, cost_price: item.cost_price });
                     setIsAdding(true);
                   }}><Edit3 size={16} /></button>
                   <button className="action-btn delete" title="Delete Product" onClick={() => handleDelete(item.product)}><Trash2 size={16} /></button>

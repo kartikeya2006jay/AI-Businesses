@@ -9,6 +9,8 @@ from app.api.vision_api import router as vision_router
 from app.api.settings_api import router as settings_router
 from app.api.lending_api import router as lending_router
 from app.api.insights_api import router as insights_router
+from app.api.reports_api import router as reports_router
+from app.api.customers_api import router as customers_router
 
 app = FastAPI(
     title="Paytm AI Merchant Copilot",
@@ -31,3 +33,6 @@ app.include_router(transactions_router)
 app.include_router(vision_router)
 app.include_router(settings_router)
 app.include_router(lending_router)
+app.include_router(insights_router)
+app.include_router(reports_router)
+app.include_router(customers_router)

@@ -102,6 +102,16 @@
     color: #ef4444;
 }
 
+.margin-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
 .card-body {
     text-align: center;
     display: flex;
