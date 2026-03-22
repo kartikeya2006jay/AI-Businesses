@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Bell, Shield, User, Database, Save, Key, Download, CheckCircle, AlertCircle, X, Globe, Phone, MapPin, Monitor, CreditCard, Sun, Moon, Droplet } from 'lucide-react';
+import { Settings, Bell, Shield, User, Database, Save, Key, Download, CheckCircle, AlertCircle, X, Globe, Phone, MapPin, Monitor, CreditCard, Sun, Moon, Droplet, LogOut } from 'lucide-react';
 import { getSettings, updateSettings, changePassword, getTransactions, getInventory } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import '../styles/SettingsView.css';
 
 const SettingsView = () => {
     const { theme, setTheme } = useTheme();
+    const { logout } = useAuth();
     const [activeTab, setActiveTab] = useState('general');
     const [settings, setSettings] = useState({
         business_name: 'Apex Retail',
@@ -87,7 +89,7 @@ const SettingsView = () => {
             if (Array.isArray(data) && data.length > 0) {
                 const headers = Object.keys(data[0]).join(',');
                 const rows = data.map(obj => Object.values(obj).join(',')).join('\n');
-                const csv = `${headers}\n${rows}`;
+                const csv = `${headers} \n${rows} `;
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -229,6 +231,7 @@ const SettingsView = () => {
                                 { id: 'light', name: 'Clean White', icon: <Sun color="#64748b" />, desc: 'Minimalist light mode' }
                             ].map(t => (
                                 <div key={t.id}
+                                    data-theme={t.id}
                                     className={`theme-card glass ${settings.theme === t.id ? 'active' : ''}`}
                                     onClick={() => {
                                         setSettings({ ...settings, theme: t.id });
@@ -289,6 +292,7 @@ const SettingsView = () => {
                     {menuItems.map(item => (
                         <button
                             key={item.id}
+                            data-id={item.id}
                             className={`nav-btn ${activeTab === item.id ? 'active' : ''}`}
                             onClick={() => setActiveTab(item.id)}
                         >
@@ -297,6 +301,18 @@ const SettingsView = () => {
                         </button>
                     ))}
                 </nav>
+
+                <div className="sidebar-footer-actions">
+                    <button className="nav-btn logout-btn" onClick={() => {
+                        if (window.confirm("Are you sure you want to log out?")) {
+                            logout();
+                        }
+                    }}>
+                        <LogOut size={18} />
+                        <span>Sign Out</span>
+                    </button>
+                </div>
+
                 <div className="sidebar-footer-msg">
                     <AlertCircle size={14} />
                     <span>Always keep your business email up to date.</span>
@@ -305,7 +321,7 @@ const SettingsView = () => {
 
             <main className="settings-main">
                 {status && (
-                    <div className={`toast-alert ${status.type} slideIn`}>
+                    <div className={`toast - alert ${status.type} slideIn`}>
                         {status.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
                         <span>{status.message}</span>
                     </div>

@@ -42,10 +42,8 @@ async def update_settings(settings: SettingsUpdate):
         json.dump(settings.dict(), f)
     return {"status": "success", "message": "Settings updated"}
 
-@router.post("/settings/change-password")
-async def change_password(passwords: PasswordChange):
-    # Mock implementation
-    if passwords.current_password == "admin123":
-        return {"status": "success", "message": "Password changed successfully"}
-    else:
-        raise HTTPException(status_code=400, detail="Incorrect current password")
+@router.post("/settings")
+async def update_settings(settings: SettingsUpdate):
+    with open(SETTINGS_FILE, "w") as f:
+        json.dump(settings.dict(), f)
+    return {"status": "success", "message": "Settings updated"}

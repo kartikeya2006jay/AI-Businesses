@@ -17,7 +17,7 @@ export const recognizeProduct = (image) => api.post('/vision/recognize', { image
 
 export const getSettings = () => api.get('/settings');
 export const updateSettings = (data) => api.post('/settings', data);
-export const changePassword = (data) => api.post('/settings/change-password', data);
+export const changePassword = (data) => api.post('/auth/change-password', data);
 
 export const getLending = () => api.get('/lending');
 export const payLending = (data) => api.post('/lending/pay', data);

@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 import pandas as pd
 import os
+from pydantic import BaseModel
 from app.models.user_model import User, UserCreate, UserInDB, Token
 from app.utils.auth_utils import (
     verify_password,
@@ -17,6 +18,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 USERS_FILE = "data/users.csv"
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
 
 def get_users_df():
     if not os.path.exists(USERS_FILE):
@@ -90,3 +95,15 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 @router.get("/me", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+@router.post("/change-password")
+async def change_password(passwords: PasswordChange, current_user: UserInDB = Depends(get_current_user)):
+    if not verify_password(passwords.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect current password")
+    
+    hashed_password = get_password_hash(passwords.new_password)
+    df = get_users_df()
+    df.loc[df["username"] == current_user.username, "hashed_password"] = hashed_password
+    save_users_df(df)
+    
+    return {"status": "success", "message": "Password changed successfully"}
