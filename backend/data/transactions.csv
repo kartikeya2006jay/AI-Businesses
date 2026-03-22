@@ -42,3 +42,5 @@ date,product,amount,customer_name,is_credit
 2026-03-22,soap -dove,1400.0,ujjwal,False
 2026-03-22,oreo biscuit,10.0,ujjwal,False
 2026-03-22,shampoo,290.0,ujjwal,False
+2026-03-22,soap -dove,100.0,varun,True
+2026-03-22,Fair&lovely,250.0,varun,True

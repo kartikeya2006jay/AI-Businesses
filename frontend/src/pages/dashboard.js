@@ -14,28 +14,26 @@ import MarginsView from '../components/MarginsView';
 import CustomersView from '../components/CustomersView';
 import CashDrawer from '../components/CashDrawer';
 import { getSummaries, getInventory, getTransactions } from '../services/api';
-import { Moon, Sun, User, AlertCircle, Package } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { Moon, Sun, User, AlertCircle, Package, Calendar, Monitor } from 'lucide-react';
 
 import '../styles/global.css';
 import '../styles/dashboard.css';
 
 const Dashboard = () => {
+    const { theme, setTheme } = useTheme();
     const [activeTab, setActiveTab] = useState('dashboard');
     const [summaries, setSummaries] = useState({ daily: 0, weekly: 0, monthly: 0 });
     const [inventory, setInventory] = useState([]);
     const [recentTransactions, setRecentTransactions] = useState([]);
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-    }, [theme]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const [summRes, invRes, transRes] = await Promise.all([
                 getSummaries(),
@@ -47,17 +45,41 @@ const Dashboard = () => {
             setRecentTransactions(transRes.data.reverse());
         } catch (error) {
             console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const lowStockItems = inventory.filter(i => i.quantity < 20);
 
+    const renderSkeleton = () => (
+        <div className="dashboard-content-wrapper animate-in">
+            <section className="summary-grid">
+                {[1, 2, 3].map(i => <div key={i} className="revenue-card glass shimmer" style={{ height: 160 }} />)}
+            </section>
+            <div className="dashboard-content">
+                <div className="left-column">
+                    <div className="chart-container glass shimmer" style={{ height: 400 }} />
+                    <div className="stats-row">
+                        <div className="mini-card glass shimmer" style={{ height: 280 }} />
+                        <div className="mini-card glass shimmer" style={{ height: 280 }} />
+                    </div>
+                </div>
+                <div className="right-column">
+                    <div className="billing-wrapper glass shimmer" style={{ height: 400 }} />
+                    <div className="inventory-preview glass shimmer" style={{ height: 200 }} />
+                </div>
+            </div>
+        </div>
+    );
+
     const renderContent = () => {
+        if (loading && activeTab === 'dashboard') return renderSkeleton();
+
         switch (activeTab) {
             case 'dashboard':
                 return (
                     <div className="dashboard-content-wrapper">
-
                         {/* ── Revenue Summary Cards ── */}
                         <section className="summary-grid">
                             <RevenueCard title="Daily Revenue" amount={summaries.daily} trend="+12.5%" />
@@ -67,20 +89,14 @@ const Dashboard = () => {
 
                         {/* ── Main Two-Column Content ── */}
                         <div className="dashboard-content">
-
                             {/* LEFT: Chart + Mini-cards */}
                             <div className="left-column">
-
-                                {/* Revenue Chart */}
                                 <div className="chart-container glass shadow-soft">
                                     <p className="chart-title">Revenue Performance</p>
                                     <RevenueChart transactions={recentTransactions} summaries={summaries} />
                                 </div>
 
-                                {/* Mini stats row */}
                                 <div className="stats-row">
-
-                                    {/* Live Transaction Feed */}
                                     <div className="mini-card glass shadow-soft">
                                         <p className="mini-card-title">Live Transactions</p>
                                         {recentTransactions.length === 0 ? (
@@ -103,25 +119,20 @@ const Dashboard = () => {
                                         )}
                                     </div>
 
-                                    {/* Inventory Count */}
                                     <div className="mini-card glass shadow-soft inventory-count-card">
                                         <p className="mini-card-title">Catalog Size</p>
                                         <div className="growth-val">{inventory.length}</div>
                                         <p>Products tracked</p>
                                     </div>
-
                                 </div>
                             </div>
 
                             {/* RIGHT: New Sale + Stock Alerts */}
                             <div className="right-column">
-
-                                {/* Sale Entry Form */}
                                 <div className="billing-wrapper shadow-bold">
                                     <SaleEntryForm inventory={inventory} onSaleSuccess={fetchData} />
                                 </div>
 
-                                {/* Stock Alerts */}
                                 <div className="inventory-preview glass shadow-soft">
                                     <p className="alert-title">
                                         <AlertCircle size={15} /> Stock Alerts
@@ -142,10 +153,16 @@ const Dashboard = () => {
                                         </div>
                                     )}
                                 </div>
-                                {/* Cash Drawer Waterfall */}
-                                <div className="cash-drawer-preview glass shadow-soft">
-                                    <CashDrawer />
-                                </div>
+                            </div>
+                        </div>
+
+                        {/* ── Cash Drawer Full Width (Balanced Layout) ── */}
+                        <div className="cash-drawer-full-row animate-in">
+                            <div className="section-label">
+                                <Monitor size={14} /> Global Cash Position
+                            </div>
+                            <div className="cash-drawer-wrap shadow-soft">
+                                <CashDrawer />
                             </div>
                         </div>
                     </div>
@@ -182,37 +199,41 @@ const Dashboard = () => {
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
             <main className="dashboard-main">
-
-                <header className="main-header">
+                <header className="main-header glass shadow-soft">
                     <div className="header-info">
                         <h1>
                             Business Hub
-                            <span className="tab-pill">{activeTab}</span>
+                            <span className="tab-pill">
+                                {activeTab === 'dashboard' ? 'Overview' :
+                                    activeTab === 'sales' ? 'Quick Bill' :
+                                        activeTab === 'lending' ? 'Khata Book' :
+                                            activeTab === 'insights' ? 'AI Insights' :
+                                                activeTab === 'margins' ? 'Profit analysis' :
+                                                    activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                            </span>
                         </h1>
                         <p>Real-time oversight of your merchant operations.</p>
                     </div>
 
-                    <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div className="header-actions">
                         <button
-                            className="theme-toggle"
-                            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+                            className="theme-toggle-fab"
+                            onClick={() => setTheme(theme === 'dark' ? 'glass' : 'dark')}
+                            title="Toggle Night Mode"
                         >
-                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
-                        <div className="header-date">
+                        <div className="header-date glass">
+                            <Calendar size={14} />
                             {new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </div>
                     </div>
                 </header>
 
-                <div className="content-framer">
+                <div className="content-framer animate-in">
                     {renderContent()}
                 </div>
-
             </main>
-
-            <ChatBox />
         </div>
     );
 };

@@ -7,20 +7,20 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   const { logout } = useAuth();
   const menuItems = [
     { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-    { id: 'sales', icon: <ShoppingCart size={20} />, label: 'Sales' },
+    { id: 'sales', icon: <ShoppingCart size={20} />, label: 'Quick Bill', badge: 'Popular' },
     { id: 'inventory', icon: <Package size={20} />, label: 'Inventory' },
-    { id: 'customers', icon: <User size={20} />, label: 'Customers' },
+    { id: 'customers', icon: <User size={20} />, label: 'Customers', badge: 'New' },
     { id: 'lending', icon: <BookOpen size={20} />, label: 'Khata Book' },
     { id: 'insights', icon: <Info size={20} />, label: 'AI Insights' },
-    { id: 'margins', icon: <LayoutDashboard size={20} />, label: 'Profit Analysis' },
+    { id: 'margins', icon: <LayoutDashboard size={20} />, label: 'Profits' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Settings' },
     { id: 'about', icon: <Info size={20} />, label: 'About' },
   ];
 
   return (
-    <div className="sidebar glass">
+    <div className="sidebar glass-heavy">
       <div className="sidebar-brand">
-        <div className="brand-logo">
+        <div className="brand-logo rotating-slow">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 26V6L16 16L26 6V26" stroke="url(#logo_grad)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
             <circle cx="16" cy="16" r="3" fill="white">
@@ -34,11 +34,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             </defs>
           </svg>
         </div>
-        <span className="brand-name">Merchant Copilot</span>
+        <span className="brand-name-premium">Merchant Copilot</span>
       </div>
 
       <nav className="sidebar-nav">
-        <div className="nav-section-label">Main Menu</div>
+        <div className="nav-section-label">Main Console</div>
         {menuItems.slice(0, 3).map(item => (
           <button
             key={item.id}
@@ -47,10 +47,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           >
             <div className="item-icon">{item.icon}</div>
             <span>{item.label}</span>
+            {item.badge && <span className="item-badge">{item.badge}</span>}
           </button>
         ))}
 
-        <div className="nav-section-label" style={{ marginTop: '1.5rem' }}>Insights & Support</div>
+        <div className="nav-section-label" style={{ marginTop: '1.5rem' }}>Intelligence</div>
         {menuItems.slice(3).map(item => (
           <button
             key={item.id}
@@ -59,6 +60,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           >
             <div className="item-icon">{item.icon}</div>
             <span>{item.label}</span>
+            {item.badge && <span className="item-badge alt">{item.badge}</span>}
           </button>
         ))}
       </nav>

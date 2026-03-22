@@ -7,6 +7,11 @@
     gap: 0.8rem;
     min-height: 160px;
     justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.revenue-card:hover {
+    transform: translateY(-5px);
 }
 
 .card-glare {
@@ -15,18 +20,19 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
     pointer-events: none;
     transform: rotate(30deg);
 }
 
 .card-title {
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin: 0;
+    opacity: 0.8;
 }
 
 .card-amount-row {
@@ -36,37 +42,44 @@
 }
 
 .card-amount {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--primary);
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--secondary);
     margin: 0;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
+}
+
+[data-theme='dark'] .card-amount {
+    color: white;
 }
 
 .card-trend {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 800;
-    padding: 4px 10px;
-    border-radius: 8px;
+    padding: 6px 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    border: 1px solid transparent;
 }
 
 .card-trend.pos {
     background: rgba(16, 185, 129, 0.1);
     color: var(--success);
+    border-color: rgba(16, 185, 129, 0.1);
 }
 
 .card-trend.neg {
     background: rgba(244, 63, 94, 0.1);
     color: var(--error);
+    border-color: rgba(244, 63, 94, 0.1);
 }
 
 .card-progress-bar {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     overflow: hidden;
     margin-top: 0.5rem;
@@ -74,10 +87,12 @@
 
 .progress-fill {
     height: 100%;
-    border-radius: 10px;
-    transition: width 1s ease-in-out;
+    border-radius: 100px;
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(0, 186, 242, 0.3);
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme='dark'] .card-progress-bar {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.1);
 }

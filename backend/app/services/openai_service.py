@@ -91,37 +91,32 @@ def top_product(df):
 
 # ---------- MAIN AI LOGIC ----------
 
-def ask_ai(question: str, transactions_df: pd.DataFrame, inventory_df: pd.DataFrame = None):
-    """Ultimate Merchant AI with full context awareness."""
+def ask_ai(question: str, transactions_df: pd.DataFrame, inventory_df: pd.DataFrame = None, lending_df: pd.DataFrame = None, language: str = 'en-US'):
+    """Ultimate Merchant AI with full context awareness (Inventory, Sales, Khata)."""
     
     if not client:
-        return "AI service is currently unavailable. Please check your API key in the .env file."
+        return "AI service is currently unavailable."
 
     # Prepare context strings
-    inventory_context = "N/A"
-    if inventory_df is not None:
-        inventory_context = inventory_df.to_json(orient='records')
+    inventory_context = inventory_df.to_json(orient='records') if inventory_df is not None else "N/A"
+    lending_context = lending_df.to_json(orient='records') if lending_df is not None else "N/A"
 
-    # Quick summaries for the prompt
-    today = datetime.now().date()
-    yesterday = today - timedelta(days=1)
-    
     # System Instruction
+    lang_instruction = "Respond in English."
+    if language == 'hi-IN' or 'hindi' in question.lower():
+        lang_instruction = "Respond in Hindi (हिन्दी) using Devanagari script. Be helpful and professional in Hindi."
+
     system_prompt = (
-        "You are the Paytm AI Merchant Copilot, a world-class business advisor and analyst. "
-        "You have full access to the store's data provided below. "
-        "Your goal is to help the merchant grow their business, manage inventory, and understand sales. "
-        "Be professional, encouraging, and highly specific. "
+        f"You are the Paytm AI Merchant Copilot. {lang_instruction} "
+        "Your goal is to help the merchant grow their business, manage inventory, and understand sales/lending. "
         "\n\nBUSINESS DATA CONTEXT:\n"
-        f"1. Current Date: {today}\n"
+        f"1. Current Date: {datetime.now().date()}\n"
         f"2. Inventory Status: {inventory_context}\n"
-        "3. Transactions (Last 10): " + transactions_df.tail(10).to_json(orient='records') + "\n"
+        f"3. Lending/Khata Book: {lending_context}\n"
+        "4. Recent Transactions: " + transactions_df.tail(15).to_json(orient='records') + "\n"
         "\nSTRICT RULES:\n"
-        "- If asked about stock, refer to 'Inventory Status'.\n"
-        "- If asked about sales, refer to 'Transactions'.\n"
-        "- If asked about GST or Tax, explain the 18% (9% CGST + 9% SGST) rule used in this app.\n"
-        "- Also help with general merchant queries like 'how to increase sales' or coding help if it relates to the dashboard API."
-        "- Keep responses concise but impactful."
+        "- If asked about 'Khata' or 'Lending' or 'Udhaar', refer to 'Lending/Khata Book'.\n"
+        "- Be professional, encouraging, and highly specific."
     )
 
     try:
@@ -134,4 +129,4 @@ def ask_ai(question: str, transactions_df: pd.DataFrame, inventory_df: pd.DataFr
         )
         return response.choices[0].message.content
     except Exception as e:
-        return f"Merchant AI is thinking... but ran into an error: {str(e)}"
+        return f"Merchant AI error: {str(e)}"

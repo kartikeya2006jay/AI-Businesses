@@ -18,6 +18,12 @@ def load_inventory():
         
     return pd.read_csv("data/inventory.csv")
 
+def load_lending():
+    """Load lending (Khata Book) data from CSV."""
+    if not os.path.exists("data/lending.csv"):
+        return pd.DataFrame(columns=["customer_name", "amount", "status", "due_date"])
+    return pd.read_csv("data/lending.csv")
+
 def load_data():
     """Legacy alias for load_transactions."""
     return load_transactions()

@@ -383,6 +383,24 @@
 }
 
 /* ───────────────────────────────────────────────
+   CASH DRAWER FULL WIDTH
+─────────────────────────────────────────────── */
+.cash-drawer-full-row {
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+  /* For grid layouts if used, but we'll use block here */
+  width: 100%;
+}
+
+.cash-drawer-wrap {
+  background: var(--card-bg);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  padding: 0;
+}
+
+/* ───────────────────────────────────────────────
    SHADOW UTILITIES (referenced in dashboard.js)
 ─────────────────────────────────────────────── */
 .shadow-soft {

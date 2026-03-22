@@ -6,18 +6,12 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import ChatBox from './components/ChatBox';
 
 const ProtectedRoute = ({ children }) => {
     const { token, loading } = useAuth();
-
-    if (loading) {
-        return <div className="loading-screen">Loading...</div>;
-    }
-
-    if (!token) {
-        return <Navigate to="/login" />;
-    }
-
+    if (loading) return <div className="loading-screen">Loading...</div>;
+    if (!token) return <Navigate to="/login" />;
     return children;
 };
 
@@ -42,6 +36,7 @@ const App = () => {
                         </Routes>
                     </div>
                 </BrowserRouter>
+                <ChatBox />
             </ThemeProvider>
         </AuthProvider>
     );

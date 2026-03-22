@@ -1,21 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { chatWithAI } from '../services/api';
 import { MessageSquare, Send, X, Bot, User as UserIcon, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import '../styles/ChatBox.css';
-
-/* ── Translation via MyMemory (free, no key) ─────────────── */
-const translateText = async (text, fromLang, toLang) => {
-  if (fromLang === toLang) return text;
-  try {
-    const resp = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`
-    );
-    const data = await resp.json();
-    return data.responseData?.translatedText || text;
-  } catch {
-    return text; // fallback: return original
-  }
-};
 
 /* ── SpeechRecognition setup ─────────────────────────────── */
 const SpeechRecognition =
@@ -23,6 +10,8 @@ const SpeechRecognition =
 
 const ChatBox = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Messages state
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -30,6 +19,7 @@ const ChatBox = () => {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
+
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -76,23 +66,12 @@ const ChatBox = () => {
     setLoading(true);
 
     try {
-      // If Hindi, translate to English for the AI
-      let queryText = text;
-      if (lang === 'hi-IN') {
-        queryText = await translateText(text, 'hi', 'en');
-      }
-
-      const res = await chatWithAI('default-session', queryText);
+      // Send directly to backend with language context
+      const res = await chatWithAI('default-session', text, lang);
       let aiReply = res.data.response;
 
-      // If Hindi mode, translate AI reply back to Hindi
-      let displayReply = aiReply;
-      if (lang === 'hi-IN') {
-        displayReply = await translateText(aiReply, 'en', 'hi');
-      }
-
-      setMessages(prev => [...prev, { role: 'assistant', text: displayReply, timestamp }]);
-      speak(displayReply, lang);
+      setMessages(prev => [...prev, { role: 'assistant', text: aiReply, timestamp }]);
+      speak(aiReply, lang);
     } catch {
       const errMsg = 'Sorry, I had trouble connecting. Please check if the backend is running!';
       setMessages(prev => [...prev, { role: 'assistant', text: errMsg, timestamp }]);
@@ -168,22 +147,34 @@ const ChatBox = () => {
     });
   };
 
-  return (
-    <>
+  const handleClose = () => {
+    setIsOpen(false);
+    // Reset to initial greeting on close per user request
+    const greeting = lang === 'hi-IN'
+      ? '🙏 नमस्ते! मैं आपका AI मर्चेंट कोपायलट हूँ। बोलें या टाइप करें!'
+      : '👋 Hello! I am your AI Merchant Copilot. Type or speak your question!';
+    setMessages([{
+      role: 'assistant',
+      text: greeting,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }]);
+    localStorage.removeItem('chat-history');
+  };
+
+  return createPortal(
+    <div className="chat-container">
       {/* ── Floating Toggle Button ─────────────────────── */}
       {!isOpen && (
-        <button className="chat-toggle glass" onClick={() => setIsOpen(true)}>
+        <button className="chat-toggle" onClick={() => setIsOpen(true)}>
           <div className="toggle-inner">
-            <MessageSquare size={24} color="white" />
-            <span className="toggle-label">Merchant AI</span>
+            <Bot size={28} />
+            <span className="toggle-label">AI Assistant</span>
           </div>
-          <div className="notification-ping" />
         </button>
       )}
 
       {/* ── Main Chat Window ───────────────────────────── */}
       <div className={`chat-box glass-v2 ${isOpen ? 'open' : ''}`}>
-
         {/* Header */}
         <div className="chat-header">
           <div className="header-brand">
@@ -215,7 +206,7 @@ const ChatBox = () => {
               {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
 
-            <button className="close-btn" onClick={() => setIsOpen(false)}>
+            <button className="close-btn" onClick={handleClose}>
               <X size={20} />
             </button>
           </div>
@@ -308,7 +299,8 @@ const ChatBox = () => {
           </span>
         </div>
       </div>
-    </>
+    </div>,
+    document.body
   );
 };
 
