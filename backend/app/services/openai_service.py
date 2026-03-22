@@ -99,7 +99,12 @@ def ask_ai(question: str, transactions_df: pd.DataFrame, inventory_df: pd.DataFr
 
     # Prepare context strings
     inventory_context = inventory_df.to_json(orient='records') if inventory_df is not None else "N/A"
-    lending_context = lending_df.to_json(orient='records') if lending_df is not None else "N/A"
+    
+    # Filter lending to only show those who OWE money (balance > 0)
+    lending_context = "N/A"
+    if lending_df is not None:
+        debtors_df = lending_df[lending_df['balance'] > 0]
+        lending_context = debtors_df.to_json(orient='records')
 
     # System Instruction
     lang_instruction = "Respond in English."

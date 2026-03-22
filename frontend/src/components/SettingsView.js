@@ -222,16 +222,19 @@ const SettingsView = () => {
                         </div>
                         <div className="theme-grid">
                             {[
-                                { id: 'glass', name: 'Premium Glass', icon: <Droplet />, desc: 'Sophisticated transparency' },
-                                { id: 'dark', name: 'Midnight', icon: <Moon />, desc: 'High contrast dark mode' },
-                                { id: 'light', name: 'Clean White', icon: <Sun />, desc: 'Modern minimalist light' }
+                                { id: 'glass', name: 'Premium Glass', icon: <Droplet color="#00baf2" />, desc: 'Modern frosted elegance' },
+                                { id: 'midnight', name: 'Midnight Glow', icon: <Moon color="#38bdf8" />, desc: 'Deep OLED dark with neon' },
+                                { id: 'royal', name: 'Royal Merchant', icon: <Monitor color="#fbbf24" />, desc: 'Elite Navy & Gold palette' },
+                                { id: 'sunset', name: 'Solar Sunset', icon: <Sun color="#f97316" />, desc: 'Warm energetic contrast' },
+                                { id: 'light', name: 'Clean White', icon: <Sun color="#64748b" />, desc: 'Minimalist light mode' }
                             ].map(t => (
                                 <div key={t.id}
                                     className={`theme-card glass ${settings.theme === t.id ? 'active' : ''}`}
                                     onClick={() => {
                                         setSettings({ ...settings, theme: t.id });
                                         setTheme(t.id);
-                                        handleUpdateProfile();
+                                        // Auto-save appearance changes
+                                        updateSettings({ ...settings, theme: t.id });
                                     }}>
                                     <div className="tc-icon">{t.icon}</div>
                                     <div className="tc-info">
