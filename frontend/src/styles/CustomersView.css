@@ -129,8 +129,9 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f1f5f9, #cbd5e1);
-    color: #334155;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--primary);
     font-size: 1.5rem;
     font-weight: 800;
     display: flex;
@@ -140,40 +141,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.rank-crown {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 800;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.rank-1 .vip-avatar {
-    background: linear-gradient(135deg, #fbbf24, #d97706);
-    color: white;
-}
-
-.vip-name {
-    font-weight: 800;
-    font-size: 1.05rem;
-    text-transform: capitalize;
-}
-
-.vip-meta {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-.vip-tier-tag {
+.vip-status-tag {
     font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -181,6 +149,28 @@
     display: flex;
     align-items: center;
     gap: 4px;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.center-cell {
+    text-align: center;
+    font-weight: 700;
+}
+
+.empty-cell {
+    text-align: center;
+    padding: 3rem !important;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.empty-sub {
+    padding: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
 }
 
 /* Loyalty Mix Chart */

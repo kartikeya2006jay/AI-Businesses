@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Users, Crown, TrendingUp, ShoppingBag, Calendar, Award, Star, UserCheck, ShieldCheck, Zap } from 'lucide-react';
+import { Users, TrendingUp, ShoppingBag, Calendar, Award, UserCheck, Zap, Activity, BarChart3 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getCustomerAnalytics } from '../services/api';
 import '../styles/CustomersView.css';
 
-const tierConfig = {
-    Gold: { emoji: '🥇', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)', icon: <ShieldCheck size={14} /> },
-    Silver: { emoji: '🥈', color: '#94a3b8', bg: 'rgba(148,163,184,0.1)', icon: <Award size={14} /> },
-    Bronze: { emoji: '🥉', color: '#cd7f32', bg: 'rgba(205,127,50,0.1)', icon: <UserCheck size={14} /> },
-};
-
 const CustomersView = () => {
-    const [data, setData] = useState({ customers: [], total_unique: 0 });
+    const [data, setData] = useState({ recent_customers: [], stats: { total_unique: 0, monthly_revenue: 0 } });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,81 +23,82 @@ const CustomersView = () => {
     }, []);
 
     const chartData = useMemo(() => {
-        const counts = { Gold: 0, Silver: 0, Bronze: 0 };
-        data.customers.forEach(c => {
-            if (counts[c.tier] !== undefined) counts[c.tier]++;
-        });
+        const { recent_customers, stats } = data;
+        if (!recent_customers.length) return [];
+
+        // Performance segments (Professional tiers based on spend)
+        const high = recent_customers.filter(c => c.total_spend >= 1000).length;
+        const mid = recent_customers.filter(c => c.total_spend >= 500 && c.total_spend < 1000).length;
+        const base = recent_customers.filter(c => c.total_spend < 500).length;
+
         return [
-            { name: 'VIP (Gold)', value: counts.Gold, color: '#f59e0b' },
-            { name: 'Loyal (Silver)', value: counts.Silver, color: '#3b82f6' },
-            { name: 'Regular (Bronze)', value: counts.Bronze, color: '#94a3b8' },
+            { name: 'High Value', value: high, color: '#0ea5e9' },
+            { name: 'Mid Range', value: mid, color: '#3b82f6' },
+            { name: 'Occasional', value: base, color: '#94a3b8' },
         ].filter(d => d.value > 0);
-    }, [data.customers]);
+    }, [data.recent_customers]);
 
-    if (loading) return <div className="customers-view"><p className="loading-text">Analyzing your high-value shoppers…</p></div>;
+    if (loading) return <div className="customers-view"><p className="loading-text">Loading customer activity monitor…</p></div>;
 
-    const { customers, total_unique } = data;
-    const top3 = customers.slice(0, 3);
-    const totalRevenue = customers.reduce((s, c) => s + c.total_spend, 0);
-    const avgAov = customers.length > 0
-        ? (customers.reduce((s, c) => s + c.avg_order_value, 0) / customers.length).toFixed(0)
-        : 0;
+    const { recent_customers, stats } = data;
+    const top3 = recent_customers.slice(0, 3);
 
     return (
         <div className="customers-view animate-in">
             {/* ── Header ── */}
             <div className="customers-header">
                 <div className="title-area">
-                    <div className="icon-box"><Users size={24} /></div>
+                    <div className="icon-box"><Activity size={24} /></div>
                     <div>
-                        <h1>Customer Intelligence</h1>
-                        <p>Real-time loyalty & behavior analysis</p>
+                        <h1>Customer Activity Monitor</h1>
+                        <p>Showing active profiles from the last 10 days</p>
                     </div>
                 </div>
                 <div className="header-stats">
                     <div className="h-stat-card glass">
-                        <span className="h-label">Unique Customers</span>
-                        <span className="h-value">{total_unique}</span>
+                        <span className="h-label">Monthly Reach</span>
+                        <span className="h-value">{stats.total_unique}</span>
                     </div>
                     <div className="h-stat-card glass">
-                        <span className="h-label">Retention Revenue</span>
-                        <span className="h-value">₹{totalRevenue.toLocaleString()}</span>
+                        <span className="h-label">Monthly Gross</span>
+                        <span className="h-value">₹{stats.monthly_revenue.toLocaleString()}</span>
                     </div>
                 </div>
             </div>
 
-            {/* ── Top Section: VIP Spotlight & Mix ── */}
+            {/* ── Top Section: Recent Performance ── */}
             <div className="customer-insights-row">
-                {/* VIP Spotlight */}
+                {/* Active Spotlight */}
                 <div className="vip-spotlight glass">
                     <div className="section-head">
-                        <Crown size={18} color="#f59e0b" />
-                        <h2>VIP Spotlight</h2>
+                        <TrendingUp size={18} color="#0ea5e9" />
+                        <h2>Recent High-Activity</h2>
                     </div>
                     <div className="vip-cards">
-                        {top3.map((c, i) => (
-                            <div key={c.customer_name} className={`vip-card rank-${i + 1}`}>
+                        {top3.length > 0 ? top3.map((c, i) => (
+                            <div key={c.customer_name} className="vip-card">
                                 <div className="vip-avatar">
                                     {c.customer_name[0].toUpperCase()}
-                                    <div className="rank-crown">{i === 0 ? '👑' : i + 1}</div>
                                 </div>
                                 <div className="vip-info">
                                     <span className="vip-name">{c.customer_name}</span>
-                                    <span className="vip-meta">₹{c.total_spend.toLocaleString()} spent</span>
+                                    <span className="vip-meta">₹{c.total_spend.toLocaleString()} (Recent)</span>
                                 </div>
-                                <div className="vip-tier-tag" style={{ color: tierConfig[c.tier]?.color }}>
-                                    {tierConfig[c.tier]?.icon} {c.tier}
+                                <div className="vip-status-tag">
+                                    <UserCheck size={12} /> Active
                                 </div>
                             </div>
-                        ))}
+                        )) : (
+                            <div className="empty-sub">No recent activity detected.</div>
+                        )}
                     </div>
                 </div>
 
-                {/* Loyalty Mix Chart */}
+                {/* Activity Mix Chart */}
                 <div className="loyalty-mix glass">
                     <div className="section-head">
-                        <Zap size={18} color="#3b82f6" />
-                        <h2>Loyalty Mix</h2>
+                        <BarChart3 size={18} color="#3b82f6" />
+                        <h2>Activity Mix (Month)</h2>
                     </div>
                     <div className="chart-container-inner">
                         <ResponsiveContainer width="100%" height={160}>
@@ -135,46 +130,40 @@ const CustomersView = () => {
                 </div>
             </div>
 
-            {/* ── Main Customer List ── */}
+            {/* ── Main Customer List (Filtered to 10 days) ── */}
             <div className="customers-list-card glass">
                 <div className="section-head">
-                    <Award size={18} />
-                    <h2>Full Customer Roster</h2>
+                    <Calendar size={18} />
+                    <h2>Active Roster (Rolling 10-Day)</h2>
                 </div>
                 <div className="table-responsive">
                     <table className="loyalty-table">
                         <thead>
                             <tr>
-                                <th>Customer</th>
-                                <th>Loyalty Status</th>
-                                <th>Visit Frequency</th>
-                                <th>Total Equity</th>
-                                <th>Last Order</th>
+                                <th>Name</th>
+                                <th>Transactions</th>
+                                <th>Total Value</th>
+                                <th>Average Checkout</th>
+                                <th>Last Seen</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {customers.map((c, i) => (
+                            {recent_customers.length > 0 ? recent_customers.map((c, i) => (
                                 <tr key={c.customer_name} style={{ animationDelay: `${i * 0.05}s` }}>
                                     <td className="name-cell">
                                         <div className="name-avatar">{c.customer_name[0].toUpperCase()}</div>
                                         <span>{c.customer_name}</span>
                                     </td>
-                                    <td>
-                                        <span className="tier-badge" style={{
-                                            color: tierConfig[c.tier]?.color,
-                                            background: tierConfig[c.tier]?.bg
-                                        }}>
-                                            {tierConfig[c.tier]?.icon} {c.tier}
-                                        </span>
-                                    </td>
-                                    <td className="freq-cell">
-                                        <span className="count">{c.transaction_count}</span>
-                                        <span className="lbl">purchases</span>
-                                    </td>
+                                    <td className="center-cell">{c.transaction_count}</td>
                                     <td className="equity-cell">₹{c.total_spend.toLocaleString()}</td>
+                                    <td>₹{c.avg_order_value.toLocaleString()}</td>
                                     <td className="date-cell">{c.last_purchase}</td>
                                 </tr>
-                            ))}
+                            )) : (
+                                <tr>
+                                    <td colSpan="5" className="empty-cell">No customer data available for the selected period.</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
