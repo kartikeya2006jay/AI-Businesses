@@ -33,6 +33,8 @@ const ChatBox = () => {
   const scrollRef = useRef(null);
   const recognitionRef = useRef(null);
   const inputRef = useRef(null);
+  const transcriptRef = useRef('');
+  const silenceTimerRef = useRef(null);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,51 +84,82 @@ const ChatBox = () => {
   }, [loading, lang, speak]);
 
   /* ── Voice recognition ──────────────────────────────────── */
-  const startListening = useCallback(() => {
-    if (!SpeechRecognition) {
+  const startListening = useCallback((overrideLang) => {
+    const SpeechRec = window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRec) {
       setVoiceError('Voice not supported in this browser. Use Chrome or Edge.');
       return;
     }
+
+    const activeLang = overrideLang || lang;
     setVoiceError('');
-    window.speechSynthesis?.cancel();
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
 
-    const rec = new SpeechRecognition();
-    rec.lang = lang;
-    rec.continuous = false;
+    // Clean up any existing instance
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) { }
+    }
+
+    const rec = new SpeechRec();
+    rec.lang = activeLang;
+    rec.continuous = true; // Use continuous for better "detect and write" experience
     rec.interimResults = true;
+    rec.maxAlternatives = 1;
 
-    rec.onstart = () => setIsListening(true);
+    transcriptRef.current = '';
+
+    rec.onstart = () => {
+      setIsListening(true);
+      setVoiceError('');
+    };
 
     rec.onresult = (e) => {
-      const transcript = Array.from(e.results)
-        .map(r => r[0].transcript)
-        .join('');
-      setInput(transcript);
-
-      // Auto-send on final result
-      if (e.results[e.results.length - 1].isFinal) {
-        sendMessage(transcript);
+      let text = '';
+      for (let i = 0; i < e.results.length; i++) {
+        text += e.results[i][0].transcript;
       }
+      transcriptRef.current = text;
+      setInput(text);
+
+      // Auto-send after 1.5s of silence
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = setTimeout(() => {
+        if (transcriptRef.current.trim()) {
+          stopListening();
+        }
+      }, 1500);
     };
 
     rec.onerror = (e) => {
-      setVoiceError(
-        e.error === 'not-allowed'
-          ? 'Microphone permission denied. Please allow mic access.'
-          : `Voice error: ${e.error}`
-      );
+      if (e.error !== 'no-speech' && e.error !== 'aborted') {
+        setVoiceError(`Voice error: ${e.error}`);
+      }
       setIsListening(false);
     };
 
-    rec.onend = () => setIsListening(false);
+    rec.onend = () => {
+      setIsListening(false);
+      // Auto-send anything left when it ends (e.g. timeout or manual stop)
+      if (transcriptRef.current.trim()) {
+        sendMessage(transcriptRef.current);
+        transcriptRef.current = '';
+        setInput('');
+      }
+    };
 
     recognitionRef.current = rec;
-    rec.start();
+    try {
+      rec.start();
+    } catch (err) {
+      setIsListening(false);
+    }
   }, [lang, sendMessage]);
 
   const stopListening = useCallback(() => {
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     recognitionRef.current?.stop();
     setIsListening(false);
+    // onend will handle the final sendMessage
   }, []);
 
   /* ── Form submit ────────────────────────────────────────── */
@@ -138,6 +171,14 @@ const ChatBox = () => {
   const toggleLang = () => {
     const next = lang === 'en-US' ? 'hi-IN' : 'en-US';
     setLang(next);
+
+    // If currently listening, we need to restart with the new language
+    if (isListening) {
+      stopListening();
+      // Restart immediately with the 'next' language to avoid closure latency
+      startListening(next);
+    }
+
     // Update greeting
     setMessages(prev => {
       const greeting = next === 'hi-IN'
@@ -264,7 +305,13 @@ const ChatBox = () => {
             type="text"
             placeholder={lang === 'hi-IN' ? 'अपना सवाल पूछें...' : 'Ask about sales, inventory...'}
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={e => {
+              setInput(e.target.value);
+              // Interrupt AI speech when user types
+              if (window.speechSynthesis?.speaking) {
+                window.speechSynthesis.cancel();
+              }
+            }}
             disabled={loading}
           />
 
@@ -273,7 +320,7 @@ const ChatBox = () => {
             <button
               type="button"
               className={`mic-btn ${isListening ? 'listening' : ''}`}
-              onClick={isListening ? stopListening : startListening}
+              onClick={() => (isListening ? stopListening() : startListening())}
               disabled={loading}
               title={isListening ? 'Stop listening' : `Speak in ${lang === 'en-US' ? 'English' : 'Hindi'}`}
             >

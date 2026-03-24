@@ -843,73 +843,80 @@
 
 /* ── Mic button ──────────────────────────────────────────── */
 .mic-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 16px;
-    background: #f0f4ff;
-    border: 1.5px solid #dde5f5;
-    color: var(--secondary);
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
     position: relative;
     overflow: visible;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .mic-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    color: var(--primary);
+    background: #f8fbff;
+    border-color: #00baf2;
+    transform: translateY(-3px) scale(1.05);
+    color: #00baf2;
+    box-shadow: 0 8px 20px rgba(0, 186, 242, 0.15);
 }
 
 .mic-btn.listening {
-    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-    border-color: #ef4444 !important;
+    background: linear-gradient(135deg, #ff4d4d, #f43f5e) !important;
+    border-color: #ff4d4d !important;
     color: white !important;
-    animation: micPulse 1.5s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    animation: micPulsePremium 1.5s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(244, 63, 94, 0.5);
+    transform: scale(1.1);
+}
+
+@keyframes micPulsePremium {
+
+    0%,
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+    }
+
+    50% {
+        transform: scale(1.18);
+        box-shadow: 0 0 40px rgba(244, 63, 94, 0.7);
+    }
 }
 
 .mic-btn:disabled {
-    opacity: 0.4;
+    opacity: 0.3;
     cursor: not-allowed;
+    filter: grayscale(1);
 }
 
 .mic-ripple {
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
-    background: rgba(239, 68, 68, 0.3);
-    animation: rippleExpand 1.5s ease-out infinite;
+    border-radius: 18px;
+    background: rgba(244, 63, 94, 0.4);
+    animation: rippleExpandPremium 1.8s ease-out infinite;
     top: 0;
     left: 0;
+    z-index: -1;
 }
 
-@keyframes micPulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
-    }
-
-    50% {
-        box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
-    }
-}
-
-@keyframes rippleExpand {
+@keyframes rippleExpandPremium {
     0% {
         transform: scale(1);
-        opacity: 0.6;
+        opacity: 0.8;
     }
 
     100% {
-        transform: scale(1.8);
+        transform: scale(2.5);
         opacity: 0;
     }
 }
