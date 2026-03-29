@@ -305,9 +305,9 @@ const ChatBox = () => {
             type="text"
             placeholder={lang === 'hi-IN' ? 'अपना सवाल पूछें...' : 'Ask about sales, inventory...'}
             value={input}
-            onChange={e => {
-              setInput(e.target.value);
-              // Interrupt AI speech when user types
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={() => {
+              // Interrupt AI speech when user types - only if actually speaking
               if (window.speechSynthesis?.speaking) {
                 window.speechSynthesis.cancel();
               }

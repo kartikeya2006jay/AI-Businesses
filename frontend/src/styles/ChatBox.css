@@ -873,8 +873,9 @@
     border-color: #ff4d4d !important;
     color: white !important;
     animation: micPulsePremium 1.5s ease-in-out infinite;
-    box-shadow: 0 0 30px rgba(244, 63, 94, 0.5);
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
     transform: scale(1.1);
+    will-change: transform;
 }
 
 @keyframes micPulsePremium {
@@ -882,19 +883,17 @@
     0%,
     100% {
         transform: scale(1.1);
-        box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
     }
 
     50% {
-        transform: scale(1.18);
-        box-shadow: 0 0 40px rgba(244, 63, 94, 0.7);
+        transform: scale(1.15);
     }
 }
 
 .mic-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.2;
     cursor: not-allowed;
-    filter: grayscale(1);
+    /* Removed grayscale filter as it can be heavy on some systems */
 }
 
 .mic-ripple {
