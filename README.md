@@ -1,127 +1,83 @@
 <div align="center">
-  <img src="docs/assets/3d_core.png" alt="Paytm AI Merchant Copilot 3D Core" width="100%">
+  <img src="docs/assets/3d_arch.png" alt="Paytm AI Merchant Copilot 3D Architecture" width="100%">
   
   <br />
-  
-  # � **PAYTM AI MERCHANT COPILOT**
-  ### *The Future of Intelligent Merchant-Level Orchestration*
-  
+
+  # 🌌 **PAYTM AI MERCHANT COPILOT**
+  ### *The Definitive Multi-Layer Intelligent Orchestration Platform*
+
   <p align="center">
     <a href="https://github.com/kartikeya2006jay/AI-Businesses">
-      <img src="https://img.shields.io/badge/VERSION-v2.0_ALPHA-B129FF?style=for-the-badge&logo=rocket" alt="Version">
+      <img src="https://img.shields.io/badge/CORE-NEURAL_V4-B129FF?style=for-the-badge&logo=rocket" alt="Core">
     </a>
     <a href="#">
-      <img src="https://img.shields.io/badge/ARCH-NEURAL_CORE-00FBFF?style=for-the-badge&logo=intel" alt="Arch">
+      <img src="https://img.shields.io/badge/ENGINE-FASTAPI_HYPER-00FBFF?style=for-the-badge&logo=fastapi" alt="Engine">
     </a>
     <a href="#">
-      <img src="https://img.shields.io/badge/SECURITY-ENTERPRISE-00FF41?style=for-the-badge&logo=lock" alt="Security">
+      <img src="https://img.shields.io/badge/VISION-ENABLED-FFD700?style=for-the-badge&logo=opencv" alt="Vision">
     </a>
   </p>
 
   ---
   
-  **Elevating every transaction with Generative Intelligence, Predictive Telemetry, and Autonomous Vision.**
+  **Transforming traditional merchant operations into an autonomous, data-driven ecosystem powered by Generative AI and High-Velocity Analytics.**
   
   ---
 </div>
 
-## 🌌 **COGNITIVE CAPABILITIES**
+## 🧩 **CORE ARCHITECTURAL PILLARS**
 
 <table align="center">
   <tr>
     <td width="33%" align="center">
-      <br />
-      <h3>🤖 AI COPILOT</h3>
-      <p>Natural language processing for hyper-personalized business insights and strategy generation.</p>
+      <img src="docs/assets/ai_icon.png" width="80px">
+      <h3><b>NEURAL BRAIN</b></h3>
+      <p><i>Context-aware LLM orchestration for strategic business intelligence and autonomous decision support.</i></p>
     </td>
     <td width="33%" align="center">
-      <br />
-      <h3>📈 PREDICTIVE ANALYTICS</h3>
-      <p>Multi-dimensional sales forecasting and revenue path optimization via advanced Scikit-learn models.</p>
+      <img src="docs/assets/data_icon.png" width="80px">
+      <h3><b>ML DATA MESH</b></h3>
+      <p><i>High-fidelity predictive telemetry pipelines utilizing Scikit-learn for revenue & sales trajectory mapping.</i></p>
     </td>
     <td width="33%" align="center">
-      <br />
-      <h3>👁️ VISION CORE</h3>
-      <p>Autonomous inventory tracking and document recognition using real-time Computer Vision protocols.</p>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <br />
-      <h3>⚡ REAL-TIME RADAR</h3>
-      <p>Continuous monitoring of transaction health and anomaly detection with high-velocity alerting.</p>
-    </td>
-    <td align="center">
-      <br />
-      <h3>📑 STRATEGIC REPORTS</h3>
-      <p>Automated financial synthesis and P&L visualizations powered by high-performance data pipelines.</p>
-    </td>
-    <td align="center">
-      <br />
-      <h3>🛡️ ISOLATED LOGIC</h3>
-      <p>Strict Multi-Tenant orchestration ensuring absolute data sanctity and merchant residency.</p>
+      <img src="docs/assets/vision_icon.png" width="80px">
+      <h3><b>VISION HUB</b></h3>
+      <p><i>Autonomous visual processing for inventory audits and automated document residency mapping.</i></p>
     </td>
   </tr>
 </table>
 
 ---
 
-## 🏗️ **SYSTEM TOPOLOGY**
+## 🏛️ **3D EXPLODED TOPOLOGY**
+
+> **The platform is built on a high-density vertical stack, ensuring absolute separation of concerns while maintaining low-latency cross-layer communication.**
+
+1.  **Holographic Frontend**: A React-driven interface utilizing Framer Motion for liquid-smooth 3D state transitions.
+2.  **Neural Gateway**: A FastAPI-powered backbone handling high-concurrency routing and secure merchant authentication.
+3.  **Intelligence Layer**: A localized mesh of OpenAI models and custom Scikit-learn predictors optimized for merchant-scale data.
+4.  **Persistent Ledger**: Isolated data residency ensuring strict multi-tenant privacy and merchant-level encryption.
+
+---
+
+## �️ **HIGH-PERFORMANCE TECH MESH**
 
 <div align="center">
-<pre>
-  <b>NEURAL ARCHITECTURE</b>
-  ┌──────────────────────────┐
-  │      <b>RECHART 3D VIZ</b>      │  <-- <i>User Experience</i>
-  └───────┬──────────┬───────┘
-          ▼          ▼
-  ┌───────┴──────────┴───────┐
-  │     <b>FASTAPI GATEWAY</b>      │  <-- <i>Neural Hub</i>
-  └───────┬──────────┬───────┘
-          ▼          ▼
-  ┌───────┴──┐    ┌──┴───────┐
-  │  <b>ML CORE</b> │    │ <b>LLM CORE</b> │  <-- <i>Intelligence Layer</i>
-  └──────────┘    └──────────┘
-</pre>
+
+| LAYER | TECHNOLOGY | ROLE | AESTHETIC |
+| :--- | :--- | :--- | :--- |
+| **FRONTEND** | React 18 / Recharts | Dashboard Orchestration | Glassmorphic / 3D Motion |
+| **BACKEND** | FastAPI / Python | High-Velocity Logic | Minimalist / Efficient |
+| **AI CORE** | OpenAI / Scikit-Learn | Generative & Predictive | Neural / Adaptive |
+| **VISION** | OpenCV | Spatial Intelligence | Autonomous / Analytical |
+
 </div>
 
 ---
 
-## 🛠️ **TECH STACK SYNERGY**
+## 🚀 **MISSION INITIALIZATION**
 
-<details>
-<summary><b>🔹 NEURAL BACKEND (PYTHON ENGINE)</b></summary>
-<br>
-
-| Module | Deployment | Purpose |
-| :--- | :--- | :--- |
-| **FastAPI** | REST Core | High-concurrency mission-critical routing. |
-| **OpenAI** | LLM Mesh | Advanced reasoning and contextual dialogue. |
-| **OpenCV** | Vision Core | Real-time image-to-data transformation. |
-| **Scikit-Learn** | ML Engine | Regression & Classification for predictive telemetry. |
-| **Pandas** | Data Mesh | High-fidelity financial data processing. |
-
-</details>
-
-<details>
-<summary><b>🔸 HOLOGRAPHIC FRONTEND (REACT MESH)</b></summary>
-<br>
-
-| Layer | Framework | Aesthetic |
-| :--- | :--- | :--- |
-| **React 18** | UI Core | Component-driven atomic architecture. |
-| **Framer Motion**| Animate | Liquid-smooth 3D transitions and micro-interactions. |
-| **Recharts** | Telemetry | Multi-layered interactive data visualization. |
-| **Lucide React** | Glyphics | Minimalist icons for high-density information. |
-| **Glassmorpism** | CSS Design | Premium transparency with backdrop saturation filtering. |
-
-</details>
-
----
-
-## 🚀 **INITIALIZATION PROTOCOL**
-
-### 1️⃣ **DEPLOY NEURAL HUB (BACKEND)**
+### **STP 1: DEPLOY NEURAL CORE**
 ```bash
 cd backend
 python -m venv venv && source venv/bin/activate
@@ -129,7 +85,7 @@ pip install -r requirements.txt
 ./run_server.sh
 ```
 
-### 2️⃣ **ACTIVATE USER INTERFACE (FRONTEND)**
+### **STP 2: ACTIVATE HOLOGRAPHIC INTERFACE**
 ```bash
 cd frontend
 npm install --force
@@ -138,25 +94,26 @@ npm start
 
 ---
 
-## � **PROJECT ONTOLOGY**
+## 📂 **SYSTEM ONTOLOGY**
 
 ```yaml
 paytm-ai-merchant-copilot:
-  - backend: "Neural Engine [FastAPI]"
-    - app: "Atomic Business Logic"
-      - api: "Endpoint Mesh (Chat, Prediction, Vision)"
-      - services: "Intelligence Services"
-  - frontend: "Holographic Interface [React]"
+  - backend: 🐍 Python Neural Logic
+    - app: Logic Core
+      - api: Intelligence Matrix
+      - services: Neural Workflows
+  - frontend: ⚛️ React Visual Hub
     - src:
-      - components: "Orbital UI Components"
-      - styles: "Glassmorphic Theme Definitions"
-  - datasets: "Financial Telemetry Data"
+      - components: Glassmorphic UI
+      - styles: Cyber-Thematic Design
+  - doc: 📖 Architectural Blueprints
 ```
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/DESIGNED_FOR-EXCELLENCE-007AFF?style=for-the-badge&logo=apple" alt="Designed for Excellence">
+  <img src="https://img.shields.io/badge/ARCHITECTED_BY-KARTIKEYA-007AFF?style=for-the-badge&logo=apple" alt="Architected by Kartikeya">
   <br />
-  <p><b>A Product of Strategic Innovation by the Antigravity Team</b></p>
+  <p><b>A Product of Strategic Innovation by Kartikeya</b></p>
+  <p><i>Empowering the next billion merchants with AI.</i></p>
 </div>
