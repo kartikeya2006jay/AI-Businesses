@@ -73,6 +73,12 @@ const Dashboard = () => {
         </div>
     );
 
+    const getTrend = (curr, prev) => {
+        if (!prev || prev === 0) return '+0%';
+        const diff = ((curr - prev) / prev) * 100;
+        return (diff >= 0 ? '+' : '') + diff.toFixed(1) + '%';
+    };
+
     const renderContent = () => {
         if (loading && activeTab === 'dashboard') return renderSkeleton();
 
@@ -82,14 +88,25 @@ const Dashboard = () => {
                     <div className="dashboard-content-wrapper">
                         {/* ── Revenue Summary Cards ── */}
                         <section className="summary-grid">
-                            <RevenueCard title="Daily Revenue" amount={summaries.daily} trend="+12.5%" />
-                            <RevenueCard title="Weekly Revenue" amount={summaries.weekly} trend="+8.2%" />
-                            <RevenueCard title="Monthly Revenue" amount={summaries.monthly} trend="+22.1%" />
+                            <RevenueCard
+                                title="Daily Revenue"
+                                amount={summaries.daily}
+                                trend={getTrend(summaries.daily, summaries.prev_daily)}
+                            />
+                            <RevenueCard
+                                title="Weekly Revenue"
+                                amount={summaries.weekly}
+                                trend={getTrend(summaries.weekly, summaries.prev_weekly)}
+                            />
+                            <RevenueCard
+                                title="Monthly Revenue"
+                                amount={summaries.monthly}
+                                trend={getTrend(summaries.monthly, summaries.prev_monthly)}
+                            />
                         </section>
 
                         {/* ── Main Two-Column Content ── */}
                         <div className="dashboard-content">
-                            {/* LEFT: Chart + Mini-cards */}
                             <div className="left-column">
                                 <div className="chart-container glass shadow-soft">
                                     <p className="chart-title">Revenue Performance</p>
@@ -127,7 +144,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
-                            {/* RIGHT: New Sale + Stock Alerts */}
                             <div className="right-column">
                                 <div className="billing-wrapper shadow-bold">
                                     <SaleEntryForm inventory={inventory} onSaleSuccess={fetchData} />
@@ -156,7 +172,6 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* ── Cash Drawer Full Width (Balanced Layout) ── */}
                         <div className="cash-drawer-full-row animate-in">
                             <div className="section-label">
                                 <Monitor size={14} /> Global Cash Position

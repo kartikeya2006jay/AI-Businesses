@@ -21,11 +21,18 @@ function buildChartData(txns, range) {
 
     if (range === 'week') {
         // last 7 days — one bucket per calendar day
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
         const buckets = {};
         for (let i = 6; i >= 0; i--) {
             const d = new Date(now);
             d.setDate(now.getDate() - i);
-            const key = d.toISOString().slice(0, 10);
+            const key = formatDate(d);
             buckets[key] = { name: DAY_LABELS[d.getDay()], revenue: 0, prev: 0 };
         }
         // previous 7-day window for "prev" baseline
@@ -33,7 +40,7 @@ function buildChartData(txns, range) {
         for (let i = 13; i >= 7; i--) {
             const d = new Date(now);
             d.setDate(now.getDate() - i);
-            prevBuckets[d.toISOString().slice(0, 10)] =
+            prevBuckets[formatDate(d)] =
                 DAY_LABELS[d.getDay()];
         }
 
@@ -45,7 +52,7 @@ function buildChartData(txns, range) {
             // map prev day to same weekday slot
             const pDate = new Date(tDate);
             pDate.setDate(pDate.getDate() + 7);
-            const pKey = pDate.toISOString().slice(0, 10);
+            const pKey = formatDate(pDate);
             if (buckets[pKey] !== undefined) {
                 buckets[pKey].prev += Number(t.amount) || 0;
             }

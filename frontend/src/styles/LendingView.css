@@ -1,45 +1,110 @@
 .lending-view {
     padding: 1rem;
-    color: var(--text-main);
+    animation: fadeIn 0.5s ease-out;
 }
 
-.lending-view .view-header {
+.lending-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2.5rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    gap: 2rem;
 }
 
-.lending-view h2 {
-    font-size: 2.2rem;
-    margin: 0;
-    color: var(--secondary);
-}
-
-.stats-badge.highlight {
-    background: rgba(245, 158, 11, 0.15);
-    color: #f59e0b;
-    padding: 0.8rem 1.5rem;
-    border-radius: 14px;
+.header-left h2 {
+    font-size: 2rem;
     font-weight: 800;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.25rem;
+}
+
+.header-sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.lending-stats {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-md);
+}
+
+.quick-stat {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-.search-bar {
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.stat-val.highlight {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #f59e0b;
+}
+
+/* Stats Row */
+.lending-stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 2.5rem;
-    padding: 0.8rem 1.5rem;
+}
+
+/* Reusing stat-card classes from Inventory for consistency */
+.stat-card {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--grad-1);
+    color: var(--primary);
+}
+
+.stat-card.warning .stat-icon {
+    background: rgba(244, 63, 94, 0.1);
+    color: var(--error);
+}
+
+.stat-info .stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--secondary);
+}
+
+.stat-info .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Search Controls */
+.search-controls {
+    margin-bottom: 2.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    border-radius: 16px;
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
 }
 
-.search-bar input {
+.search-controls input {
     background: transparent;
     border: none;
     color: var(--text-main);
@@ -48,24 +113,23 @@
     outline: none;
 }
 
+.search-icon {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* Records Grid */
 .records-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
 .record-card {
-    padding: 1.8rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.record-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-bold);
-    border-color: var(--primary);
 }
 
 .card-top {
@@ -75,9 +139,9 @@
 }
 
 .user-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 15px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     background: var(--grad-1);
     display: flex;
     align-items: center;
@@ -89,42 +153,47 @@
     margin: 0;
     font-size: 1.1rem;
     color: var(--secondary);
+    font-weight: 700;
 }
 
 .last-tx {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
+    display: flex;
+    align-items: center;
 }
 
 .card-amount {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    background: var(--bg);
-    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 14px;
+    border: 1px dashed var(--glass-border);
 }
 
 .card-amount .label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--text-muted);
+    letter-spacing: 1px;
 }
 
 .card-amount .value {
     font-size: 1.8rem;
     font-weight: 900;
-    color: #ef4444;
+    color: var(--error);
 }
 
 .pay-btn {
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem;
     background: var(--secondary);
-    color: var(--bg);
+    color: white;
     border: none;
     border-radius: 12px;
-    font-weight: 800;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,11 +204,63 @@
 
 .pay-btn:hover {
     background: var(--primary);
-    color: white;
+    box-shadow: 0 4px 12px rgba(0, 186, 242, 0.3);
+}
+
+/* Modal Settlement specifics */
+.settlement-preview {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--grad-1);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.outstanding-pill {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: white;
+    border-radius: 20px;
+    color: var(--error);
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.input-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: var(--text-muted);
 }
 
 .empty-state {
     padding: 4rem;
     text-align: center;
     color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.col-span-all {
+    grid-column: 1 / -1;
+}
+
+[data-theme='dark'] .card-amount {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='dark'] .outstanding-pill {
+    background: #1e293b;
 }

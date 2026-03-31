@@ -131,8 +131,8 @@ def get_transactions():
     if not os.path.exists(TRANSACTIONS_FILE):
         return []
     df = pd.read_csv(TRANSACTIONS_FILE)
-    # Return last 20 transactions
-    return df.tail(20).to_dict(orient="records")
+    # Return last 100 transactions to give enough data for the chart's 30-day view
+    return df.tail(100).to_dict(orient="records")
 
 @router.get("/summaries")
 def get_summaries():

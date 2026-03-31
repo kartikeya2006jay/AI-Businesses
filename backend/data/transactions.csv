@@ -46,3 +46,6 @@ date,product,amount,customer_name,is_credit
 2026-03-22,Fair&lovely,250.0,varun,True
 2026-03-22,hammer headset,3600.0,varun,False
 2026-03-24,realme headset,2600.0,ujjual,False
+2026-04-01,Takatak Chatpata Masala,10.0,piyush,False
+2026-04-01,hammer headset,3600.0,piyush,False
+2026-04-01,realme headset,2600.0,piyush,False
