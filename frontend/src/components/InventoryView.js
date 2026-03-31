@@ -15,7 +15,8 @@ import {
     Image as ImageIcon,
     Loader2,
     RefreshCcw,
-    Zap
+    Zap,
+    Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductImage, deleteInventory, updateInventory, getInventoryOptimization } from '../services/api';
@@ -270,7 +271,7 @@ const InventoryView = ({ inventory, fetchData }) => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ delay: index * 0.05 }}
-                                    className="product-card glass shadow-soft"
+                                    className={`product-card glass shadow-soft ${item.quantity < 10 ? 'status-critical' : ''}`}
                                 >
                                     <div className="product-image-wrap">
                                         {productImages[item.product] && productImages[item.product] !== 'placeholder' ? (
@@ -395,20 +396,23 @@ const InventoryView = ({ inventory, fetchData }) => {
 
                     <div className="performance-card glass shadow-soft" style={{ padding: '1.5rem' }}>
                         <div className="ai-header" style={{ marginBottom: '1rem' }}>
-                            <TrendingUp size={18} style={{ color: 'var(--success)' }} />
-                            <h3>Quick Analytics</h3>
+                            <Activity size={18} style={{ color: 'var(--primary)' }} />
+                            <h3>Neural Telemetry</h3>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Inventory Health</span>
-                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--success)' }}>84%</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>System Integrity</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--success)' }}>Nominal</span>
                             </div>
-                            <div style={{ width: '100%', height: '6px', background: 'rgba(0,0,0,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
-                                <div style={{ width: '84%', height: '100%', background: 'var(--success)' }}></div>
+                            <div style={{ width: '100%', height: '4px', background: 'rgba(0,0,0,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+                                <div style={{ width: '100%', height: '100%', background: 'var(--success)', opacity: 0.5 }}></div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Stock Out Risk</span>
-                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--error)' }}>Low</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Profit Extraction</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary)' }}>High</span>
+                            </div>
+                            <div style={{ width: '100%', height: '4px', background: 'rgba(0,0,0,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+                                <div style={{ width: '88%', height: '100%', background: 'var(--primary)', opacity: 0.5 }}></div>
                             </div>
                         </div>
                     </div>
