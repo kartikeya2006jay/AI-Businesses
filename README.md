@@ -1,91 +1,71 @@
+# 🌌 **PAYTM AI MERCHANT COPILOT** 
+### *Empowering the Next Billion Merchants with Neural Orchestration*
+
 <div align="center">
-  <img src="docs/assets/3d_arch.png" alt="Paytm AI Merchant Copilot 3D Architecture" width="100%">
+  <img src="docs/assets/banner.png" alt="Banner" width="100%">
   
   <br />
 
-  # 🌌 **PAYTM AI MERCHANT COPILOT**
-  ### *The Definitive Multi-Layer Intelligent Orchestration Platform*
-
   <p align="center">
-    <a href="https://github.com/kartikeya2006jay/AI-Businesses">
-      <img src="https://img.shields.io/badge/CORE-NEURAL_V4-B129FF?style=for-the-badge&logo=rocket" alt="Core">
+    <a href="https://github.com/kartikeya2006jay/paytm-ai-merchant-copilot">
+      <img src="https://img.shields.io/badge/CORE-NEURAL_V4-00BBA2?style=for-the-badge&logo=rocket" alt="Core">
     </a>
     <a href="#">
-      <img src="https://img.shields.io/badge/ENGINE-FASTAPI_HYPER-00FBFF?style=for-the-badge&logo=fastapi" alt="Engine">
+      <img src="https://img.shields.io/badge/PAYTM-MERCANT_OS-002E6E?style=for-the-badge&logo=paytm" alt="Paytm">
     </a>
     <a href="#">
-      <img src="https://img.shields.io/badge/VISION-ENABLED-FFD700?style=for-the-badge&logo=opencv" alt="Vision">
+      <img src="https://img.shields.io/badge/AI-VISION_ENABLED-00BBA2?style=for-the-badge&logo=opencv" alt="Vision">
     </a>
   </p>
 
   ---
-  
-  **Transforming traditional merchant operations into an autonomous, data-driven ecosystem powered by Generative AI and High-Velocity Analytics.**
-  
+  **A futuristic Business-OS for small & medium merchants. Integrating real-time AI inventory recognition, smart digital ledger (Khata Book), and high-velocity business telemetry.**
   ---
 </div>
 
-## 🧩 **CORE ARCHITECTURAL PILLARS**
+## ✨ **PREMIUM CAPABILITIES**
 
-<table align="center">
-  <tr>
-    <td width="33%" align="center">
-      <img src="docs/assets/ai_icon.png" width="80px">
-      <h3><b>NEURAL BRAIN</b></h3>
-      <p><i>Context-aware LLM orchestration for strategic business intelligence and autonomous decision support.</i></p>
-    </td>
-    <td width="33%" align="center">
-      <img src="docs/assets/data_icon.png" width="80px">
-      <h3><b>ML DATA MESH</b></h3>
-      <p><i>High-fidelity predictive telemetry pipelines utilizing Scikit-learn for revenue & sales trajectory mapping.</i></p>
-    </td>
-    <td width="33%" align="center">
-      <img src="docs/assets/vision_icon.png" width="80px">
-      <h3><b>VISION HUB</b></h3>
-      <p><i>Autonomous visual processing for inventory audits and automated document residency mapping.</i></p>
-    </td>
-  </tr>
-</table>
+### 📦 **AI-POWERED STOCK REPOSITORY**
+- **Neural Product Discovery**: Scan any item with your phone camera to automatically identify and catalogue it.
+- **Smart Restock Alerts**: Predictive analysis detects low-stock items before they run out.
+- **Automated Inventory Logic**: Real-time sales syncing with the central database.
+
+### 📔 **DIGITAL KHATA BOOK (CREDIT LEDGER)**
+- **Intelligent Receivables**: Track credit (Udhaar) with a single click.
+- **Record Liquidation**: Premium, theme-aware action buttons for quick settlement.
+- **Customer Identity Mesh**: Beautifully organized customer profiles with automated ledger history.
+
+### 📊 **BUSINESS TELEMETRY & ANALYTICS**
+- **Revenue Trajectory Mapping**: Visualize sales trends with high-fidelity charts.
+- **Profit Extraction Intelligence**: Real-time insights into your shop's performance.
+- **Nominal System Integrity**: Enterprise-grade stability for busy shop environments.
 
 ---
 
-## 🏛️ **3D EXPLODED TOPOLOGY**
+## 🏛️ **SYSTEM ARCHITECTURE**
 
-> **The platform is built on a high-density vertical stack, ensuring absolute separation of concerns while maintaining low-latency cross-layer communication.**
+The platform is designed with a **High-Density Vertical Stack**, ensuring isolated data residency and low-latency communication.
 
-1.  **Holographic Frontend**: A React-driven interface utilizing Framer Motion for liquid-smooth 3D state transitions.
-2.  **Neural Gateway**: A FastAPI-powered backbone handling high-concurrency routing and secure merchant authentication.
-3.  **Intelligence Layer**: A localized mesh of OpenAI models and custom Scikit-learn predictors optimized for merchant-scale data.
-4.  **Persistent Ledger**: Isolated data residency ensuring strict multi-tenant privacy and merchant-level encryption.
-
----
-
-## �️ **HIGH-PERFORMANCE TECH MESH**
-
-<div align="center">
-
-| LAYER | TECHNOLOGY | ROLE | AESTHETIC |
-| :--- | :--- | :--- | :--- |
-| **FRONTEND** | React 18 / Recharts | Dashboard Orchestration | Glassmorphic / 3D Motion |
-| **BACKEND** | FastAPI / Python | High-Velocity Logic | Minimalist / Efficient |
-| **AI CORE** | OpenAI / Scikit-Learn | Generative & Predictive | Neural / Adaptive |
-| **VISION** | OpenCV | Spatial Intelligence | Autonomous / Analytical |
-
-</div>
+| LAYER | TECHNOLOGY | CORE ROLE |
+| :--- | :--- | :--- |
+| **HOLOGRAPHIC UI** | React 18 / Framer Motion | Liquid-smooth 3D state transitions & Glassmorphism |
+| **NEURAL ENGINE** | FastAPI / Python | High-concurrency routing and secure merchant logic |
+| **VISION MATRIX** | OpenAI / CV2 | AI-driven product recognition and spatial intelligence |
+| **DATA LEDGER** | Pandas / CSV Mesh | Rapid-access merchant ledger and transaction history |
 
 ---
 
 ## 🚀 **MISSION INITIALIZATION**
 
-### **STP 1: DEPLOY NEURAL CORE**
+### **Step 1: Deploy Neural Backbone**
 ```bash
 cd backend
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-./run_server.sh
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### **STP 2: ACTIVATE HOLOGRAPHIC INTERFACE**
+### **Step 2: Activate Holographic Hub**
 ```bash
 cd frontend
 npm install --force
@@ -94,26 +74,28 @@ npm start
 
 ---
 
-## 📂 **SYSTEM ONTOLOGY**
+## 📂 **PROJECT TAXONOMY**
 
 ```yaml
 paytm-ai-merchant-copilot:
   - backend: 🐍 Python Neural Logic
     - app: Logic Core
-      - api: Intelligence Matrix
-      - services: Neural Workflows
+      - api: Intelligence Matrix (Transactions, Inventory, Customers)
+      - services: Neural Workflows (Vision Service, LLM logic)
+      - models: System Schema
   - frontend: ⚛️ React Visual Hub
     - src:
-      - components: Glassmorphic UI
-      - styles: Cyber-Thematic Design
-  - doc: 📖 Architectural Blueprints
+      - components: Glassmorphic UI (LendingView, InventoryView, CashDrawer)
+      - styles: Cyber-Thematic CSS
+      - services: API Bridge
+  - docs: 📖 Architectural Blueprints
 ```
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/ARCHITECTED_BY-KARTIKEYA-007AFF?style=for-the-badge&logo=apple" alt="Architected by Kartikeya">
+  <img src="https://img.shields.io/badge/ARCHITECTED_BY-KARTIKEYA-002E6E?style=for-the-badge&logo=apple" alt="Architected by Kartikeya">
   <br />
-  <p><b>A Product of Strategic Innovation by Kartikeya</b></p>
-  <p><i>Empowering the next billion merchants with AI.</i></p>
+  <p><b>Designed by Kartikeya</b></p>
+  <p><i>The Future of Merchant Operations is Autonomous.</i></p>
 </div>
