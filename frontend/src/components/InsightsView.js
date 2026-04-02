@@ -1,12 +1,17 @@
 import React, { useMemo } from 'react';
 import {
     TrendingUp, AlertTriangle, BarChart3, Zap, Target,
-    RefreshCw, Cpu, Activity, Globe, ShieldCheck
+    RefreshCw, Cpu, Activity, Globe, ShieldCheck, Search
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import NeuralStrategyModal from './NeuralStrategyModal';
 import '../styles/InsightsView.css';
 
 const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => {
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [selectedProduct, setSelectedProduct] = React.useState(null);
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
     // ── Dynamic Logic for "Neural Nodes" ──────────────────────────
     const insights = useMemo(() => {
         if (!inventory.length && !transactions.length) return null;
@@ -27,8 +32,25 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
         const projectedMonthly = Math.round(currentMonthly * 1.12);
         const growthPct = currentMonthly > 0 ? 12 : 0;
 
-        return { bestSeller, stockoutRiskCount, projectedMonthly, growthPct };
+        const matrixCoverage = 94.2; // Mocked consistent with UI requirements
+        const criticalNodes = lowStockItems.length;
+
+        return { bestSeller, stockoutRiskCount, projectedMonthly, growthPct, matrixCoverage, criticalNodes };
     }, [inventory, transactions, summaries]);
+
+    // Handle search filtered results
+    const filteredProducts = React.useMemo(() => {
+        if (!searchQuery) return [];
+        return inventory.filter(item =>
+            item.product.toLowerCase().includes(searchQuery.toLowerCase())
+        ).slice(0, 5);
+    }, [searchQuery, inventory]);
+
+    const handleProductSelect = (productName) => {
+        setSelectedProduct(productName);
+        setIsModalOpen(true);
+        setSearchQuery('');
+    };
 
     if (!insights) {
         return (
@@ -47,35 +69,33 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
 
     const cards = [
         {
-            id: 'performance',
-            title: 'Top Performance',
-            icon: <Target className="node-icon icon-cyan" />,
-            label: 'High Velocity Asset',
+            id: 'velocity',
+            title: 'Sales Velocity',
+            icon: <TrendingUp className="node-icon icon-cyan" />,
+            label: 'Top Deceleration Threshold',
             value: insights.bestSeller,
-            desc: `Leading the transaction stream. Market demand for "${insights.bestSeller}" is currently peaking.`,
-            tag: 'Trending Now',
+            desc: `High-frequency movement detected in ${insights.bestSeller} nodes. Optimal restock latency identified.`,
+            tag: 'Positive Delta',
             tagClass: 'cyan-glow'
         },
         {
-            id: 'inventory',
-            title: 'Supply Integrity',
-            icon: <ShieldCheck className="node-icon icon-gold" />,
-            label: 'Stock Depletion Risk',
-            value: `${insights.stockoutRiskCount} Items`,
-            desc: insights.stockoutRiskCount > 0
-                ? `Critical risk detected in ${insights.stockoutRiskCount} SKU nodes. Immediate replenishment recommended.`
-                : "All supply chains stabilized. Neural monitoring active for all product nodes.",
-            tag: insights.stockoutRiskCount > 0 ? 'Critical' : 'Stable',
-            tagClass: insights.stockoutRiskCount > 0 ? 'gold-glow' : 'green-glow'
+            id: 'risk',
+            title: 'Risk Parameters',
+            icon: <AlertTriangle className="node-icon icon-gold" />,
+            label: 'Critical Stock Sync',
+            value: `${insights.criticalNodes} Nodes`,
+            desc: `Identified ${insights.criticalNodes} inventory items near critical depletion. Mitigation strategy required.`,
+            tag: 'Action Required',
+            tagClass: 'gold-glow'
         },
         {
-            id: 'forecast',
-            title: 'Growth Projection',
+            id: 'efficiency',
+            title: 'Neural Efficiency',
             icon: <Activity className="node-icon icon-purple" />,
-            label: 'Predictive Revenue',
-            value: `₹${insights.projectedMonthly.toLocaleString()}`,
-            desc: `Current velocity indicates a ${insights.growthPct}% performance delta by month-end cycles.`,
-            tag: 'Optimistic',
+            label: 'Matrix Coverage',
+            value: `${insights.matrixCoverage}%`,
+            desc: `Stock health index is optimal. Neural layers synchronized with market volatility.`,
+            tag: 'Stable Matrix',
             tagClass: 'purple-glow'
         }
     ];
@@ -89,25 +109,71 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="neural-hero-panel"
+                className="neural-hero-panel-advanced"
             >
-                <div className="hero-left">
-                    <div className="ai-core-orb">
-                        <Cpu size={28} />
+                <div className="hero-top-row">
+                    <div className="hero-left">
+                        <div className="ai-core-orb">
+                            <Cpu size={28} />
+                        </div>
+                        <div className="hero-text-neural">
+                            <h1>Neural Engine <span>v4.3 ULTRA</span></h1>
+                            <p>Merchant Heuristics & Strategic Telemetry</p>
+                        </div>
                     </div>
-                    <div className="hero-text-neural">
-                        <h1>Neural Insights Engine <span>v4.2</span></h1>
-                        <p>Real-time heuristic analysis of your local business matrix.</p>
+
+                    <div className="hero-right-telemetry">
+                        <div className="telemetry-node">
+                            <Globe size={14} />
+                            <span>@Node: 07-PYTM</span>
+                        </div>
+                        <div className="telemetry-node active">
+                            <div className="pulse-dot" />
+                            <span>Uplink: Synchronized</span>
+                        </div>
                     </div>
                 </div>
-                <div className="hero-right-telemetry">
-                    <div className="telemetry-node">
-                        <Globe size={14} />
-                        <span>Node: 07-PYTM</span>
-                    </div>
-                    <div className="telemetry-node active">
-                        <div className="pulse-dot" />
-                        <span>Uplink: Synchronized</span>
+
+                <div className="neural-search-container">
+                    <div className="neural-search-box">
+                        <Search className="search-icon-neural" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Analyze any product (eg: Oreo)..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <AnimatePresence>
+                            {searchQuery && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="search-results-dropdown"
+                                >
+                                    {filteredProducts.length > 0 ? (
+                                        filteredProducts.map(p => (
+                                            <div
+                                                key={p.product}
+                                                className="result-item-enhanced"
+                                                onClick={() => handleProductSelect(p.product)}
+                                            >
+                                                <div className="result-left">
+                                                    <Target size={14} className="target-icon-neural" />
+                                                    <span className="product-name-result">{p.product}</span>
+                                                </div>
+                                                <div className="result-right">
+                                                    <span className="result-meta">Stock: <b className={p.quantity < 20 ? 'text-warn' : 'text-ok'}>{p.quantity}</b></span>
+                                                    <span className="result-meta">₹{p.price}</span>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="no-result">No neural match found</div>
+                                    )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </motion.div>
@@ -146,28 +212,13 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
                 </AnimatePresence>
             </div>
 
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="neural-cta-dock"
-            >
-                <div className="cta-left">
-                    <Zap className="cta-icon-zap" size={22} />
-                    <div className="cta-copy">
-                        <h4>Establish Deep Strategy Matrix?</h4>
-                        <p>Interface with AI Copilot: <span>"Analyze {insights.bestSeller} performance trends"</span></p>
-                    </div>
-                </div>
-                <button
-                    className="neural-cta-btn"
-                    onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
-                >
-                    Initialize AI Chat
-                    <TrendingUp size={16} />
-                </button>
-            </motion.div>
-
+            <NeuralStrategyModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                product={selectedProduct}
+                transactions={transactions}
+                inventory={inventory}
+            />
         </div>
     );
 };
