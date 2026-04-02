@@ -276,3 +276,138 @@
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.camera-flash {
+    position: absolute;
+    inset: 0;
+    background: white;
+    z-index: 200;
+    animation: flashOut 0.2s ease-out forwards;
+}
+
+@keyframes flashOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.scan-corners {
+    position: absolute;
+    inset: 15%;
+    pointer-events: none;
+}
+
+.corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #00baf2;
+    border-radius: 4px;
+}
+
+.top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.discovery-text {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #00baf2;
+    text-transform: uppercase;
+    animation: pulseText 1.5s infinite;
+}
+
+@keyframes pulseText {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.recognition-result {
+    width: 85% !important;
+    padding: 2.5rem 1.5rem !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(0, 255, 127, 0.3) !important;
+    box-shadow: 0 0 40px rgba(0, 255, 127, 0.2) !important;
+}
+
+.success-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #10b981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    animation: scalePing 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scalePing {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.match-tag {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+}
+
+.confidence-pill {
+    display: inline-block;
+    margin-top: 1rem !important;
+    padding: 0.4rem 1rem;
+    background: rgba(0, 186, 242, 0.1);
+    border-radius: 20px;
+    font-size: 0.8rem !important;
+    border: 1px solid rgba(0, 186, 242, 0.2);
+}

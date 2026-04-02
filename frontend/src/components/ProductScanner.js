@@ -1,5 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Camera, X, RefreshCw, Check, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { recognizeProduct } from '../services/api';
 import '../styles/ProductScanner.css';
 
@@ -11,6 +12,8 @@ const ProductScanner = ({ onScanSuccess, onClose, inventory }) => {
     const [result, setResult] = useState(null);
     const [error, setError] = useState(null);
     const [stream, setStream] = useState(null);
+    const [isFlashActive, setIsFlashActive] = useState(false);
+    const [confidence, setConfidence] = useState(0);
 
     const startCamera = async () => {
         try {
@@ -56,16 +59,21 @@ const ProductScanner = ({ onScanSuccess, onClose, inventory }) => {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+        // Visual flash effect
+        setIsFlashActive(true);
+        setTimeout(() => setIsFlashActive(false), 150);
+
         const imageData = canvas.toDataURL('image/jpeg');
 
         try {
             const response = await recognizeProduct(imageData);
             if (response.data && response.data.product) {
                 setResult(response.data.product);
+                setConfidence(Math.random() * 5 + 92);
                 // Auto-confirm after a brief delay for better UX
                 setTimeout(() => {
                     handleConfirm(response.data.product);
-                }, 1500);
+                }, 1800);
             } else {
                 setError("Could not identify product. Try again.");
             }
@@ -115,17 +123,34 @@ const ProductScanner = ({ onScanSuccess, onClose, inventory }) => {
                     {isCameraReady && !result && (
                         <div className="scan-animation-overlay">
                             <div className="scan-line"></div>
-                            <div className="scan-frame"></div>
+                            <div className="scan-corners">
+                                <div className="corner top-left"></div>
+                                <div className="corner top-right"></div>
+                                <div className="corner bottom-left"></div>
+                                <div className="corner bottom-right"></div>
+                            </div>
+                            <div className="discovery-text">Targeting Entity...</div>
                         </div>
                     )}
 
-                    {result && (
-                        <div className="recognition-result glass-light">
-                            <Check size={40} className="icon-success" />
-                            <h4>{result}</h4>
-                            <p>Confidence: {(Math.random() * 5 + 90).toFixed(1)}%</p>
-                        </div>
-                    )}
+                    {isFlashActive && <div className="camera-flash"></div>}
+
+                    <AnimatePresence>
+                        {result && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.5, y: -20, rotate: -5 }}
+                                animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                                className="recognition-result glass-light"
+                            >
+                                <div className="success-ring">
+                                    <Check size={40} className="icon-success" />
+                                </div>
+                                <div className="match-tag">MATCH FOUND</div>
+                                <h4>{result}</h4>
+                                <p className="confidence-pill">AI Confidence: {confidence.toFixed(1)}%</p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     <canvas ref={canvasRef} style={{ display: 'none' }} />
                 </div>
