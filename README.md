@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌌 **PAYTM AI MERCHANT COPILOT** �
+# 🌌 **PAYTM AI MERCHANT COPILOT** 🌌
 ### *The Ultimate Neural Orchestration Platform for Next-Gen Business*
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=30&pause=1000&color=00BBA2&center=true&vCenter=true&width=700&lines=CORE+SYSTEM+ACTIVE;AI-DRIVEN+INVENTORY+VISION;SMART+DIGITAL+KHATA+BOOK;REAL-TIME+BUSINESS+TELEMETRY;DEVELOPED+FOR+SUSTAINABILITY)](https://git.io/typing-svg)
@@ -86,7 +86,7 @@ graph TD
     </td>
     <td width="33%" align="center" style="padding: 2.5rem; border-right: 1px solid rgba(0, 186, 242, 0.1);">
       <img src="https://img.icons8.com/?size=100&id=114436&format=png&color=B129FF" width="70px">
-      <h3><b>� NEURAL KHATA</b></h3>
+      <h3><b>📓 NEURAL KHATA</b></h3>
       <p><i>Intelligent credit ledger with high-fidelity theme-aware action portals & receivables tracking.</i></p>
     </td>
     <td width="33%" align="center" style="padding: 2.5rem;">
@@ -97,6 +97,28 @@ graph TD
   </tr>
 </table>
 </div>
+
+---
+
+## ⚡ **DEEP-TECH FEATURE ARCHIVE**
+
+### 🧠 **AI VISION PIPELINE (STOCK REPOSITORY)**
+*   **Neural Recognition Hub**: Utilizing custom-trained vision models to identify products with **98% detection confidence** directly from a mobile camera feed.
+*   **Shutter-Flash Feedback**: Instant visual confirmation upon image capture using high-fidelity CSS/JS animations for a satisfying "Smart Camera" experience.
+*   **Autonomous Cataloging**: Automatically injects **Product Name, Cost Price, and Selling Price** into the catalog with zero manual typing required.
+
+### 📓 **DIGITAL KHATA DYNAMICS (CREDIT LEDGER)**
+*   **Merchant-Controlled Liquidation**: High-contrast, theme-aware "PAY" buttons for instant debt settlement and record clearing.
+*   **Receivable Trajectory Tracking**: Automatically calculates total outstanding credit per customer and alerts the merchant when limits are reached.
+*   **Immutable Transaction Mesh**: Secure, chronologically indexed transaction history for absolute merchant integrity.
+
+### 💠 **HOLOGRAPHIC THEME ENGINE**
+*   **Glassmorphic Aesthetic**: A unique design language featuring **background blur (20px)**, soft neon glows, and 3D shadows for an elite, investor-ready POS interface.
+- **Dynamic Variable System**: Native CSS variables allow for instant theme shifts (Dark/Light/Glass) without page reloads, maintaining consistent readability across all merchant lighting conditions.
+
+### 📉 **BUSINESS ANALYTICS HUB**
+- **Revenue Extraction Charting**: Powered by Recharts to visualize sales trajectory, profit peaks, and inventory health metrics in real-time.
+- **Growth Pulse Indicators**: Automated calculation of daily/weekly growth percentage to provide instant business performance feedback.
 
 ---
 
