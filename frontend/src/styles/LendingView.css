@@ -189,7 +189,8 @@
 .pay-btn {
     width: 100%;
     padding: 0.8rem;
-    background: var(--secondary);
+    background: #002e6e;
+    /* Using a fixed dark blue for consistency */
     color: white;
     border: none;
     border-radius: 12px;
@@ -205,6 +206,11 @@
 .pay-btn:hover {
     background: var(--primary);
     box-shadow: 0 4px 12px rgba(0, 186, 242, 0.3);
+}
+
+[data-theme='dark'] .pay-btn {
+    background: var(--primary);
+    color: #0b0f1a;
 }
 
 /* Modal Settlement specifics */

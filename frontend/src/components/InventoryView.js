@@ -12,6 +12,7 @@ import {
     Trash2,
     Edit3,
     X,
+    Camera,
     Image as ImageIcon,
     Loader2,
     RefreshCcw,
@@ -19,7 +20,8 @@ import {
     Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getProductImage, deleteInventory, updateInventory, getInventoryOptimization } from '../services/api';
+import ProductScanner from './ProductScanner';
+import { recognizeProduct, getProductImage, deleteInventory, updateInventory, getInventoryOptimization } from '../services/api';
 import '../styles/InventoryView.css';
 
 const InventoryView = ({ inventory, fetchData }) => {
@@ -33,6 +35,9 @@ const InventoryView = ({ inventory, fetchData }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null); // { product, quantity, price, cost_price }
     const [updateLoading, setUpdateLoading] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isScannerOpen, setIsScannerOpen] = useState(false);
+    const [newProduct, setNewProduct] = useState({ product: '', quantity: 0, price: 0, cost_price: 0 });
 
     // 0. Avatar Generation Logic
     const getAvatarStyle = (name) => {
@@ -178,6 +183,22 @@ const InventoryView = ({ inventory, fetchData }) => {
         }
     };
 
+    const handleAddProduct = async (e) => {
+        e.preventDefault();
+        if (!newProduct.product) return;
+        setUpdateLoading(true);
+        try {
+            await updateInventory(newProduct);
+            setIsAddModalOpen(false);
+            setNewProduct({ product: '', quantity: 0, price: 0, cost_price: 0 });
+            fetchData();
+        } catch (err) {
+            alert("Failed to add product");
+        } finally {
+            setUpdateLoading(false);
+        }
+    };
+
     return (
         <div className="inventory-view app-root">
 
@@ -258,6 +279,21 @@ const InventoryView = ({ inventory, fetchData }) => {
                         </div>
                         <button className="action-btn" style={{ width: 'auto', padding: '0.6rem 1rem' }} onClick={handleRefresh} disabled={isRefreshing}>
                             <RefreshCcw size={16} className={isRefreshing ? 'spin' : ''} />
+                        </button>
+                        <button
+                            className="action-btn"
+                            style={{
+                                width: 'auto',
+                                padding: '0.6rem 1.2rem',
+                                background: 'var(--primary)',
+                                color: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                            }}
+                            onClick={() => setIsAddModalOpen(true)}
+                        >
+                            <Plus size={16} /> Add Product
                         </button>
                     </div>
 
@@ -449,7 +485,7 @@ const InventoryView = ({ inventory, fetchData }) => {
                                         <input
                                             type="number"
                                             value={editingProduct.price}
-                                            onChange={(e) => setEditingProduct({ ...editingProduct, price: parseFloat(e.target.value) })}
+                                            onChange={(e) => setEditingProduct({ ...editingProduct, price: parseFloat(e.target.value) || 0 })}
                                             required
                                         />
                                     </div>
@@ -458,7 +494,7 @@ const InventoryView = ({ inventory, fetchData }) => {
                                         <input
                                             type="number"
                                             value={editingProduct.cost_price || 0}
-                                            onChange={(e) => setEditingProduct({ ...editingProduct, cost_price: parseFloat(e.target.value) })}
+                                            onChange={(e) => setEditingProduct({ ...editingProduct, cost_price: parseFloat(e.target.value) || 0 })}
                                             required
                                         />
                                     </div>
@@ -487,6 +523,97 @@ const InventoryView = ({ inventory, fetchData }) => {
                             </form>
                         </motion.div>
                     </div>
+                )}
+
+                {isAddModalOpen && (
+                    <div className="modal-overlay">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="modal glass shadow-bold"
+                        >
+                            <div className="modal-header">
+                                <div className="header-icon"><Plus size={18} /></div>
+                                <h3>Add New Product</h3>
+                                <button className="close-btn" onClick={() => setIsAddModalOpen(false)}><X size={18} /></button>
+                            </div>
+
+                            <form onSubmit={handleAddProduct} className="edit-form">
+                                <div className="form-group ink-border">
+                                    <label>Product Name</label>
+                                    <div className="input-with-icon">
+                                        <input
+                                            type="text"
+                                            value={newProduct.product}
+                                            onChange={(e) => setNewProduct({ ...newProduct, product: e.target.value })}
+                                            placeholder="e.g. Red Label Tea"
+                                            required
+                                            autoFocus
+                                        />
+                                        <button
+                                            type="button"
+                                            className="inline-action-btn"
+                                            onClick={() => setIsScannerOpen(true)}
+                                            title="Scan with Camera"
+                                        >
+                                            <Camera size={18} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group ink-border">
+                                        <label>Selling Price (₹)</label>
+                                        <input
+                                            type="number"
+                                            value={newProduct.price}
+                                            onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) || 0 })}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group ink-border">
+                                        <label>Cost Price (₹)</label>
+                                        <input
+                                            type="number"
+                                            value={newProduct.cost_price}
+                                            onChange={(e) => setNewProduct({ ...newProduct, cost_price: parseFloat(e.target.value) || 0 })}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group ink-border">
+                                    <label>Initial Stock Quantity</label>
+                                    <div className="qty-input-wrap">
+                                        <button type="button" onClick={() => setNewProduct({ ...newProduct, quantity: Math.max(0, newProduct.quantity - 1) })}>-</button>
+                                        <input
+                                            type="number"
+                                            value={newProduct.quantity}
+                                            onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value) || 0 })}
+                                            required
+                                        />
+                                        <button type="button" onClick={() => setNewProduct({ ...newProduct, quantity: newProduct.quantity + 1 })}>+</button>
+                                    </div>
+                                </div>
+
+                                <div className="modal-actions">
+                                    <button type="button" className="action-btn" style={{ width: 'auto', padding: '0.8rem 1.5rem' }} onClick={() => setIsAddModalOpen(false)}>Cancel</button>
+                                    <button type="submit" className="save-btn" disabled={updateLoading}>
+                                        {updateLoading ? <Loader2 size={18} className="spin" /> : 'Add to Catalog'}
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </div>
+                )}
+
+                {isScannerOpen && (
+                    <ProductScanner
+                        onScanSuccess={(name) => setNewProduct({ ...newProduct, product: name })}
+                        onClose={() => setIsScannerOpen(false)}
+                        inventory={inventory}
+                    />
                 )}
             </AnimatePresence>
         </div>
