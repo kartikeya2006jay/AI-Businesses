@@ -1,99 +1,125 @@
-# <p align="center">� **PAYTM AI MERCHANT COPILOT** 🌠</p>
-<p align="center"><i>The Definitive Multi-Layer Intelligent Orchestration Platform for Next-Gen Merchants</i></p>
-
 <div align="center">
-  <img src="docs/assets/banner.png" alt="Paytm Copilot Banner" width="100%" style="border-radius: 24px; box-shadow: 0 20px 50px rgba(0, 186, 242, 0.3);">
-  
-  <br />
 
-  <p align="center">
-    <a href="https://github.com/kartikeya2006jay/paytm-ai-merchant-copilot">
-      <img src="https://img.shields.io/badge/CORE-NEURAL_V4-00BBA2?style=for-the-badge&logo=rocket&logoColor=white" alt="Core">
-    </a>
-    <a href="#">
-      <img src="https://img.shields.io/badge/PAYTM-MERCANT_OS-002E6E?style=for-the-badge&logo=paytm&logoColor=white" alt="Paytm">
-    </a>
-    <a href="#">
-      <img src="https://img.shields.io/badge/ENVIRONMENT-VISION_ACTIVE-FFD700?style=for-the-badge&logo=opencv&logoColor=black" alt="Vision">
-    </a>
-  </p>
+# 🌌 **PAYTM AI MERCHANT COPILOT** �
+### *The Ultimate Neural Orchestration Platform for Next-Gen Business*
 
-  ---
-  **Transforming traditional merchant operations into an autonomous, data-driven ecosystem powered by Generative AI and High-Velocity Vision Analytics.**
-  ---
-</div>
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=30&pause=1000&color=00BBA2&center=true&vCenter=true&width=700&lines=CORE+SYSTEM+ACTIVE;AI-DRIVEN+INVENTORY+VISION;SMART+DIGITAL+KHATA+BOOK;REAL-TIME+BUSINESS+TELEMETRY;DEVELOPED+FOR+SUSTAINABILITY)](https://git.io/typing-svg)
 
-## 🌌 **SYSTEM OVERVIEW: THE HOLOGRAPHIC STACK**
-
-<details open>
-<summary><b>�️ ARCHITECTURAL BLUEPRINT (Click to toggle)</b></summary>
 <br />
 
-> **The platform is built on a high-density vertical stack, ensuring absolute separation of concerns while maintaining low-latency cross-layer communication.**
+<a href="SHOWCASE.html">
+  <img src="https://img.shields.io/badge/LAUNCH_3D_ARCH_SHOWCASE-00BBA2?style=for-the-badge&logo=rocket&logoColor=white" height="40" alt="Launch 3D">
+</a>
 
-1.  **💠 Holographic Frontend**: A React-driven interface utilizing Framer Motion for liquid-smooth 3D state transitions.
-2.  **⚡ Neural Gateway**: A FastAPI-powered backbone handling high-concurrency routing and secure merchant authentication.
-3.  **🧠 Intelligence Matrix**: A localized mesh of custom AI models optimized for merchant-scale telemetry.
-4.  **📒 Persistent Ledger**: Isolated merchant residency ensuring strict privacy and merchant-level encryption.
-</details>
+<br /><br />
+
+<img src="docs/assets/banner.png" alt="Paytm Copilot Banner" width="100%" style="border-radius: 28px; box-shadow: 0 40px 80px rgba(0, 186, 242, 0.45); border: 1px solid rgba(0, 255, 255, 0.1);">
+
+---
+
+### **🚀 THE MISSION OBJECTIVE**
+**Empowering local merchants with enterprise-grade Neural Intelligence. Transforming traditional operations into an autonomous, data-driven ecosystem powered by Vision Analytics and Predictive Logic.**
+
+---
+
+<p align="center">
+  <a href="https://github.com/kartikeya2006jay/paytm-ai-merchant-copilot">
+    <img src="https://img.shields.io/badge/VERSION-CORE_V4.3-00BBA2?style=flat-square&logo=git&logoColor=white" alt="Version">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/BACKEND-FASTAPI_HYPER-002E6E?style=flat-square&logo=fastapi&logoColor=white" alt="Backend">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/ENGINE-NEURAL_MESH-B129FF?style=flat-square&logo=openai&logoColor=white" alt="AI">
+  </a>
+</p>
+
+</div>
+
+## 🪐 **3D EXPLODED TECHNOLOGY TOPOLOGY**
+
+<div align="center">
+
+```mermaid
+graph TD
+    subgraph "Holographic Visual Layer"
+    UI[<b>VISUAL HUB</b><br/>React 18 + Framer Motion]
+    end
+
+    subgraph "Neural Logic Layer"
+    NG[<b>NEURAL GATEWAY</b><br/>FastAPI / Secure Matrix]
+    end
+
+    subgraph "Intelligence Matrix"
+    IM[<b>VISION ENGINE</b><br/>AI Scanner + OpenAI Mesh]
+    end
+
+    subgraph "Persistent Ledger"
+    PL[<b>STOCK REPOSITORY</b><br/>Isolated Merchant Data]
+    end
+
+    UI -- 3D States --> NG
+    NG -- Neural Pipe --> IM
+    IM -- Data Sync --> PL
+    PL -- High-Speed Retrieval --> NG
+    
+    linkStyle default stroke:#00fbff,stroke-width:2px,stroke-dasharray: 4 4;
+    style UI fill:#00BBA2,stroke:#00FBFF,stroke-width:4px,color:#fff
+    style NG fill:#002E6E,stroke:#00FBFF,stroke-width:4px,color:#fff
+    style IM fill:#B129FF,stroke:#00FBFF,stroke-width:4px,color:#fff
+    style PL fill:#1e293b,stroke:#00FBFF,stroke-width:4px,color:#fff
+```
+
+</div>
 
 ---
 
 ## ⚡ **MISSION-CRITICAL CAPABILITIES**
 
-### 📦 **REVOLUTIONARY STOCK REPOSITORY**
-> *AI that sees your business before you do.*
-- **`VISION-SCAN`**: Scan items with 98% accuracy using real-time AI product recognition.
-- **`AUTO-CATALOG`**: Instant metadata injection (Price, Stock, Class) upon item detection.
-- **`INTELLIGENT-REORDER`**: Predictive reordering suggestions based on merchant turnover velocity.
-
-### � **NEURAL KHATA BOOK (CREDIT LEDGER)**
-> *The smart way to handle receivables.*
-- **`ONE-CLICK-LIQUIDATE`**: Premium liquidation portal for instant debt settlement.
-- **`CUSTOMER-IDENTITY-MESH`**: Beautifully rendered customer profiles with real-time credit metrics.
-- **`GLASS-UI-CONTRAST`**: High-fidelity dark/light mode optimization for maximal visibility safely from the counter.
-
-### 📈 **HOLOGRAPHIC TELEMETRY**
-> *Data transformed into actionable intelligence.*
-- **`REVENUE-TRAJECTORY`**: Beautifully animated charts showing profit extraction peaks.
-- **`SYSTEM-INTEGRITY`**: Real-time nominal health checks across the entire business ecosystem.
-
----
-
-## 🏛️ **3D EXPLODED TECHNOLOGY TOPOLOGY**
-
-```mermaid
-graph TD
-    UI[Holographic Frontend - React 18] --> NG[Neural Gateway - FastAPI]
-    NG --> IM[Intelligence Matrix - AI Vision]
-    NG --> PL[Persistent Ledger - Merchant Data]
-    IM --> PL
-    style UI fill:#00BBA2,stroke:#000,stroke-width:2px,color:#fff
-    style NG fill:#002E6E,stroke:#000,stroke-width:2px,color:#fff
-    style IM fill:#FFD700,stroke:#000,stroke-width:2px,color:#000
-    style PL fill:#1e293b,stroke:#000,stroke-width:2px,color:#fff
-```
+<div align="center">
+<table align="center" style="border-collapse: collapse; width: 100%; border-radius: 20px; overflow: hidden; background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 186, 242, 0.2);">
+  <tr>
+    <td width="33%" align="center" style="padding: 2.5rem; border-right: 1px solid rgba(0, 186, 242, 0.1);">
+      <img src="https://img.icons8.com/?size=100&id=108652&format=png&color=00BBA2" width="70px">
+      <h3><b>📦 AI INVENTORY</b></h3>
+      <p><i>Real-time camera recognition hub for autonomous product auditing & restock alerts.</i></p>
+    </td>
+    <td width="33%" align="center" style="padding: 2.5rem; border-right: 1px solid rgba(0, 186, 242, 0.1);">
+      <img src="https://img.icons8.com/?size=100&id=114436&format=png&color=B129FF" width="70px">
+      <h3><b>� NEURAL KHATA</b></h3>
+      <p><i>Intelligent credit ledger with high-fidelity theme-aware action portals & receivables tracking.</i></p>
+    </td>
+    <td width="33%" align="center" style="padding: 2.5rem;">
+      <img src="https://img.icons8.com/?size=100&id=111494&format=png&color=002E6E" width="70px">
+      <h3><b>📊 TELEMETRY</b></h3>
+      <p><i>High-velocity business dashboards transforming raw sales into actionable intelligence.</i></p>
+    </td>
+  </tr>
+</table>
+</div>
 
 ---
 
-## 🚀 **MISSION INITIALIZATION: ZERO-CONFIG DEPLOY**
+## 🚀 **MISSION INITIALIZATION**
 
-### 🟢 **STP 1: DEPLOY NEURAL CORE**
+<div align="center">
+
+**Step 1: Deploy Neural Backbone**
 ```bash
-# Initialize the ecosystem backbone
 cd backend
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ./run_server.sh
 ```
 
-### 🔵 **STP 2: ACTIVATE HOLOGRAPHIC HUB**
+**Step 2: Activate Holographic Hub**
 ```bash
-# Launch the merchant visual terminal
 cd frontend
 npm install --force
 npm start
 ```
+
+</div>
 
 ---
 
@@ -101,14 +127,14 @@ npm start
 
 ```yaml
 paytm-ai-merchant-copilot:
-  - backend: 🐍 Python Neural Logic
-    - app: Logic Core Matrix
-      - api: Intelligence Handlers (Khata, Inventory, POS)
-      - services: Autonomous Neural Workflows
+  - backend: 🐍 Python Neural Logic Matrix
+    - app: Logic Core
+      - api: Transaction & Inventory Matrix
+      - services: Autonomous Neural Workflows (Vision, LLM)
   - frontend: ⚛️ React Visual Hub
     - src:
-      - components: Glassmorphic UI Elements
-      - styles: Cyber-Thematic CSS v4.0
+      - components: Glassmorphic UI (AddProduct, ProductScanner)
+      - styles: Cyber-Thematic Design v4.0
   - docs: 📖 Architectural Blueprints
 ```
 
@@ -118,5 +144,5 @@ paytm-ai-merchant-copilot:
   <img src="https://img.shields.io/badge/ARCHITECTED_BY-KARTIKEYA-002E6E?style=for-the-badge&logo=apple" alt="Architected by Kartikeya">
   <br />
   <p><b>Designed by Kartikeya – The Future of Merchant Operations</b></p>
-  <p><i>Empowering local businesses with enterprise-grade Neural Intelligence.</i></p>
+  <p><i>Empowering local businesses with advanced enterprise-grade AI.</i></p>
 </div>
