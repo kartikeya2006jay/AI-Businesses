@@ -191,16 +191,19 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
                             className={`neural-node-card ${card.id} bento-item-apex`}
                         >
                             <div className="node-header">
-                                {card.icon}
+                                <div style={{ position: 'relative' }}>
+                                    {card.icon}
+                                    <div className="pulse-ring" style={{ position: 'absolute', top: '-5px', right: '-5px', width: '8px', height: '8px' }} />
+                                </div>
                                 <h3>{card.title}</h3>
                             </div>
 
                             <div className="node-body">
                                 <div className="metric-wrap-elite">
                                     <span className="apex-label">{card.label}</span>
-                                    <span className="apex-value">{card.value}</span>
+                                    <span className="apex-value" style={{ fontSize: '2rem' }}>{card.value}</span>
                                 </div>
-                                <p className="node-description">{card.desc}</p>
+                                <p className="node-description" style={{ fontSize: '0.85rem' }}>{card.desc}</p>
                             </div>
 
                             <div className="node-footer-neural">
