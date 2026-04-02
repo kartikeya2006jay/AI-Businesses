@@ -93,38 +93,38 @@ const NeuralStrategyModal = ({ isOpen, onClose, product, transactions = [], inve
                 >
                     {analysisAnimation && <div className="apex-scan-line" />}
 
-                    {/* Header: APEX V9 */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6rem' }}>
+                    {/* Header: APEX V10 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4rem' }}>
                         <div>
-                            <div style={{ display: 'flex', gap: '15px', alignItems: 'center', marginBottom: '10px' }}>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '8px' }}>
                                 <div className="pulse-ring" />
-                                <span className="apex-label" style={{ margin: 0, opacity: 0.5 }}>Strategic Intelligence // APEX_V9.0</span>
+                                <span className="apex-label" style={{ margin: 0, opacity: 0.5 }}>Strategic Intelligence // ZENITH_V10.0</span>
                             </div>
                             <h1 className="apex-title">{product}</h1>
-                            <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
+                            <div style={{ display: 'flex', gap: '12px', marginTop: '15px' }}>
                                 <span className="apex-status-pill pill-apex-blue">DATA_STREAMS_ACTIVE</span>
-                                <span className="apex-status-pill" style={{ color: 'rgba(255,255,255,0.3)' }}>LAST_REFRESH: {new Date().toLocaleTimeString()}</span>
+                                <span className="apex-status-pill" style={{ color: 'rgba(255,255,255,0.3)' }}>SYNCED: {new Date().toLocaleTimeString()}</span>
                             </div>
                         </div>
-                        <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0, 242, 255, 0.4)', color: '#fff', width: '90px', height: '90px', borderRadius: '35px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: '0.3s' }}>
-                            <X size={40} />
+                        <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0, 242, 255, 0.4)', color: '#fff', width: '70px', height: '70px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: '0.3s' }}>
+                            <X size={32} />
                         </button>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1.1fr', gap: '4rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '3rem' }}>
 
                         {/* ── LEFT: Precision Sales Graph ────────────────── */}
                         <div className="graph-container-apex">
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
                                 <div>
-                                    <h3 style={{ margin: 0, fontSize: '2rem', fontWeight: 1000 }}>Sales Performance</h3>
-                                    <p className="apex-label">Daily Sales Volume (Units Sold)</p>
+                                    <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 1000 }}>Sales Performance</h3>
+                                    <p className="apex-label" style={{ margin: 0 }}>Daily Units Sold</p>
                                 </div>
                                 <div style={{ display: 'flex', gap: '10px' }}>
                                     <select className="apex-select" value={viewMode} onChange={(e) => setViewMode(e.target.value)}>
-                                        <option value="today">Today Only</option>
-                                        <option value="week">Last 7 Cycles</option>
-                                        <option value="month">Full Month Stream</option>
+                                        <option value="today">Today</option>
+                                        <option value="week">7 Cycles</option>
+                                        <option value="month">Full Month</option>
                                     </select>
                                 </div>
                             </div>
@@ -232,8 +232,8 @@ const NeuralStrategyModal = ({ isOpen, onClose, product, transactions = [], inve
                         </div>
 
                         <button
-                            className="ultimate-scan-btn"
-                            style={{ padding: '1.5rem 5rem', fontSize: '1.4rem' }}
+                            className="apex-liquid-btn"
+                            style={{ padding: '1.6rem 6rem' }}
                             onClick={handleRunDeepAnalysis}
                             disabled={analysisAnimation || showDeepInsights}
                         >

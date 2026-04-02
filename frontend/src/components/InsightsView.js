@@ -6,6 +6,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import NeuralStrategyModal from './NeuralStrategyModal';
 import '../styles/InsightsView.css';
+import '../styles/NeuralStrategy.css';
 
 const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => {
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -71,32 +72,32 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
         {
             id: 'velocity',
             title: 'Sales Velocity',
-            icon: <TrendingUp className="node-icon icon-cyan" />,
-            label: 'Top Deceleration Threshold',
+            icon: <Activity className="node-icon icon-cyan" />,
+            label: 'Top Active Node',
             value: insights.bestSeller,
-            desc: `High-frequency movement detected in ${insights.bestSeller} nodes. Optimal restock latency identified.`,
-            tag: 'Positive Delta',
-            tagClass: 'cyan-glow'
+            desc: `High-frequency throughput detected in ${insights.bestSeller} clusters. Optimal restock latency identified.`,
+            tag: 'POSITIVE_DELTA',
+            tagClass: 'pill-apex-green'
         },
         {
             id: 'risk',
             title: 'Risk Parameters',
-            icon: <AlertTriangle className="node-icon icon-gold" />,
-            label: 'Critical Stock Sync',
+            icon: <ShieldCheck className="node-icon icon-gold" />,
+            label: 'Critical Depletion Sync',
             value: `${insights.criticalNodes} Nodes`,
-            desc: `Identified ${insights.criticalNodes} inventory items near critical depletion. Mitigation strategy required.`,
-            tag: 'Action Required',
-            tagClass: 'gold-glow'
+            desc: `Identified ${insights.criticalNodes} inventory nodes near critical exhaustion. Mitigation strategy initialized.`,
+            tag: 'ACTION_REQUIRED',
+            tagClass: 'pill-apex-gold'
         },
         {
             id: 'efficiency',
             title: 'Neural Efficiency',
-            icon: <Activity className="node-icon icon-purple" />,
-            label: 'Matrix Coverage',
+            icon: <Zap className="node-icon icon-purple" />,
+            label: 'Matrix Integrity',
             value: `${insights.matrixCoverage}%`,
-            desc: `Stock health index is optimal. Neural layers synchronized with market volatility.`,
-            tag: 'Stable Matrix',
-            tagClass: 'purple-glow'
+            desc: `Stock health index is optimal. Neural layers synchronized with live market volatility.`,
+            tag: 'STABLE_MATRIX',
+            tagClass: 'pill-apex-blue'
         }
     ];
 
@@ -117,8 +118,8 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
                             <Cpu size={28} />
                         </div>
                         <div className="hero-text-neural">
-                            <h1>Neural Engine <span>v4.3 ULTRA</span></h1>
-                            <p>Merchant Heuristics & Strategic Telemetry</p>
+                            <h1>Neural Engine <span>ZENITH v10.0</span></h1>
+                            <p>Merchant Heuristics & Strategic Telemetry Hub</p>
                         </div>
                     </div>
 
@@ -185,8 +186,9 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
                             key={card.id}
                             initial={{ opacity: 0, scale: 0.9, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
+                            whileHover={{ y: -10, scale: 1.02 }}
                             transition={{ delay: idx * 0.15, duration: 0.5 }}
-                            className={`neural-node-card ${card.id}`}
+                            className={`neural-node-card ${card.id} bento-item-apex`}
                         >
                             <div className="node-header">
                                 {card.icon}
@@ -195,17 +197,17 @@ const InsightsView = ({ inventory = [], transactions = [], summaries = {} }) => 
 
                             <div className="node-body">
                                 <div className="metric-wrap-elite">
-                                    <span className="metric-sub">{card.label}</span>
-                                    <span className="metric-main">{card.value}</span>
+                                    <span className="apex-label">{card.label}</span>
+                                    <span className="apex-value">{card.value}</span>
                                 </div>
                                 <p className="node-description">{card.desc}</p>
                             </div>
 
                             <div className="node-footer-neural">
-                                <span className={`neural-tag ${card.tagClass}`}>
+                                <span className={`apex-status-pill ${card.tagClass}`}>
                                     {card.tag}
                                 </span>
-                                <div className="scan-line-mini" />
+                                <div className="apex-scan-line" style={{ height: '2px', opacity: 0.1 }} />
                             </div>
                         </motion.div>
                     ))}
