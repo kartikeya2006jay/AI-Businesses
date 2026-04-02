@@ -757,15 +757,18 @@
 .receipt-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 10, 30, 0.65);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 1000;
+    background: rgba(0, 10, 30, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2000;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    /* Better for long content */
     justify-content: center;
+    overflow-y: auto;
+    /* Allow overlay to scroll */
+    padding: 2rem 1.5rem;
     animation: overlayFade 0.25s ease;
-    padding: 1.5rem;
 }
 
 @keyframes overlayFade {
@@ -780,17 +783,18 @@
 
 .receipt-modal {
     width: 100%;
-    max-width: 440px;
-    border-radius: 24px !important;
+    max-width: 460px;
+    background: var(--card-bg) !important;
+    border-radius: 28px !important;
     position: relative;
+    margin: auto;
+    /* Magic for flex centering + scrolling */
     animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow:
-        0 40px 100px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(255, 255, 255, 0.12) !important;
-    max-height: 88vh;
-    overflow-y: auto;
-    scrollbar-width: none;
-    background: var(--card-bg) !important;
+        0 40px 100px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+    overflow: visible;
+    /* Let the overlay handle scrolling */
 }
 
 .receipt-modal::-webkit-scrollbar {
