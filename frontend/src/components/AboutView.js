@@ -60,7 +60,7 @@ const AboutView = () => {
         ].map((node, i) => (
           <motion.div
             key={i}
-            whileHover={{ y: -5, background: 'rgba(255,255,255,0.04)' }}
+            whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.04)' }}
             className={`capability-card-zenith glass ${node.color}`}
           >
             <div className="card-icon">{node.icon}</div>
