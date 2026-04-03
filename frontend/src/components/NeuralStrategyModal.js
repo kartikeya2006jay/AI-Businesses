@@ -18,6 +18,35 @@ const NeuralStrategyModal = ({ isOpen, onClose, product, transactions = [], inve
     const [showDeepInsights, setShowDeepInsights] = useState(false);
     const [analysisAnimation, setAnalysisAnimation] = useState(false);
     const [viewMode, setViewMode] = useState('month');
+    const [analysisLogs, setAnalysisLogs] = useState([]);
+
+    // ── Neural Analysis Stream Logic ──────────────────────────
+    useEffect(() => {
+        if (showDeepInsights) {
+            const logs = [
+                "[NODE_0x82A]: INITIALIZING_DEEP_SCAN...",
+                "[SYSTEM]: ACCESSING_HISTORICAL_QUERIES...",
+                "[DATA_UPLINK]: FETCHING_MARKET_NODE_12...",
+                "[NEURAL_CORE]: CROSS_REFERENCING_INVENTORY...",
+                "[ZENITH]: CALCULATING_OPTIMAL_RESTOCK_LATENCY...",
+                "[STRATEGY]: GENERATING_RECOMMENDED_PRICE_ADJUSTMENT...",
+                "[ZENITH]: INSIGHTS_DECODED_SUCCESSFULLY."
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < logs.length) {
+                    setAnalysisLogs(prev => [...prev.slice(-5), logs[i]]);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 800);
+            return () => clearInterval(interval);
+        } else {
+            setAnalysisLogs([]);
+        }
+    }, [showDeepInsights]);
 
     useEffect(() => {
         if (isOpen) {
@@ -249,6 +278,29 @@ const NeuralStrategyModal = ({ isOpen, onClose, product, transactions = [], inve
                             )}
                         </button>
                     </div>
+
+                    {/* ── Technical Ledger: Live Neural Stream ── */}
+                    {showDeepInsights && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="technical-ledger"
+                        >
+                            <div className="ledger-header">
+                                <BrainCircuit size={14} className="icon-cyan" />
+                                <span>LIVE_ANALYSIS_STREAM</span>
+                            </div>
+                            <div className="ledger-body">
+                                {analysisLogs.map((log, idx) => (
+                                    <div key={idx} className="ledger-line">
+                                        <span className="line-prefix">{">>"}</span>
+                                        <span className="line-content">{log}</span>
+                                    </div>
+                                ))}
+                                <div className="ledger-cursor" />
+                            </div>
+                        </motion.div>
+                    )}
 
                     <AnimatePresence>
                         {showDeepInsights && (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from '../components/Sidebar';
 import RevenueCard from '../components/RevenueCard';
 import RevenueChart from '../components/RevenueChart';
@@ -23,6 +23,7 @@ import '../styles/dashboard.css';
 const Dashboard = () => {
     const { theme, setTheme } = useTheme();
     const [activeTab, setActiveTab] = useState('dashboard');
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [summaries, setSummaries] = useState({ daily: 0, weekly: 0, monthly: 0 });
     const [inventory, setInventory] = useState([]);
     const [recentTransactions, setRecentTransactions] = useState([]);
@@ -211,9 +212,14 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-layout">
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Sidebar
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                collapsed={sidebarCollapsed}
+                setCollapsed={setSidebarCollapsed}
+            />
 
-            <main className="dashboard-main">
+            <main className={`dashboard-main${sidebarCollapsed ? ' main-collapsed' : ''}`}>
                 <header className="main-header glass shadow-soft">
                     <div className="header-info">
                         <h1>

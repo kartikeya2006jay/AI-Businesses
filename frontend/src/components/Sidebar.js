@@ -1,77 +1,94 @@
 import React from 'react';
-import { LayoutDashboard, ShoppingCart, Package, Info, Settings, LogOut, BookOpen, User } from 'lucide-react';
+import {
+  LayoutDashboard, ShoppingCart, Package, Info, Settings,
+  LogOut, BookOpen, User, ChevronLeft, ChevronRight,
+  TrendingUp, Brain
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Sidebar.css';
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
   const { logout } = useAuth();
-  const menuItems = [
-    { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-    { id: 'sales', icon: <ShoppingCart size={20} />, label: 'Quick Bill', badge: 'Popular' },
-    { id: 'inventory', icon: <Package size={20} />, label: 'Inventory' },
-    { id: 'customers', icon: <User size={20} />, label: 'Customers', badge: 'New' },
-    { id: 'lending', icon: <BookOpen size={20} />, label: 'Khata Book' },
-    { id: 'insights', icon: <Info size={20} />, label: 'AI Insights' },
-    { id: 'margins', icon: <LayoutDashboard size={20} />, label: 'Profits' },
-    { id: 'settings', icon: <Settings size={20} />, label: 'Settings' },
-    { id: 'about', icon: <Info size={20} />, label: 'About' },
+
+  const menuGroups = [
+    {
+      label: 'Main',
+      items: [
+        { id: 'dashboard', icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
+        { id: 'sales', icon: <ShoppingCart size={18} />, label: 'Quick Bill', badge: 'Popular' },
+        { id: 'inventory', icon: <Package size={18} />, label: 'Inventory' },
+        { id: 'customers', icon: <User size={18} />, label: 'Customers', badge: 'New' },
+      ]
+    },
+    {
+      label: 'Intelligence',
+      items: [
+        { id: 'lending', icon: <BookOpen size={18} />, label: 'Khata Book' },
+        { id: 'insights', icon: <Brain size={18} />, label: 'AI Insights' },
+        { id: 'margins', icon: <TrendingUp size={18} />, label: 'Profits' },
+        { id: 'settings', icon: <Settings size={18} />, label: 'Settings' },
+        { id: 'about', icon: <Info size={18} />, label: 'About' },
+      ]
+    }
   ];
 
   return (
-    <div className="sidebar glass-heavy">
-      <div className="sidebar-brand">
+    <div className={`sidebar glass-heavy ${collapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Header */}
+      <div className="sidebar-header">
         <div className="brand-logo rotating-slow">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 26V6L16 16L26 6V26" stroke="url(#logo_grad)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <path d="M6 26V6L16 16L26 6V26" stroke="url(#lg)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
             <circle cx="16" cy="16" r="3" fill="white">
               <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
             </circle>
             <defs>
-              <linearGradient id="logo_grad" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+              <linearGradient id="lg" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#00baf2" />
                 <stop offset="1" stopColor="#002e6e" />
               </linearGradient>
             </defs>
           </svg>
         </div>
-        <span className="brand-name-premium">Merchant Copilot</span>
+        {!collapsed && <span className="brand-name-premium">Merchant Copilot</span>}
       </div>
 
-      <nav className="sidebar-nav">
-        <div className="nav-section-label">Main Console</div>
-        {menuItems.slice(0, 3).map(item => (
-          <button
-            key={item.id}
-            className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(item.id)}
-          >
-            <div className="item-icon">{item.icon}</div>
-            <span>{item.label}</span>
-            {item.badge && <span className="item-badge">{item.badge}</span>}
-          </button>
-        ))}
+      {/* Collapse Toggle */}
+      <button className="sidebar-toggle" onClick={() => setCollapsed(c => !c)} title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+        {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+      </button>
 
-        <div className="nav-section-label" style={{ marginTop: '1.5rem' }}>Intelligence</div>
-        {menuItems.slice(3).map(item => (
-          <button
-            key={item.id}
-            className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(item.id)}
-          >
-            <div className="item-icon">{item.icon}</div>
-            <span>{item.label}</span>
-            {item.badge && <span className="item-badge alt">{item.badge}</span>}
-          </button>
+      {/* Nav */}
+      <nav className="sidebar-nav">
+        {menuGroups.map(group => (
+          <div key={group.label} className="nav-group">
+            {!collapsed && <div className="nav-section-label">{group.label}</div>}
+            {group.items.map(item => (
+              <button
+                key={item.id}
+                className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(item.id)}
+                title={collapsed ? item.label : undefined}
+              >
+                <div className="item-icon">{item.icon}</div>
+                {!collapsed && <span className="item-label">{item.label}</span>}
+                {!collapsed && item.badge && (
+                  <span className={`item-badge ${item.id === 'customers' ? 'alt' : ''}`}>{item.badge}</span>
+                )}
+                {collapsed && item.badge && <span className="collapsed-dot" />}
+              </button>
+            ))}
+          </div>
         ))}
       </nav>
 
+      {/* Footer */}
       <div className="sidebar-footer">
-        <button className="nav-item logout" onClick={logout}>
-          <div className="item-icon"><LogOut size={20} /></div>
-          <span>Logout</span>
+        <button className="nav-item logout" onClick={logout} title={collapsed ? 'Logout' : undefined}>
+          <div className="item-icon"><LogOut size={18} /></div>
+          {!collapsed && <span className="item-label">Logout</span>}
         </button>
       </div>
-
     </div>
   );
 };

@@ -190,3 +190,76 @@
         opacity: 0.3;
     }
 }
+
+/* ── Technical Ledger ────────────────────────────────────── */
+.technical-ledger {
+    margin-top: 3rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 242, 255, 0.15);
+    border-radius: 20px;
+    padding: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+.ledger-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.65rem;
+    font-weight: 1000;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.ledger-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 120px;
+}
+
+.ledger-line {
+    font-size: 0.8rem;
+    display: flex;
+    gap: 12px;
+    animation: lineFadeIn 0.3s ease forwards;
+}
+
+.line-prefix {
+    color: #00f2ff;
+    font-weight: 1000;
+}
+
+.line-content {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+@keyframes lineFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.ledger-cursor {
+    width: 8px;
+    height: 14px;
+    background: #00f2ff;
+    display: inline-block;
+    margin-left: 5px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

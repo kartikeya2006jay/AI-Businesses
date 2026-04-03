@@ -1,6 +1,4 @@
-/* ───────────────────────────────────────────────
-   DASHBOARD LAYOUT
-─────────────────────────────────────────────── */
+/* ─── Dashboard Layout ─── */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
@@ -8,66 +6,71 @@
 }
 
 .dashboard-main {
-  margin-left: 280px;
+  margin-left: var(--sidebar-w);
   flex: 1;
-  padding: 2.5rem 3.5rem 4rem;
-  max-width: calc(100vw - 280px);
+  padding: 1.5rem 2rem 3rem;
+  max-width: calc(100vw - var(--sidebar-w));
   min-height: 100vh;
+  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ───────────────────────────────────────────────
-   MAIN HEADER
-─────────────────────────────────────────────── */
+/* When sidebar is collapsed */
+.dashboard-main.main-collapsed {
+  margin-left: var(--sidebar-w-collapsed);
+  max-width: calc(100vw - var(--sidebar-w-collapsed));
+}
+
+
+/* ─── Main Header ─── */
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 1.75rem;
+  padding: 0 1.5rem;
+  height: var(--header-h);
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
 }
 
 .header-info h1 {
-  font-size: 1.9rem;
-  font-weight: 800;
+  font-size: 1.4rem;
+  font-weight: 700;
   margin: 0;
   color: var(--secondary);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  letter-spacing: -0.5px;
-}
-
-.tab-pill {
-  font-size: 0.72rem;
-  background: var(--primary);
-  color: white;
-  padding: 5px 14px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0, 186, 242, 0.35);
+  gap: 0.75rem;
+  letter-spacing: -0.4px;
 }
 
 .header-info p {
-  margin: 0.5rem 0 0;
+  margin: 0.3rem 0 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .theme-toggle {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: var(--secondary);
-  background: var(--card-bg);
+  border-radius: 10px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
   transition: all 0.2s ease;
 }
 
@@ -75,31 +78,19 @@
   background: var(--primary);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 12px rgba(0, 186, 242, 0.35);
+  box-shadow: 0 0 16px rgba(0, 186, 242, 0.3);
 }
 
-.header-date {
-  padding: 0.65rem 1.3rem;
-  font-weight: 600;
-  font-size: 0.88rem;
-  border-radius: 12px;
-  color: var(--secondary);
-  background: var(--card-bg);
-  border: 1px solid var(--glass-border);
-  letter-spacing: 0.2px;
-}
-
-/* ───────────────────────────────────────────────
-   CONTENT ENTRY ANIMATION
-─────────────────────────────────────────────── */
-.content-framer {
-  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+/* ─── Content Entry ─── */
+.content-framer,
+.animate-in {
+  animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(10px);
   }
 
   to {
@@ -108,34 +99,21 @@
   }
 }
 
-/* ───────────────────────────────────────────────
-   DASHBOARD CONTENT WRAPPER
-─────────────────────────────────────────────── */
+/* ─── Content Wrapper ─── */
 .dashboard-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.75rem;
 }
 
-/* ───────────────────────────────────────────────
-   SUMMARY CARDS ROW
-─────────────────────────────────────────────── */
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-/* ───────────────────────────────────────────────
-   SECTION LABEL STYLE
-─────────────────────────────────────────────── */
+/* ─── Section Label ─── */
 .section-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.4px;
   color: var(--text-muted);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -148,72 +126,71 @@
   background: var(--glass-border);
 }
 
-/* ───────────────────────────────────────────────
-   DASHBOARD TWO-COLUMN GRID
-─────────────────────────────────────────────── */
+/* ─── Summary Cards ─── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* ─── Two-Column Dashboard Content ─── */
 .dashboard-content {
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
+  grid-template-columns: 1fr 380px;
+  gap: 1.5rem;
   align-items: start;
 }
 
-/* ───────────────────────────────────────────────
-   LEFT COLUMN
-─────────────────────────────────────────────── */
+/* ─── Left Column ─── */
 .left-column {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-}
-
-.chart-container {
-  padding: 2rem 2.2rem 2.2rem;
-}
-
-.chart-container .chart-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--text-muted);
-  margin: 0 0 1.5rem;
-}
-
-/* ───────────────────────────────────────────────
-   STATS ROW (MINI CARDS)
-─────────────────────────────────────────────── */
-.stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
-.mini-card {
-  padding: 2rem;
+.chart-container {
+  padding: 1.5rem 1.75rem;
 }
 
-.mini-card-title {
-  font-size: 0.75rem;
+.chart-container .chart-title {
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: var(--text-muted);
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
-/* ───────────────────────────────────────────────
-   LIVE TRANSACTIONS
-─────────────────────────────────────────────── */
+/* ─── Stats Row (Mini Cards) ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.mini-card {
+  padding: 1.5rem;
+}
+
+.mini-card-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+}
+
+/* ─── Live Transactions ─── */
 .mini-t-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.9rem 1rem;
-  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
   background: transparent;
   border-bottom: 1px solid var(--glass-border);
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
   gap: 1rem;
 }
 
@@ -222,20 +199,20 @@
 }
 
 .mini-t-item:hover {
-  background: rgba(0, 186, 242, 0.05);
+  background: rgba(0, 186, 242, 0.04);
 }
 
 .mini-t-left {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   flex: 1;
   min-width: 0;
 }
 
 .mini-t-product {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -243,97 +220,93 @@
 }
 
 .mini-t-customer {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 4px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .mini-t-amount {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--primary);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
   white-space: nowrap;
 }
 
-/* ───────────────────────────────────────────────
-   INVENTORY STATUS CARD
-─────────────────────────────────────────────── */
+/* ─── Inventory Count Card ─── */
 .inventory-count-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .growth-val {
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   font-weight: 900;
   color: var(--primary);
-  letter-spacing: -2px;
+  letter-spacing: -3px;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .inventory-count-card p {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  font-weight: 600;
-  margin: 0.3rem 0 0;
+  font-weight: 500;
+  margin: 0.25rem 0 0;
 }
 
-/* ───────────────────────────────────────────────
-   RIGHT COLUMN
-─────────────────────────────────────────────── */
+/* ─── Right Column ─── */
 .right-column {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .billing-wrapper {
   border-radius: var(--radius-md);
   overflow: hidden;
+  border: 1px solid var(--glass-border);
 }
 
-/* ───────────────────────────────────────────────
-   STOCK ALERTS
-─────────────────────────────────────────────── */
+/* ─── Stock Alerts ─── */
 .inventory-preview {
-  padding: 2rem 2.2rem;
+  padding: 1.5rem;
 }
 
 .inventory-preview .alert-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
+  gap: 6px;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: var(--error);
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .stock-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .stock-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.9rem 1.1rem;
+  padding: 0.65rem 0.9rem;
   background: rgba(244, 63, 94, 0.04);
-  border: 1px solid rgba(244, 63, 94, 0.12);
-  border-radius: 12px;
-  transition: all 0.2s ease;
+  border: 1px solid rgba(244, 63, 94, 0.1);
+  border-radius: 10px;
+  transition: all 0.15s ease;
 }
 
 .stock-item:hover {
@@ -341,15 +314,15 @@
 }
 
 .stock-item span:first-child {
-  font-weight: 600;
-  font-size: 0.92rem;
+  font-weight: 500;
+  font-size: 0.85rem;
   color: var(--text-main);
 }
 
 .stock-count {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 6px;
   background: rgba(244, 63, 94, 0.1);
   color: var(--error);
@@ -357,52 +330,42 @@
 
 .all-stocked {
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1.25rem 0;
   color: var(--success);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
-/* ───────────────────────────────────────────────
-   EMPTY HINT
-─────────────────────────────────────────────── */
+/* ─── Empty Hint ─── */
 .empty-hint {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   margin: 1.5rem 0;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
 }
 
-/* ───────────────────────────────────────────────
-   RECENT LIST OVERFLOW
-─────────────────────────────────────────────── */
+/* ─── Recent List ─── */
 .recent-list {
   overflow-y: auto;
   max-height: 280px;
 }
 
-/* ───────────────────────────────────────────────
-   CASH DRAWER FULL WIDTH
-─────────────────────────────────────────────── */
+/* ─── Cash Drawer Full Row ─── */
 .cash-drawer-full-row {
-  margin-top: 2rem;
-  grid-column: 1 / -1;
-  /* For grid layouts if used, but we'll use block here */
+  margin-top: 0.5rem;
   width: 100%;
 }
 
 .cash-drawer-wrap {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--glass-border);
   overflow: hidden;
   padding: 0;
 }
 
-/* ───────────────────────────────────────────────
-   SHADOW UTILITIES (referenced in dashboard.js)
-─────────────────────────────────────────────── */
+/* ─── Shadow Utilities ─── */
 .shadow-soft {
   box-shadow: var(--shadow-soft);
 }
