@@ -149,7 +149,10 @@
 }
 
 .chart-container {
-  padding: 1.5rem 1.75rem;
+  padding: 2.5rem;
+  border-radius: 40px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
 }
 
 .chart-container .chart-title {
@@ -169,7 +172,10 @@
 }
 
 .mini-card {
-  padding: 1.5rem;
+  padding: 2.5rem;
+  border-radius: 40px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
 }
 
 .mini-card-title {

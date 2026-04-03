@@ -1,17 +1,22 @@
 .revenue-card {
-    padding: 1.8rem;
+    padding: 2.2rem;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    min-height: 160px;
+    gap: 1.2rem;
+    min-height: 180px;
     justify-content: space-between;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(165deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.03) 100%);
 }
 
 .revenue-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .card-glare {
@@ -89,8 +94,28 @@
     height: 100%;
     border-radius: 100px;
     background: var(--primary);
-    box-shadow: 0 0 10px rgba(0, 186, 242, 0.3);
+    box-shadow: 0 0 15px rgba(0, 186, 242, 0.4);
     transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer-swipe 2s infinite linear;
+}
+
+@keyframes shimmer-swipe {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 [data-theme='dark'] .card-progress-bar {
