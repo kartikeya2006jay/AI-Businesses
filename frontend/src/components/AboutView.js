@@ -7,10 +7,10 @@ const AboutView = () => {
   const [showContact, setShowContact] = useState(false);
 
   const contactInfo = {
-    name: "Kartikeya yadav",
+    name: "Kartikeya Yadav",
     phone: "9720613333",
     email: "kartikeya2006jay@gmail.com",
-    address: "Bangalore karnataka, 560100"
+    address: "Bangalore, Karnataka, 560100"
   };
 
   return (

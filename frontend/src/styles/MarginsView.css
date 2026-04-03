@@ -24,11 +24,11 @@
 }
 
 .header-meta h2 {
-    font-size: 2.5rem;
-    font-weight: 900;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--secondary);
     margin: 0;
-    letter-spacing: -1.5px;
+    letter-spacing: -0.5px;
     background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -41,8 +41,8 @@
     color: var(--primary);
     border-radius: 50px;
     font-size: 0.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     border: 1px solid rgba(0, 186, 242, 0.2);
     box-shadow: 0 0 25px rgba(0, 186, 242, 0.1);
     backdrop-filter: blur(10px);
@@ -112,11 +112,11 @@
 }
 
 .hero-title-group h3 {
-    font-size: 2.8rem;
-    font-weight: 1000;
+    font-size: 1.8rem;
+    font-weight: 700;
     margin: 0;
     color: var(--text-bright);
-    letter-spacing: -2px;
+    letter-spacing: -0.5px;
 }
 
 .hero-title-group p {
@@ -168,10 +168,10 @@
 }
 
 .triad-box .t-val {
-    font-size: 3.5rem;
-    font-weight: 1000;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--text-bright);
-    letter-spacing: -2px;
+    letter-spacing: -0.5px;
 }
 
 .triad-box .t-lbl {
@@ -247,8 +247,8 @@
     color: #00baf2;
     border-radius: 50px;
     font-size: 0.75rem;
-    font-weight: 1000;
-    letter-spacing: 1px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -281,15 +281,24 @@
 }
 
 .orbit-wrap {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background: rgba(0, 186, 242, 0.1);
-    border-radius: 24px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     border: 1px solid rgba(0, 186, 242, 0.2);
+}
+
+.orbit-wrap.warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.orbit-wrap.warning .orbit-icon {
+    color: #f59e0b;
 }
 
 .orbit-icon {
@@ -300,11 +309,11 @@
 }
 
 .h-name {
-    font-size: 2.8rem;
-    font-weight: 950;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--text-bright);
     margin: 0;
-    letter-spacing: -2px;
+    letter-spacing: -0.5px;
 }
 
 .h-stats-flex {
@@ -324,8 +333,8 @@
 }
 
 .tile-val {
-    font-size: 1.6rem;
-    font-weight: 1000;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--text-bright);
 }
 
@@ -380,12 +389,12 @@
 .list-title {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    font-size: 2.2rem;
-    font-weight: 1000;
+    gap: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--secondary);
-    margin-bottom: 5rem;
-    letter-spacing: -1.2px;
+    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
 }
 
 .margin-row-item {
@@ -410,11 +419,11 @@
 }
 
 .p-name {
-    font-size: 2.2rem;
-    font-weight: 900;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: var(--text-bright);
-    margin-bottom: 0.8rem;
-    letter-spacing: -1px;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.2px;
 }
 
 .p-meta-labels {
@@ -473,8 +482,8 @@
 }
 
 .stat-pct {
-    font-size: 1.8rem;
-    font-weight: 1000;
+    font-size: 1.4rem;
+    font-weight: 720;
 }
 
 .stat-label {
@@ -499,24 +508,24 @@
 }
 
 .p-total-profit {
-    font-size: 2.22rem;
-    font-weight: 1000;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--text-bright);
-    letter-spacing: -1px;
+    letter-spacing: -0.2px;
 }
 
 .p-unit-profit {
-    font-size: 1.8rem;
-    font-weight: 900;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: #10b981;
 }
 
 .p-lbl {
-    font-size: 0.75rem;
-    font-weight: 900;
+    font-size: 0.72rem;
+    font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 }
 
 /* ── Animations ── */

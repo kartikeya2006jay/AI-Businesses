@@ -13,8 +13,8 @@ from app.api.reports_api import router as reports_router
 from app.api.customers_api import router as customers_router
 
 app = FastAPI(
-    title="Paytm AI Merchant Copilot",
-    description="AI assistant for small business insights"
+    title="Merchant Copilot: Zenith Engine",
+    description="Zenith V10.0 Neural Backbone - Advanced Merchant Intelligence"
 )
 
 app.add_middleware(

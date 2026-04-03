@@ -42,9 +42,17 @@ const Login = () => {
                 className="auth-card glass"
             >
                 <div className="auth-header">
-                    <div className="auth-logo">M</div>
-                    <h1>Welcome Back</h1>
-                    <p>Login to your Merchant Copilot account</p>
+                    <div className="auth-logo-premium">
+                        <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+                            <path d="M6 26V6L16 16L26 6V26" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                            <circle cx="16" cy="16" r="3" fill="white" />
+                        </svg>
+                    </div>
+                    <h1>
+                        <span style={{ fontWeight: 300 }}>MERCHANT</span>
+                        <span className="text-primary" style={{ fontWeight: 800, marginLeft: '0.4rem' }}>COPILOT</span>
+                    </h1>
+                    <p>Advanced Neural Business Matrix</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">

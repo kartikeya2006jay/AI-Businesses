@@ -24,7 +24,7 @@
 
 <p align="center">
   <a href="https://github.com/kartikeya2006jay/paytm-ai-merchant-copilot">
-    <img src="https://img.shields.io/badge/VERSION-CORE_V4.3-00BBA2?style=flat-square&logo=git&logoColor=white" alt="Version">
+    <img src="https://img.shields.io/badge/VERSION-CORE_V10.0-00BBA2?style=flat-square&logo=git&logoColor=white" alt="Version">
   </a>
   <a href="#">
     <img src="https://img.shields.io/badge/BACKEND-FASTAPI_HYPER-002E6E?style=flat-square&logo=fastapi&logoColor=white" alt="Backend">
@@ -165,6 +165,6 @@ paytm-ai-merchant-copilot:
 <div align="center">
   <img src="https://img.shields.io/badge/ARCHITECTED_BY-KARTIKEYA-002E6E?style=for-the-badge&logo=apple" alt="Architected by Kartikeya">
   <br />
-  <p><b>Designed by Kartikeya – The Future of Merchant Operations</b></p>
+  <p><b>Designed by Kartikeya Yadav – The Future of Merchant Operations</b></p>
   <p><i>Empowering local businesses with advanced enterprise-grade AI.</i></p>
 </div>

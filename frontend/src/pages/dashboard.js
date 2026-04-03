@@ -229,7 +229,7 @@ const Dashboard = () => {
                                     activeTab === 'sales' ? 'Quick Bill' :
                                         activeTab === 'lending' ? 'Khata Book' :
                                             activeTab === 'insights' ? 'AI Insights' :
-                                                activeTab === 'margins' ? 'Profit analysis' :
+                                                activeTab === 'margins' ? 'Profit Analysis' :
                                                     activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                             </span>
                         </h1>
