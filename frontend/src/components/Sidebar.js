@@ -36,7 +36,7 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
     <div className={`sidebar glass-heavy ${collapsed ? 'sidebar-collapsed' : ''}`}>
       {/* Header */}
       <div className="sidebar-header">
-        <div className="brand-logo rotating-slow">
+        <div className="brand-logo">
           <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
             <path d="M6 26V6L16 16L26 6V26" stroke="url(#lg)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
             <circle cx="16" cy="16" r="3" fill="white">

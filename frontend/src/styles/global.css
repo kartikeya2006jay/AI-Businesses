@@ -114,6 +114,27 @@
     --sidebar-bg: #0e0604;
 }
 
+[data-theme='cream'] {
+    --bg: #fffbf0;
+    --bg-secondary: #fffef5;
+    --card-bg: #ffffff;
+    --primary: #c9a050;
+    /* Refined Gold */
+    --primary-dark: #a67c37;
+    --secondary: #5c4033;
+    /* Deep Bronze/Brown */
+    --text-main: #5c4033;
+    --text-muted: #8b7355;
+    --glass: rgba(255, 251, 240, 0.92);
+    --glass-border: rgba(201, 160, 80, 0.2);
+    --shadow-soft: 0 4px 24px rgba(92, 64, 51, 0.08);
+    --shadow-bold: 0 12px 48px rgba(92, 64, 51, 0.15);
+    --grad-1: rgba(201, 160, 80, 0.12);
+    --grad-2: rgba(255, 251, 240, 0.5);
+    --sidebar-bg: #fffbf0;
+    --accent: #d4af37;
+}
+
 /* ─── Reset & Base ─── */
 *,
 *::before,
