@@ -129,24 +129,27 @@ const MarginsView = () => {
                         <span className="dot-pulse"></span>
                     </div>
                     <div className="hero-title-group">
-                        <h3>Profit Margin Analyzer</h3>
-                        <p>Per-product profitability insights for smarter stocking</p>
+                        <h3>Strategy Hub</h3>
+                        <p>High-fidelity profitability vectors & stocking intelligence</p>
                     </div>
                 </div>
 
                 <div className="metrics-triad">
-                    <div className="triad-box glow-blue">
+                    <motion.div whileHover={{ y: -5 }} className="triad-box glow-blue">
+                        <div className="box-icon"><PieChart size={20} /></div>
                         <span className="t-val">{marginData.avgMargin}%</span>
-                        <span className="t-lbl">AVG. MARGIN</span>
-                    </div>
-                    <div className="triad-box glow-green accent">
+                        <span className="t-lbl">YIELD RATIO</span>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -5 }} className="triad-box glow-green accent">
+                        <div className="box-icon"><TrendingUp size={20} /></div>
                         <span className="t-val">₹{marginData.totalProfit.toLocaleString()}</span>
-                        <span className="t-lbl">TOTAL PROFIT</span>
-                    </div>
-                    <div className="triad-box">
+                        <span className="t-lbl">NET SURPLUS</span>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -5 }} className="triad-box glow-gold">
+                        <div className="box-icon"><Activity size={20} /></div>
                         <span className="t-val">₹{marginData.totalRevenue.toLocaleString()}</span>
-                        <span className="t-lbl">TOTAL REVENUE</span>
-                    </div>
+                        <span className="t-lbl">GROSS SCALE</span>
+                    </motion.div>
                 </div>
                 <div className="hero-orb-decoration"></div>
             </motion.div>
@@ -161,24 +164,33 @@ const MarginsView = () => {
                 >
                     <div className="elite-badge"><Award size={14} /> PEAK MARGIN</div>
                     <div className="h-header">
-                        <Target size={16} className="text-secondary" />
-                        <span>BEST CAPTURE</span>
+                        <Zap size={16} className="text-secondary" />
+                        <span>INTELLIGENCE RADAR: BEST CAPTURE</span>
                     </div>
                     <div className="elite-visual-hub">
                         <div className="orbit-wrap">
-                            <Zap className="orbit-icon" />
+                            <Target className="orbit-icon" />
                         </div>
                         <div className="elite-info">
                             <h4 className="h-name">{marginData.bestProduct.product}</h4>
-                            <div className="h-price-mix">
-                                <span className="h-u-price">₹{marginData.bestProduct.unitPrice}</span>
-                                <span className="h-pct-badge">{marginData.bestProduct.margin}% profit</span>
-                            </div>
+                        </div>
+                    </div>
+                    <div className="h-stats-flex">
+                        <div className="h-stat-tile">
+                            <span className="tile-val">₹{marginData.bestProduct.unitPrice}</span>
+                            <span className="tile-lbl">Price</span>
+                        </div>
+                        <div className="h-stat-tile highlight">
+                            <span className="tile-val">{marginData.bestProduct.margin}%</span>
+                            <span className="tile-lbl">Yield</span>
+                        </div>
+                        <div className="h-stat-tile">
+                            <span className="tile-val">₹{marginData.bestProduct.profit.toLocaleString()}</span>
+                            <span className="tile-lbl">Net</span>
                         </div>
                     </div>
                     <div className="elite-meta">
                         <p>Immediate profitability leader. <span>Optimal pricing active.</span></p>
-                        <span className="h-cost-ref">₹{marginData.bestProduct.costPerUnit} Cost ・ ₹{marginData.bestProduct.profit.toLocaleString()} Profit</span>
                     </div>
                     <div className="elite-glow"></div>
                 </motion.div>
@@ -187,23 +199,30 @@ const MarginsView = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="h-card glass glow-amber"
+                    className="h-card warning-highlight-card glow-amber"
                 >
+                    <div className="elite-badge warning"><ShieldCheck size={14} /> WARNING: VOLATILE</div>
                     <div className="h-header">
                         <TrendingDown size={16} className="text-warning" />
-                        <span>LOWEST MARGIN</span>
+                        <span>MARGIN DEFICIT DETECTED</span>
                     </div>
                     <div className="h-content">
                         <div className="h-prod-row">
                             <h4 className="h-name">{marginData.worstProduct.product}</h4>
-                            <div className="h-price-mix">
-                                <span className="h-u-price">₹{marginData.worstProduct.unitPrice}</span>
-                                <span className="h-t-profit">₹{marginData.worstProduct.profit.toLocaleString()}</span>
-                            </div>
                         </div>
-                        <div className="h-meta">
-                            <span className="h-pct text-warning">{marginData.worstProduct.margin}% profit</span>
-                            <span className="h-cost-ref">₹{marginData.worstProduct.costPerUnit} Cost ・ ₹{marginData.worstProduct.profit.toLocaleString()} Profit</span>
+                        <div className="h-stats-flex">
+                            <div className="h-stat-tile">
+                                <span className="tile-val">₹{marginData.worstProduct.unitPrice}</span>
+                                <span className="tile-lbl">Price</span>
+                            </div>
+                            <div className="h-stat-tile warning">
+                                <span className="tile-val">{marginData.worstProduct.margin}%</span>
+                                <span className="tile-lbl">Yield</span>
+                            </div>
+                            <div className="h-stat-tile">
+                                <span className="tile-val">₹{marginData.worstProduct.profit.toLocaleString()}</span>
+                                <span className="tile-lbl">Net</span>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
