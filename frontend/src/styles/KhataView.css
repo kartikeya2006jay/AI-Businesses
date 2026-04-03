@@ -75,11 +75,12 @@
 }
 
 .customer-row:hover {
-    background: rgba(var(--primary-rgb), 0.05);
+    background: var(--panel-bg);
 }
 
 .customer-row.header {
-    background: rgba(var(--secondary-rgb), 0.03);
+    background: var(--panel-bg);
+    opacity: 0.8;
     font-weight: 700;
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -108,7 +109,7 @@
 
 .settle-btn {
     background: var(--primary);
-    color: white;
+    color: var(--text-bright);
     border: none;
     padding: 0.6rem 1rem;
     border-radius: 10px;

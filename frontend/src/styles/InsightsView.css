@@ -34,13 +34,11 @@
     flex-direction: column;
     gap: 2rem;
     padding: 2.5rem;
-    background: rgba(11, 15, 26, 0.4);
+    background: var(--glass);
     backdrop-filter: blur(25px);
-    border: 1px solid rgba(0, 186, 242, 0.2);
+    border: 1px solid var(--glass-border);
     border-radius: 32px;
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.3),
-        inset 0 0 20px rgba(0, 186, 242, 0.05);
+    box-shadow: var(--shadow-bold);
 }
 
 .hero-top-row {
@@ -75,11 +73,8 @@
     font-size: 2.4rem;
     font-weight: 900;
     margin: 0;
-    letter-spacing: -1.5px;
-    background: linear-gradient(90deg, #fff 30%, #00baf2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    color: var(--text-bright);
 }
 
 .hero-text-neural h1 span {
@@ -114,8 +109,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 186, 242, 0.3);
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 18px;
     padding: 0 1.5rem;
     height: 58px;
@@ -138,14 +133,15 @@
     width: 100%;
     background: transparent;
     border: none;
-    color: white;
+    color: var(--text-main);
     font-size: 1.1rem;
     font-weight: 500;
     outline: none;
 }
 
 .neural-search-box input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
+    opacity: 0.5;
 }
 
 .search-results-dropdown {
@@ -286,10 +282,10 @@
 .neural-node-card {
     position: relative;
     padding: 2.2rem;
-    background: rgba(11, 15, 26, 0.4);
+    background: var(--card-bg);
     backdrop-filter: blur(25px);
     border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
     display: flex;
     flex-direction: column;
     gap: 1.8rem;

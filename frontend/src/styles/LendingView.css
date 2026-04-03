@@ -191,7 +191,7 @@
     padding: 0.8rem;
     background: #002e6e;
     /* Using a fixed dark blue for consistency */
-    color: white;
+    color: var(--text-bright);
     border: none;
     border-radius: 12px;
     font-weight: 700;
@@ -226,7 +226,7 @@
     display: inline-block;
     margin-top: 0.5rem;
     padding: 0.4rem 1rem;
-    background: white;
+    background: var(--bg);
     border-radius: 20px;
     color: var(--error);
     font-weight: 800;
@@ -264,7 +264,7 @@
 }
 
 [data-theme='dark'] .card-amount {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--panel-bg);
 }
 
 [data-theme='dark'] .outstanding-pill {

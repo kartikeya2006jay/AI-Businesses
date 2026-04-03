@@ -38,7 +38,7 @@
 .paid-stamp-container {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--glass);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     display: flex;
@@ -158,12 +158,12 @@
     width: 46px;
     height: 46px;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--text-bright);
     flex-shrink: 0;
     backdrop-filter: blur(8px);
 }
@@ -200,9 +200,9 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.78rem;
     font-weight: 700;
-    color: white;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-bright);
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
     padding: 4px 10px;
     border-radius: 6px;
     letter-spacing: 1px;
@@ -420,9 +420,8 @@
     height: 48px;
     width: 48px;
     border-radius: 14px;
-    background: #00baf2;
-    /* Solid Paytm Blue */
-    color: #ffffff !important;
+    background: var(--primary);
+    color: var(--text-bright) !important;
     border: none;
     display: flex;
     align-items: center;
@@ -430,7 +429,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
-    box-shadow: 0 6px 20px rgba(0, 186, 242, 0.35);
+    box-shadow: 0 6px 20px var(--grad-2);
 }
 
 .add-to-bill-btn svg {
@@ -792,7 +791,7 @@
     animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow:
         0 40px 100px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+        0 0 0 1px var(--glass-border) !important;
     overflow: visible;
     /* Let the overlay handle scrolling */
 }
