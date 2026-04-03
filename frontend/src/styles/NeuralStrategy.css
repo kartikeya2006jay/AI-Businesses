@@ -6,7 +6,7 @@
 .neural-modal-overlay {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(0, 10, 20, 0.98) 0%, #000 100%);
+    background: var(--bg-overlay, radial-gradient(circle at center, rgba(0, 10, 20, 0.98) 0%, #000 100%));
     backdrop-filter: blur(40px);
     z-index: 1000;
     display: flex;
@@ -104,16 +104,16 @@
 /* ── Apex Dropdown (Supreme) ───────────────────────────────── */
 .apex-select {
     appearance: none;
-    background: rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.8) !important;
+    background: var(--input-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
     padding: 8px 32px 8px 16px !important;
     border-radius: 12px;
     font-weight: 900;
     font-size: 0.7rem;
     text-transform: uppercase;
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
     background-position: right 10px center !important;
 }
@@ -189,8 +189,8 @@
 /* ── Technical Ledger ────────────────────────────────────── */
 .technical-ledger {
     margin-top: 3rem;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(0, 242, 255, 0.15);
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 1.5rem;
     font-family: 'JetBrains Mono', monospace;
@@ -204,7 +204,7 @@
     gap: 10px;
     font-size: 0.65rem;
     font-weight: 1000;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     margin-bottom: 1rem;
     letter-spacing: 2px;
 }
@@ -229,7 +229,7 @@
 }
 
 .line-content {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-main);
 }
 
 @keyframes lineFadeIn {
@@ -257,4 +257,26 @@
     50% {
         opacity: 0;
     }
+}
+
+/* ─── Light/Cream Theme Overrides ─── */
+[data-theme='light'] .neural-modal-overlay,
+[data-theme='cream'] .neural-modal-overlay {
+    --bg-overlay: radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, var(--bg) 100%);
+}
+
+[data-theme='light'] .apex-title,
+[data-theme='cream'] .apex-title {
+    color: var(--text-bright);
+}
+
+[data-theme='light'] .bento-item-apex,
+[data-theme='cream'] .bento-item-apex {
+    background: var(--bg-secondary);
+    border-color: var(--glass-border);
+}
+
+[data-theme='light'] .apex-select,
+[data-theme='cream'] .apex-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
 }
