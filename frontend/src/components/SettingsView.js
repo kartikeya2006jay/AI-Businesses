@@ -229,7 +229,7 @@ const SettingsView = () => {
                                 { id: 'royal', name: 'Royal Merchant', icon: <Monitor color="#fbbf24" />, desc: 'Elite Navy & Gold palette' },
                                 { id: 'sunset', name: 'Solar Sunset', icon: <Sun color="#f97316" />, desc: 'Warm energetic contrast' },
                                 { id: 'cream', name: 'Golden Cream', icon: <Droplet color="#d97706" />, desc: 'Premium royal warmth' },
-                                { id: 'light', name: 'Clean White', icon: <Sun color="#64748b" />, desc: 'Minimalist light mode' }
+                                { id: 'light', name: 'Pure White', icon: <Sun color="#1d4ed8" />, desc: 'Crisp professional light mode' }
                             ].map(t => (
                                 <div key={t.id}
                                     data-theme={t.id}

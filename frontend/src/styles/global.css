@@ -55,23 +55,41 @@
 }
 
 [data-theme='light'] {
-    --bg: #f5f7fb;
+    /* Core Palette */
+    --primary: #1d4ed8;
+    --primary-dark: #1e40af;
+    --secondary: #0f172a;
+    --accent: #f59e0b;
+    --success: #16a34a;
+    --error: #dc2626;
+
+    /* Backgrounds */
+    --bg: #f1f5f9;
     --bg-secondary: #ffffff;
     --card-bg: #ffffff;
-    --secondary: #0f172a;
+    --sidebar-bg: #ffffff;
+
+    /* Text */
     --text-main: #1e293b;
     --text-muted: #64748b;
-    --glass: rgba(255, 255, 255, 0.95);
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
-    --shadow-bold: 0 10px 40px rgba(0, 0, 0, 0.1);
-    --grad-1: rgba(0, 186, 242, 0.06);
-    --grad-2: rgba(0, 46, 110, 0.04);
-    --sidebar-bg: #ffffff;
-    --input-bg: #f8fafc;
-    --panel-bg: rgba(0, 0, 0, 0.02);
     --text-bright: #0f172a;
-    --border-glass: rgba(0, 0, 0, 0.08);
+
+    /* Glass / Cards */
+    --glass: #ffffff;
+    --glass-border: rgba(15, 23, 42, 0.08);
+    --border-glass: rgba(15, 23, 42, 0.08);
+
+    /* Shadows */
+    --shadow-soft: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+    --shadow-bold: 0 4px 24px rgba(0, 0, 0, 0.1);
+
+    /* Gradient overlays */
+    --grad-1: rgba(29, 78, 216, 0.06);
+    --grad-2: rgba(15, 23, 42, 0.03);
+
+    /* Inputs & Panels */
+    --input-bg: #f8fafc;
+    --panel-bg: rgba(15, 23, 42, 0.025);
 }
 
 [data-theme='midnight'] {
@@ -236,6 +254,7 @@ html {
 .glass:hover {
     box-shadow: var(--shadow-bold);
     transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 /* ─── Shimmer (Skeleton) ─── */
@@ -372,6 +391,44 @@ h4 {
     color: var(--secondary);
     font-weight: 700;
     line-height: 1.3;
+}
+
+/* ─── Global Text Utilities ─── */
+.text-primary {
+    color: var(--primary);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-bright {
+    color: var(--text-bright);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-warning {
+    color: var(--accent);
+}
+
+.text-error {
+    color: var(--error);
+}
+
+/* ─── Focus Ring (Accessibility) ─── */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ─── Selection Color ─── */
+::selection {
+    background: rgba(0, 186, 242, 0.2);
+    color: var(--text-bright);
 }
 
 /* ─── Global Print Isolation ─── */
