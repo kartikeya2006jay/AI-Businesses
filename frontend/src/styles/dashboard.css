@@ -34,6 +34,9 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
+  overflow: visible !important;
+  position: relative;
+  z-index: 1000;
 }
 
 .header-info h1 {
@@ -393,4 +396,211 @@
 
 .shadow-bold {
   box-shadow: var(--shadow-bold);
+}
+
+/* ─── Notification Styles ─── */
+.header-action-btn svg {
+  pointer-events: none;
+}
+
+.notification-wrapper {
+  position: relative;
+  margin-right: 0.8rem;
+  display: flex;
+  align-items: center;
+  z-index: 120;
+}
+
+.header-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 105;
+  pointer-events: auto;
+}
+
+.header-action-btn:hover,
+.header-action-btn.active {
+  background: var(--grad-1);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--primary), transparent 80%);
+}
+
+.noti-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 15px);
+  right: -10px;
+  width: 380px;
+  z-index: 2000;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  background: #0a0a0c;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 186, 242, 0.1);
+  animation: dropdown-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.noti-header {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.noti-header h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.close-noti {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.noti-body {
+  padding: 1.25rem;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.noti-item.highlight {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.noti-item.highlight::before {
+  content: 'AI ANALYTICS';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #d4af37;
+  color: #000;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 0.25rem 0.6rem;
+  border-bottom-left-radius: 8px;
+}
+
+.noti-icon.pulse {
+  width: 42px;
+  height: 42px;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4af37;
+  flex-shrink: 0;
+}
+
+.noti-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #d4af37;
+  margin-bottom: 0.5rem;
+}
+
+.noti-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  margin: 0;
+  font-weight: 500;
+}
+
+.noti-header-mini {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.noti-meta-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.noti-meta-top span {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.noti-content-main {
+  padding-top: 0.5rem;
+}
+
+.noti-footer {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.noti-footer button {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--text-bright);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.noti-footer button:hover {
+  background: var(--primary);
+  color: var(--bg);
 }

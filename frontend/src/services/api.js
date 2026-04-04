@@ -27,5 +27,6 @@ export const getInventoryOptimization = () => api.get('/inventory-optimization')
 export const getReportsMargins = () => api.get('/reports/margins');
 export const getCustomerAnalytics = () => api.get('/customers/analytics');
 export const getCashDrawer = () => api.get('/reports/cash-drawer');
+export const getDailyNotification = () => api.get('/reports/daily-notification');
 
 export default api;

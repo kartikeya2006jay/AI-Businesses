@@ -13,9 +13,9 @@ import LendingView from '../components/LendingView';
 import MarginsView from '../components/MarginsView';
 import CustomersView from '../components/CustomersView';
 import CashDrawer from '../components/CashDrawer';
-import { getSummaries, getInventory, getTransactions } from '../services/api';
+import { getSummaries, getInventory, getTransactions, getDailyNotification } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
-import { Moon, Sun, User, AlertCircle, Package, Calendar, Monitor } from 'lucide-react';
+import { Moon, Sun, User, AlertCircle, Package, Calendar, Monitor, Palette, Bell, TrendingUp, CheckCircle2 } from 'lucide-react';
 
 import '../styles/global.css';
 import '../styles/dashboard.css';
@@ -23,15 +23,30 @@ import '../styles/dashboard.css';
 const Dashboard = () => {
     const { theme, setTheme } = useTheme();
     const [activeTab, setActiveTab] = useState('dashboard');
+    const [settingsTab, setSettingsTab] = useState('general');
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [summaries, setSummaries] = useState({ daily: 0, weekly: 0, monthly: 0 });
     const [inventory, setInventory] = useState([]);
     const [recentTransactions, setRecentTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [dailyNotification, setDailyNotification] = useState(null);
+    const [showNotifications, setShowNotifications] = useState(false);
 
     useEffect(() => {
         fetchData();
+        fetchDailyNotification();
     }, []);
+
+    const fetchDailyNotification = async () => {
+        try {
+            const res = await getDailyNotification();
+            if (res.data.show) {
+                setDailyNotification(res.data);
+            }
+        } catch (error) {
+            console.error("Error fetching daily notification:", error);
+        }
+    };
 
     const fetchData = async () => {
         setLoading(true);
@@ -197,7 +212,7 @@ const Dashboard = () => {
             case 'customers':
                 return <CustomersView />;
             case 'settings':
-                return <SettingsView />;
+                return <SettingsView initialTab={settingsTab} />;
             case 'about':
                 return <AboutView />;
             default:
@@ -237,12 +252,69 @@ const Dashboard = () => {
                     </div>
 
                     <div className="header-actions">
+                        <div className="notification-wrapper">
+                            <button
+                                className={`header-action-btn ${showNotifications ? 'active' : ''}`}
+                                onClick={() => setShowNotifications(!showNotifications)}
+                                title="Notifications"
+                            >
+                                <Bell size={20} />
+                                {dailyNotification && <span className="noti-badge" />}
+                            </button>
+
+                            {showNotifications && (
+                                <div className="notification-dropdown glass shadow-bold animate-in">
+                                    <div className="noti-header">
+                                        <h3>System Notifications</h3>
+                                        <button onClick={() => setShowNotifications(false)} className="close-noti">
+                                            <CheckCircle2 size={14} />
+                                        </button>
+                                    </div>
+                                    <div className="noti-body">
+                                        {dailyNotification ? (
+                                            <div className="noti-item highlight">
+                                                <div className="noti-header-mini">
+                                                    <div className="noti-icon pulse">
+                                                        <TrendingUp size={20} />
+                                                    </div>
+                                                    <div className="noti-meta-top">
+                                                        <p className="noti-title">Neural Performance Analysis</p>
+                                                        <span>Yesterday • {dailyNotification.date}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="noti-content-main">
+                                                    <p className="noti-text">{dailyNotification.message}</p>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="noti-empty">
+                                                <p>No new notifications today.</p>
+                                                <span>Check back tomorrow for your daily report.</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="noti-footer">
+                                        <button onClick={() => {
+                                            setSettingsTab('notifications');
+                                            setActiveTab('settings');
+                                            setShowNotifications(false);
+                                        }}>
+                                            Notification Settings
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <button
-                            className="theme-toggle-fab"
-                            onClick={() => setTheme(theme === 'dark' ? 'glass' : 'dark')}
-                            title="Toggle Night Mode"
+                            className="header-action-btn"
+                            onClick={() => {
+                                setSettingsTab('appearance');
+                                setActiveTab('settings');
+                            }}
+                            title="Visual Experience"
                         >
-                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                            <Palette size={20} />
                         </button>
                         <div className="header-date glass">
                             <Calendar size={14} />

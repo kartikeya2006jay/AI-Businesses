@@ -5,10 +5,14 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import '../styles/SettingsView.css';
 
-const SettingsView = () => {
+const SettingsView = ({ initialTab = 'general' }) => {
     const { theme, setTheme } = useTheme();
     const { logout } = useAuth();
-    const [activeTab, setActiveTab] = useState('general');
+    const [activeTab, setActiveTab] = useState(initialTab);
+
+    useEffect(() => {
+        setActiveTab(initialTab);
+    }, [initialTab]);
     const [settings, setSettings] = useState({
         business_name: 'Apex Retail',
         email: 'admin@apexretail.com',
