@@ -26,5 +26,26 @@
     "title": "New Sale Captured",
     "text": "vipin purchased red label tea",
     "timestamp": "2026-04-04T16:42:24.610193"
+  },
+  {
+    "id": "evt_1775318067.012752",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "abhi purchased soap -dove, Fair&lovely. Total: \u20b9100",
+    "timestamp": "2026-04-04T21:24:27.012763"
+  },
+  {
+    "id": "evt_1775318178.009191",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "vipin_final_test purchased hammer headset, red label tea. Total: \u20b91310",
+    "timestamp": "2026-04-04T21:26:18.009202"
+  },
+  {
+    "id": "evt_1775318287.643528",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "abhi purchased realme headset. Total: \u20b91300",
+    "timestamp": "2026-04-04T21:28:07.643543"
   }
 ]

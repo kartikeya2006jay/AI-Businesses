@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 import pandas as pd
 import os
+from typing import List
 from app.utils.logger import log_event
 
 router = APIRouter()
@@ -93,6 +94,94 @@ def add_transaction(transaction: Transaction):
     log_event("PURCHASE", "New Sale Captured", event_text)
         
     return {"message": "Transaction recorded", "product": transaction.product}
+
+
+class BulkTransaction(BaseModel):
+    items: List[Transaction]
+    customer_name: str
+    is_credit: bool
+
+@router.post("/transactions/bulk")
+def add_bulk_transactions(bulk: BulkTransaction):
+    if not os.path.exists(INVENTORY_FILE):
+        raise HTTPException(status_code=500, detail="Inventory file not found")
+    
+    inventory_df = pd.read_csv(INVENTORY_FILE)
+    total_amount = 0
+    product_names = []
+    
+    # Process items
+    for item in bulk.items:
+        if item.product not in inventory_df['product'].values:
+             raise HTTPException(status_code=400, detail=f"Product '{item.product}' not in inventory")
+        
+        idx = inventory_df[inventory_df['product'] == item.product].index[0]
+        current_qty = inventory_df.at[idx, 'quantity']
+        
+        if current_qty < item.quantity:
+             raise HTTPException(status_code=400, detail=f"Insufficient stock for {item.product}")
+            
+        inventory_df.at[idx, 'quantity'] = current_qty - item.quantity
+        total_amount += item.amount
+        product_names.append(item.product)
+        
+        # Record to CSV
+        tr_row = pd.DataFrame([{
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "product": item.product,
+            "amount": item.amount,
+            "customer_name": bulk.customer_name,
+            "is_credit": bulk.is_credit
+        }])
+        
+        # Record to CSV with Header Check
+        if os.path.exists(TRANSACTIONS_FILE):
+            check_df = pd.read_csv(TRANSACTIONS_FILE, nrows=0)
+            if "customer_name" not in check_df.columns:
+                main_df = pd.read_csv(TRANSACTIONS_FILE)
+                main_df["customer_name"] = "Legacy User"
+                main_df["is_credit"] = False
+                main_df = pd.concat([main_df, tr_row], ignore_index=True)
+                main_df.to_csv(TRANSACTIONS_FILE, index=False)
+            else:
+                tr_row.to_csv(TRANSACTIONS_FILE, mode='a', header=False, index=False)
+        else:
+            tr_row.to_csv(TRANSACTIONS_FILE, index=False)
+
+    # Save inventory
+    inventory_df.to_csv(INVENTORY_FILE, index=False)
+    
+    # Handle Khata
+    if bulk.is_credit:
+        LENDING_FILE = "data/lending.csv"
+        if os.path.exists(LENDING_FILE):
+            ldf = pd.read_csv(LENDING_FILE)
+            if bulk.customer_name in ldf['customer_name'].values:
+                lidx = ldf[ldf['customer_name'] == bulk.customer_name].index[0]
+                ldf.at[lidx, 'balance'] += total_amount
+                ldf.at[lidx, 'last_transaction'] = datetime.now().strftime("%Y-%m-%d")
+                ldf.to_csv(LENDING_FILE, index=False)
+            else:
+                new_l = pd.DataFrame([{"customer_name": bulk.customer_name, "balance": total_amount, "last_transaction": datetime.now().strftime("%Y-%m-%d")}])
+                pd.concat([ldf, new_l], ignore_index=True).to_csv(LENDING_FILE, index=False)
+        else:
+            pd.DataFrame([{"customer_name": bulk.customer_name, "balance": total_amount, "last_transaction": datetime.now().strftime("%Y-%m-%d")}]).to_csv(LENDING_FILE, index=False)
+
+    # Grouped Notification
+    if product_names:
+        summary = f"{bulk.customer_name} purchased {product_names[0]}"
+        if len(product_names) > 1:
+            summary += f", {product_names[1]}"
+        if len(product_names) > 2:
+            summary += f" and {len(product_names)-2} more"
+        
+        summary += f". Total: ₹{int(total_amount)}"
+        if bulk.is_credit:
+            summary += " (Added to Khata)"
+            
+        log_event("PURCHASE", "New Sale Captured", summary)
+
+    return {"message": "Grouped purchase recorded", "items_count": len(bulk.items)}
 
 class InventoryItem(BaseModel):
     product: str

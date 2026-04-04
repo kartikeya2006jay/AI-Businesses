@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Plus, Trash2, Printer, CheckCircle, FileText, Camera, X, Receipt } from 'lucide-react';
-import { addTransaction } from '../services/api';
+import { addTransaction, addBulkTransaction } from '../services/api';
 import ProductScanner from './ProductScanner';
 import '../styles/SaleEntryForm.css';
 
@@ -65,15 +65,11 @@ const SaleEntryForm = ({ inventory, onSaleSuccess }) => {
             timeStyle: 'short'
         });
         try {
-            for (const item of cart) {
-                await addTransaction({
-                    product: item.product,
-                    quantity: item.quantity,
-                    amount: item.amount,
-                    customer_name: customerName || 'Anonymous',
-                    is_credit: isCredit
-                });
-            }
+            await addBulkTransaction({
+                items: cart,
+                customer_name: customerName || 'Anonymous',
+                is_credit: isCredit
+            });
             setLastBillTime(billTime);
             setLastBillData({
                 customer: customerName || 'Anonymous',

@@ -302,8 +302,8 @@ const Dashboard = () => {
                                                 <div className="divider-line"></div>
                                             </div>
                                         )}
-                                        {dailyNotification && dailyNotification.live && dailyNotification.live.map(alert => (
-                                            <div key={alert.id} className={`noti-item live ${alert.type.toLowerCase()}`}>
+                                        {dailyNotification && dailyNotification.live && dailyNotification.live.map((alert, index) => (
+                                            <div key={alert.id} className={`noti-item live ${alert.type.toLowerCase()} ${index === 0 ? 'new-alert' : ''}`}>
                                                 <div className="noti-icon alert-icon">
                                                     {alert.type === 'PURCHASE' ? <ShoppingBag size={18} /> :
                                                         alert.type === 'INVENTORY' ? <Package size={18} /> :
