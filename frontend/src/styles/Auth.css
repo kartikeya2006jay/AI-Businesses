@@ -98,6 +98,9 @@
     margin: 0 auto 1.5rem;
     box-shadow: 0 10px 30px color-mix(in srgb, var(--primary), transparent 70%);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--bg);
+    font-weight: 800;
+    font-size: 2rem;
 }
 
 .auth-header h1 {
@@ -165,8 +168,8 @@
 }
 
 .auth-submit {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: white;
+    background: var(--primary);
+    color: var(--bg);
     border: none;
     padding: 1rem;
     border-radius: 14px;

@@ -124,30 +124,45 @@ const SettingsView = () => {
                             <p>Manage your public business identity and contact information.</p>
                         </div>
                         <form className="settings-form" onSubmit={handleUpdateProfile}>
-                            <div className="form-grid">
-                                <div className="setting-item">
-                                    <label><User size={14} /> Shop / Business Name</label>
-                                    <input type="text" value={settings.business_name} onChange={e => setSettings({ ...settings, business_name: e.target.value })} />
+                            <div className="settings-section">
+                                <div className="section-title">
+                                    <User size={16} />
+                                    <span>Merchant Identity</span>
                                 </div>
-                                <div className="setting-item">
-                                    <label><Globe size={14} /> Currency Unit</label>
-                                    <select value={settings.currency} onChange={e => setSettings({ ...settings, currency: e.target.value })}>
-                                        <option value="INR">Indian Rupee (₹)</option>
-                                        <option value="USD">US Dollar ($)</option>
-                                        <option value="GBP">British Pound (£)</option>
-                                    </select>
+                                <div className="form-grid">
+                                    <div className="setting-item">
+                                        <label>Corporate / Shop Name</label>
+                                        <input type="text" value={settings.business_name} onChange={e => setSettings({ ...settings, business_name: e.target.value })} placeholder="e.g. Apex Retail Solutions" />
+                                    </div>
+                                    <div className="setting-item">
+                                        <label>Operational Currency</label>
+                                        <select value={settings.currency} onChange={e => setSettings({ ...settings, currency: e.target.value })}>
+                                            <option value="INR">Indian Rupee (₹) - Standard</option>
+                                            <option value="USD">US Dollar ($) - International</option>
+                                            <option value="GBP">British Pound (£) - UK</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div className="setting-item">
-                                    <label><Save size={14} /> Official Email</label>
-                                    <input type="email" value={settings.email} onChange={e => setSettings({ ...settings, email: e.target.value })} />
+                            </div>
+
+                            <div className="settings-section" style={{ marginTop: '2rem' }}>
+                                <div className="section-title">
+                                    <Globe size={16} />
+                                    <span>Communication & Access</span>
                                 </div>
-                                <div className="setting-item">
-                                    <label><Phone size={14} /> Contact Number</label>
-                                    <input type="text" value={settings.phone} onChange={e => setSettings({ ...settings, phone: e.target.value })} />
-                                </div>
-                                <div className="setting-item full-width">
-                                    <label><MapPin size={14} /> Store Address</label>
-                                    <textarea rows="3" value={settings.address} onChange={e => setSettings({ ...settings, address: e.target.value })} />
+                                <div className="form-grid">
+                                    <div className="setting-item">
+                                        <label>Official Business Email</label>
+                                        <input type="email" value={settings.email} onChange={e => setSettings({ ...settings, email: e.target.value })} />
+                                    </div>
+                                    <div className="setting-item">
+                                        <label>Primary Contact</label>
+                                        <input type="text" value={settings.phone} onChange={e => setSettings({ ...settings, phone: e.target.value })} />
+                                    </div>
+                                    <div className="setting-item full-width">
+                                        <label>Registered Store Address</label>
+                                        <textarea rows="3" value={settings.address} onChange={e => setSettings({ ...settings, address: e.target.value })} />
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-actions">
@@ -224,12 +239,12 @@ const SettingsView = () => {
                         </div>
                         <div className="theme-grid">
                             {[
-                                { id: 'glass', name: 'Lo-Fi Dusk', icon: <Droplet color="#89c4af" />, desc: 'Warm earthy analog, cozy & readable' },
-                                { id: 'midnight', name: 'Midnight Glow', icon: <Moon color="#38bdf8" />, desc: 'Deep OLED dark with navy neon' },
-                                { id: 'royal', name: 'Obsidian Pro', icon: <Monitor color="#6366f1" />, desc: 'Premium warm charcoal dark mode' },
-                                { id: 'sunset', name: 'Titanium Elite', icon: <Monitor color="#e2e8f0" />, desc: 'The absolute pinnacle of luxury' },
-                                { id: 'cream', name: 'Golden Cream', icon: <Droplet color="#d97706" />, desc: 'Premium royal warmth' },
-                                { id: 'light', name: 'Pure White', icon: <Sun color="#1d4ed8" />, desc: 'Crisp professional light mode' }
+                                { id: 'glass', name: 'Lo-Fi Dusk', icon: <Droplet color="#89c4af" />, desc: 'Warm earthy analog' },
+                                { id: 'midnight', name: 'Midnight Glow', icon: <Moon color="#38bdf8" />, desc: 'Deep OLED dark' },
+                                { id: 'royal', name: 'Obsidian Pro', icon: <Monitor color="#6366f1" />, desc: 'Premium charcoal' },
+                                { id: 'sunset', name: 'Titanium Elite', icon: <Monitor color="#e2e8f0" />, desc: 'Pinnacle of luxury' },
+                                { id: 'cream', name: 'Golden Cream', icon: <Droplet color="#d97706" />, desc: 'Royal warmth' },
+                                { id: 'light', name: 'Pure White', icon: <Sun color="#1d4ed8" />, desc: 'Crisp light' }
                             ].map(t => (
                                 <div key={t.id}
                                     data-theme={t.id}
@@ -282,11 +297,14 @@ const SettingsView = () => {
     return (
         <div className="settings-container glass-heavy shadow-bold">
             <aside className="settings-sidebar">
-                <div className="sidebar-header">
+                <div className="brand-icon-wrap">
                     <Settings size={28} className="rotating" />
-                    <div>
-                        <h3>Control Center</h3>
-                        <span>v1.2.0-stable</span>
+                </div>
+                <div>
+                    <h3>Neural Command</h3>
+                    <div className="status-pill-small">
+                        <span className="pulse-dot"></span>
+                        SYSTEM READY
                     </div>
                 </div>
                 <nav className="settings-nav">
@@ -314,9 +332,9 @@ const SettingsView = () => {
                     </button>
                 </div>
 
-                <div className="sidebar-footer-msg">
-                    <AlertCircle size={14} />
-                    <span>Always keep your business email up to date.</span>
+                <div className="sidebar-footer-msg glass">
+                    <div className="msg-icon"><Shield size={14} /></div>
+                    <span>Data encryption active via Neural Secure Protocol.</span>
                 </div>
             </aside>
 
