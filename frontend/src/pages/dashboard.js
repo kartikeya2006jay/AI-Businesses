@@ -223,7 +223,7 @@ const Dashboard = () => {
                 <header className="main-header glass shadow-soft">
                     <div className="header-info">
                         <h1>
-                            Business Hub
+                            NEURAL CORE
                             <span className="tab-pill">
                                 {activeTab === 'dashboard' ? 'Overview' :
                                     activeTab === 'sales' ? 'Quick Bill' :
@@ -233,7 +233,7 @@ const Dashboard = () => {
                                                     activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                             </span>
                         </h1>
-                        <p>Real-time oversight of your merchant operations.</p>
+                        <p>High-fidelity oversight of your neural trade infrastructure.</p>
                     </div>
 
                     <div className="header-actions">

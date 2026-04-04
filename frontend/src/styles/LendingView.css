@@ -46,7 +46,7 @@
 .stat-val.highlight {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #f59e0b;
+    color: var(--accent);
 }
 
 /* Stats Row */
@@ -77,8 +77,8 @@
 }
 
 .stat-card.warning .stat-icon {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: color-mix(in srgb, var(--error), transparent 90%);
+    color: var(--error);
 }
 
 .stat-info .stat-value {
@@ -148,6 +148,7 @@
     justify-content: center;
     color: var(--primary);
     border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
 }
 
 .user-info h3 {
@@ -184,7 +185,7 @@
 .card-amount .value {
     font-size: 1.8rem;
     font-weight: 900;
-    color: #ef4444;
+    color: var(--error);
 }
 
 .pay-btn {
@@ -206,12 +207,14 @@
 
 .pay-btn:hover {
     background: var(--primary);
-    box-shadow: 0 4px 12px rgba(0, 186, 242, 0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary), transparent 60%);
 }
 
+[data-theme='sunset'] .pay-btn,
+[data-theme='royal'] .pay-btn,
 [data-theme='dark'] .pay-btn {
     background: var(--primary);
-    color: #0b0f1a;
+    color: #000000 !important;
 }
 
 /* Modal Settlement specifics */
@@ -264,10 +267,17 @@
     grid-column: 1 / -1;
 }
 
+[data-theme='sunset'] .card-amount,
+[data-theme='royal'] .card-amount,
+[data-theme='midnight'] .card-amount,
 [data-theme='dark'] .card-amount {
     background: var(--panel-bg);
 }
 
+[data-theme='sunset'] .outstanding-pill,
+[data-theme='royal'] .outstanding-pill,
+[data-theme='midnight'] .outstanding-pill,
 [data-theme='dark'] .outstanding-pill {
-    background: #1e293b;
+    background: var(--bg-secondary);
+    color: var(--error);
 }

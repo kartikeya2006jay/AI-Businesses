@@ -281,12 +281,10 @@ const InventoryView = ({ inventory, fetchData }) => {
                             <RefreshCcw size={16} className={isRefreshing ? 'spin' : ''} />
                         </button>
                         <button
-                            className="action-btn"
+                            className="action-btn prime-btn"
                             style={{
                                 width: 'auto',
                                 padding: '0.6rem 1.2rem',
-                                background: 'var(--primary)',
-                                color: 'white',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.5rem'

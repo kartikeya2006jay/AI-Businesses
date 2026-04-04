@@ -33,20 +33,20 @@
     width: 36px;
     height: 36px;
     min-width: 36px;
-    background: linear-gradient(135deg, rgba(0, 186, 242, 0.12), rgba(0, 46, 110, 0.15));
-    border: 1px solid rgba(0, 186, 242, 0.2);
+    background: var(--grad-1);
+    border: 1px solid var(--glass-border);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 16px rgba(0, 186, 242, 0.12);
+    box-shadow: 0 0 16px var(--grad-1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .brand-logo:hover {
     border-radius: 14px;
     transform: rotate(8deg) scale(1.1);
-    box-shadow: 0 0 28px rgba(0, 186, 242, 0.4);
+    box-shadow: 0 0 28px color-mix(in srgb, var(--primary), transparent 60%);
     border-color: var(--primary);
 }
 
@@ -205,9 +205,9 @@
 
 .item-badge {
     margin-left: auto;
-    background: rgba(0, 186, 242, 0.15);
+    background: color-mix(in srgb, var(--primary), transparent 85%);
     color: var(--primary);
-    border: 1px solid rgba(0, 186, 242, 0.25);
+    border: 1px solid color-mix(in srgb, var(--primary), transparent 75%);
     font-size: 0.58rem;
     padding: 1px 7px;
     border-radius: 20px;
@@ -217,9 +217,9 @@
 }
 
 .item-badge.alt {
-    background: rgba(255, 184, 0, 0.12);
+    background: color-mix(in srgb, var(--accent), transparent 88%);
     color: var(--accent);
-    border-color: rgba(255, 184, 0, 0.2);
+    border: 1px solid color-mix(in srgb, var(--accent), transparent 80%);
 }
 
 /* Dot in collapsed mode with badge */
@@ -242,8 +242,8 @@
 
 .nav-item.logout:hover {
     color: var(--error);
-    background: rgba(244, 63, 94, 0.08);
-    border: 1px solid rgba(244, 63, 94, 0.12);
+    background: color-mix(in srgb, var(--error), transparent 92%);
+    border: 1px solid color-mix(in srgb, var(--error), transparent 85%);
 }
 
 /* ─── Collapsed Layout (icon-only) ─── */
@@ -278,7 +278,7 @@
 }
 
 .merchant-badge:hover {
-    border-color: rgba(0, 186, 242, 0.2);
+    border-color: color-mix(in srgb, var(--primary), transparent 80%);
 }
 
 .merchant-avatar {

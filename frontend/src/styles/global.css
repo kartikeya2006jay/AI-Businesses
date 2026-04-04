@@ -111,16 +111,25 @@
     --bg-secondary: #0d1525;
     --card-bg: rgba(13, 21, 37, 0.9);
     --primary: #38bdf8;
+    --primary-dark: #0ea5e9;
     --secondary: #f8fafc;
+    --accent: #f472b6;
+    --success: #34d399;
+    --error: #f87171;
     --text-main: #dde3f0;
     --text-muted: #4a6080;
+    --text-bright: #f8fafc;
     --glass: rgba(6, 10, 18, 0.9);
     --glass-border: rgba(56, 189, 248, 0.12);
+    --border-glass: rgba(56, 189, 248, 0.12);
     --shadow-soft: 0 0 30px rgba(56, 189, 248, 0.06);
     --shadow-bold: 0 0 60px rgba(56, 189, 248, 0.1);
     --grad-1: rgba(56, 189, 248, 0.1);
     --grad-2: rgba(30, 41, 59, 0.3);
     --sidebar-bg: #06080f;
+    --input-bg: rgba(56, 189, 248, 0.05);
+    --panel-bg: rgba(56, 189, 248, 0.03);
+    --shimmer-bg: linear-gradient(90deg, rgba(56, 189, 248, 0.02) 25%, rgba(56, 189, 248, 0.06) 50%, rgba(56, 189, 248, 0.02) 75%);
 }
 
 [data-theme='royal'] {
@@ -164,9 +173,9 @@
 [data-theme='sunset'] {
     /* Core Palette — Titanium Elite Plus | Obsidion Black, Luminous Silver & Brushed Gold */
     --primary: #e2e8f0;
-    --primary-dark: #cbd5e1;
+    --primary-dark: #f8fafc;
     --secondary: #ffffff;
-    --accent: #c5a34a;
+    --accent: #d4af37;
     --success: #10b981;
     --error: #ef4444;
 
@@ -178,25 +187,25 @@
 
     /* Text — pure white and silver */
     --text-main: #f8fafc;
-    --text-muted: #94a3b8;
+    --text-muted: #cbd5e1;
     --text-bright: #ffffff;
 
     /* Glass — obsidian panels with silver shimmer */
     --glass: rgba(10, 10, 15, 0.96);
-    --glass-border: rgba(226, 232, 240, 0.16);
-    --border-glass: rgba(226, 232, 240, 0.16);
+    --glass-border: rgba(226, 232, 240, 0.22);
+    --border-glass: rgba(226, 232, 240, 0.22);
 
     /* Shadows — ultimate contrast */
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.85);
+    --shadow-soft: 0 4px 24px rgba(226, 232, 240, 0.05);
     --shadow-bold: 0 12px 64px rgba(0, 0, 0, 1);
 
     /* Titanium Elite gradient overlays — luminous silver & ghost gold */
-    --grad-1: rgba(226, 232, 240, 0.1);
-    --grad-2: rgba(197, 163, 74, 0.04);
+    --grad-1: rgba(226, 232, 240, 0.12);
+    --grad-2: rgba(212, 175, 55, 0.06);
 
     /* Inputs & Panels */
     --input-bg: #0c0c0e;
-    --panel-bg: rgba(226, 232, 240, 0.04);
+    --panel-bg: rgba(226, 232, 240, 0.06);
     --shimmer-bg: linear-gradient(90deg, rgba(226, 232, 240, 0.02) 25%, rgba(226, 232, 240, 0.06) 50%, rgba(226, 232, 240, 0.02) 75%);
 }
 
@@ -268,7 +277,7 @@ body {
 html {
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 186, 242, 0.2) transparent;
+    scrollbar-color: var(--primary) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -281,12 +290,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 186, 242, 0.2);
+    background: color-mix(in srgb, var(--primary), transparent 80%);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 186, 242, 0.4);
+    background: color-mix(in srgb, var(--primary), transparent 60%);
 }
 
 .glass::after {
@@ -309,7 +318,7 @@ html {
 .glass:hover {
     box-shadow: var(--shadow-bold);
     transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: color-mix(in srgb, var(--primary), transparent 70%);
 }
 
 /* ─── Shimmer (Skeleton) ─── */
@@ -363,16 +372,17 @@ html {
 }
 
 .tab-pill {
-    background: rgba(0, 186, 242, 0.15);
+    background: var(--grad-1);
     color: var(--primary);
-    border: 1px solid rgba(0, 186, 242, 0.25);
-    padding: 3px 12px;
+    padding: 0.35rem 0.8rem;
     border-radius: 20px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     margin-left: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-weight: 800;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .theme-toggle-fab {
@@ -403,10 +413,10 @@ html {
     padding: 0.45rem 1rem;
     border-radius: 10px;
     font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--text-muted);
+    font-weight: 600;
+    color: var(--text-main);
     border: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--panel-bg);
 }
 
 /* ─── Buttons ─── */
@@ -419,24 +429,6 @@ button:active {
     transform: scale(0.97);
 }
 
-/* ─── Scrollbar ─── */
-::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.18);
-}
 
 /* ─── Headings ─── */
 h1,
@@ -482,7 +474,7 @@ h4 {
 
 /* ─── Selection Color ─── */
 ::selection {
-    background: rgba(0, 186, 242, 0.2);
+    background: color-mix(in srgb, var(--primary), transparent 70%);
     color: var(--text-bright);
 }
 

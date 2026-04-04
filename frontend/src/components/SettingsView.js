@@ -224,10 +224,10 @@ const SettingsView = () => {
                         </div>
                         <div className="theme-grid">
                             {[
-                                { id: 'glass', name: 'Lo-Fi Dusk', icon: <Droplet color="#7eb8a4" />, desc: 'Warm earthy analog, cozy & readable' },
-                                { id: 'midnight', name: 'Midnight Glow', icon: <Moon color="#38bdf8" />, desc: 'Deep OLED dark with neon' },
+                                { id: 'glass', name: 'Lo-Fi Dusk', icon: <Droplet color="#89c4af" />, desc: 'Warm earthy analog, cozy & readable' },
+                                { id: 'midnight', name: 'Midnight Glow', icon: <Moon color="#38bdf8" />, desc: 'Deep OLED dark with navy neon' },
                                 { id: 'royal', name: 'Obsidian Pro', icon: <Monitor color="#6366f1" />, desc: 'Premium warm charcoal dark mode' },
-                                { id: 'sunset', name: 'Titanium Elite', icon: <Monitor color="#e2e8f0" />, desc: 'Elite bespoke silver and brushed gold' },
+                                { id: 'sunset', name: 'Titanium Elite', icon: <Monitor color="#e2e8f0" />, desc: 'The absolute pinnacle of luxury' },
                                 { id: 'cream', name: 'Golden Cream', icon: <Droplet color="#d97706" />, desc: 'Premium royal warmth' },
                                 { id: 'light', name: 'Pure White', icon: <Sun color="#1d4ed8" />, desc: 'Crisp professional light mode' }
                             ].map(t => (

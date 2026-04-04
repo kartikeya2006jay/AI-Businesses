@@ -96,7 +96,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    box-shadow: 0 10px 30px rgba(0, 186, 242, 0.3);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--primary), transparent 70%);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -153,7 +153,8 @@
 }
 
 .input-group input::placeholder {
-    color: #64748b;
+    color: var(--text-muted);
+    opacity: 0.5;
 }
 
 .input-group input:focus {
@@ -178,12 +179,12 @@
     gap: 0.8rem;
     margin-top: 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(0, 186, 242, 0.2);
+    box-shadow: 0 10px 20px color-mix(in srgb, var(--primary), transparent 80%);
 }
 
 .auth-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(0, 186, 242, 0.4);
+    box-shadow: 0 15px 30px color-mix(in srgb, var(--primary), transparent 60%);
     filter: brightness(1.1);
 }
 
