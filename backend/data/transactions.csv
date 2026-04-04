@@ -67,3 +67,7 @@ date,product,amount,customer_name,is_credit
 2026-04-04,red label tea,2750.0,ankit,False
 2026-04-04,realme headset,1300.0,rakesh,True
 2026-04-04,realme headset,5200.0,yash,False
+2026-04-04,oreo biscuit,10.0,ujjwal,True
+2026-04-04,hammer headset,1200.0,vipin,False
+2026-04-04,Takatak Chatpata Masala,10.0,vipin,False
+2026-04-04,red label tea,110.0,vipin,False

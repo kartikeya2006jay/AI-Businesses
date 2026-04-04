@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 import pandas as pd
 import os
+from app.utils.logger import log_event
 
 router = APIRouter()
 
@@ -83,6 +84,13 @@ def add_transaction(transaction: Transaction):
                 new_df.to_csv(f, header=False, index=False)
     else:
         new_df.to_csv(TRANSACTIONS_FILE, index=False)
+    
+    # 4. Log Event for Notifications
+    event_text = f"{transaction.customer_name} purchased {transaction.product}"
+    if transaction.is_credit:
+        event_text += " (Added to Khata)"
+    
+    log_event("PURCHASE", "New Sale Captured", event_text)
         
     return {"message": "Transaction recorded", "product": transaction.product}
 
@@ -111,6 +119,10 @@ def update_inventory(item: InventoryItem):
         df = pd.concat([df, new_row], ignore_index=True)
     
     df.to_csv(INVENTORY_FILE, index=False)
+    
+    # Log Inventory Event
+    log_event("INVENTORY", "Stock Intelligence Update", f"Product '{item.product}' stock status modified.")
+    
     return {"message": "Inventory updated", "product": item.product}
 
 @router.delete("/inventory/{product_name}")

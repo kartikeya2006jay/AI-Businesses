@@ -15,7 +15,7 @@ import CustomersView from '../components/CustomersView';
 import CashDrawer from '../components/CashDrawer';
 import { getSummaries, getInventory, getTransactions, getDailyNotification } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
-import { Moon, Sun, User, AlertCircle, Package, Calendar, Monitor, Palette, Bell, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Moon, Sun, User, AlertCircle, Package, Calendar, Monitor, Palette, Bell, TrendingUp, CheckCircle2, ShoppingBag } from 'lucide-react';
 
 import '../styles/global.css';
 import '../styles/dashboard.css';
@@ -259,19 +259,26 @@ const Dashboard = () => {
                                 title="Notifications"
                             >
                                 <Bell size={20} />
-                                {dailyNotification && <span className="noti-badge" />}
+                                {dailyNotification && (dailyNotification.daily || (dailyNotification.live && dailyNotification.live.length > 0)) && <span className="noti-badge" />}
                             </button>
 
                             {showNotifications && (
                                 <div className="notification-dropdown glass shadow-bold animate-in">
                                     <div className="noti-header">
-                                        <h3>System Notifications</h3>
-                                        <button onClick={() => setShowNotifications(false)} className="close-noti">
-                                            <CheckCircle2 size={14} />
-                                        </button>
+                                        <h3>Notification Intelligence</h3>
+                                        <div className="noti-header-actions">
+                                            <button className="noti-action-btn" title="Mark all as read" onClick={() => setDailyNotification(null)}>
+                                                <CheckCircle2 size={16} />
+                                            </button>
+                                            <button className="noti-action-btn" title="Notification Settings" onClick={() => setActiveTab('settings')}>
+                                                <Palette size={16} />
+                                            </button>
+                                            <button className="close-noti" onClick={() => setShowNotifications(false)}>×</button>
+                                        </div>
                                     </div>
                                     <div className="noti-body">
-                                        {dailyNotification ? (
+                                        {/* Daily Report Section */}
+                                        {dailyNotification && dailyNotification.daily && (
                                             <div className="noti-item highlight">
                                                 <div className="noti-header-mini">
                                                     <div className="noti-icon pulse">
@@ -279,17 +286,43 @@ const Dashboard = () => {
                                                     </div>
                                                     <div className="noti-meta-top">
                                                         <p className="noti-title">Neural Performance Analysis</p>
-                                                        <span>Yesterday • {dailyNotification.date}</span>
+                                                        <span>Yesterday • {dailyNotification.daily.date}</span>
                                                     </div>
                                                 </div>
                                                 <div className="noti-content-main">
-                                                    <p className="noti-text">{dailyNotification.message}</p>
+                                                    <p className="noti-text">{dailyNotification.daily.message}</p>
                                                 </div>
                                             </div>
-                                        ) : (
+                                        )}
+
+                                        {/* Live Alerts Section */}
+                                        {dailyNotification && dailyNotification.live && dailyNotification.live.length > 0 && (
+                                            <div className="noti-section-divider">
+                                                <span>Recent Activity</span>
+                                                <div className="divider-line"></div>
+                                            </div>
+                                        )}
+                                        {dailyNotification && dailyNotification.live && dailyNotification.live.map(alert => (
+                                            <div key={alert.id} className={`noti-item live ${alert.type.toLowerCase()}`}>
+                                                <div className="noti-icon alert-icon">
+                                                    {alert.type === 'PURCHASE' ? <ShoppingBag size={18} /> :
+                                                        alert.type === 'INVENTORY' ? <Package size={18} /> :
+                                                            <AlertCircle size={18} />}
+                                                </div>
+                                                <div className="noti-content">
+                                                    <div className="noti-meta-top">
+                                                        <p className="noti-title">{alert.title}</p>
+                                                        <span>{new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                    </div>
+                                                    <p className="noti-text small">{alert.text}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                        {(!dailyNotification || (!dailyNotification.daily && (!dailyNotification.live || dailyNotification.live.length === 0))) && (
                                             <div className="noti-empty">
                                                 <p>No new notifications today.</p>
-                                                <span>Check back tomorrow for your daily report.</span>
+                                                <span>Check back soon for live updates.</span>
                                             </div>
                                         )}
                                     </div>

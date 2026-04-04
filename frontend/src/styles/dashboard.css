@@ -500,6 +500,31 @@
   transition: color 0.3s;
 }
 
+.noti-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.noti-action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noti-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
 .noti-body {
   padding: 1.25rem;
   max-height: 450px;
@@ -507,16 +532,143 @@
 }
 
 .noti-item.highlight {
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 18px;
-  padding: 1.5rem;
+  animation: pulse-border 3s infinite ease-in-out;
+  border: 1px solid rgba(0, 186, 242, 0.2) !important;
+  background: rgba(0, 186, 242, 0.03) !important;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 186, 242, 0.1);
+    border-color: rgba(0, 186, 242, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 0 rgba(0, 186, 242, 0.2);
+    border-color: rgba(0, 186, 242, 0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 186, 242, 0.1);
+    border-color: rgba(0, 186, 242, 0.2);
+  }
+}
+
+.noti-section-divider {
   display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0.5rem 1rem;
+  padding: 0 0.5rem;
+}
+
+.noti-section-divider span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+  flex-grow: 1;
+}
+
+/* Premium Settings Toggles */
+.setting-item-premium {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.setting-item-premium:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(4px);
+}
+
+.si-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.25rem;
+  flex-shrink: 0;
+}
+
+.si-content {
+  flex-grow: 1;
+}
+
+.si-content h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.si-content p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.toggle-switch {
   position: relative;
-  overflow: hidden;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: .4s;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked+.slider {
+  background-color: var(--primary);
+}
+
+input:checked+.slider:before {
+  transform: translateX(20px);
 }
 
 .noti-item.highlight::before {
@@ -603,4 +755,47 @@
 .noti-footer button:hover {
   background: var(--primary);
   color: var(--bg);
+}
+
+.noti-item.live {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.noti-item.live:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.noti-item.live.purchase .alert-icon {
+  background: rgba(0, 186, 242, 0.1);
+  color: #00baf2;
+}
+
+.noti-item.live.inventory .alert-icon {
+  background: rgba(255, 171, 0, 0.1);
+  color: #ffab00;
+}
+
+.noti-icon.alert-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.noti-text.small {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
 }

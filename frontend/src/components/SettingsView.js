@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Bell, Shield, User, Database, Save, Key, Download, CheckCircle, AlertCircle, X, Globe, Phone, MapPin, Monitor, CreditCard, Sun, Moon, Droplet, LogOut } from 'lucide-react';
+import { Settings, Bell, Shield, User, Database, Save, Key, Download, CheckCircle, AlertCircle, X, Globe, Phone, MapPin, Monitor, CreditCard, Sun, Moon, Droplet, LogOut, Package, TrendingUp, Activity } from 'lucide-react';
 import { getSettings, updateSettings, changePassword, getTransactions, getInventory } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -216,22 +216,59 @@ const SettingsView = ({ initialTab = 'general' }) => {
                             <p>Control how and when you receive business alerts.</p>
                         </div>
                         <div className="toggle-list">
-                            <div className="toggle-row glass">
-                                <div className="tr-text">
+                            <div className="setting-item-premium glass">
+                                <div className="si-icon"><Package size={20} color="#00baf2" /></div>
+                                <div className="si-content">
                                     <h4>Inventory Alerts</h4>
                                     <p>Get notified when products drop below their threshold.</p>
                                 </div>
-                                <input type="checkbox" checked={settings.notifications_low_stock} onChange={e => setSettings({ ...settings, notifications_low_stock: e.target.checked })} />
+                                <label className="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        checked={settings.notifications_low_stock}
+                                        onChange={e => setSettings({ ...settings, notifications_low_stock: e.target.checked })}
+                                    />
+                                    <span className="slider"></span>
+                                </label>
                             </div>
-                            <div className="toggle-row glass">
-                                <div className="tr-text">
+
+                            <div className="setting-item-premium glass">
+                                <div className="si-icon"><TrendingUp size={20} color="#10b981" /></div>
+                                <div className="si-content">
                                     <h4>End of Day Reports</h4>
-                                    <p>Automatic summary of daily cash flow and sales.</p>
+                                    <p>Automatic summary of daily cash flow and sales intelligence.</p>
                                 </div>
-                                <input type="checkbox" checked={settings.notifications_daily_reports} onChange={e => setSettings({ ...settings, notifications_daily_reports: e.target.checked })} />
+                                <label className="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        checked={settings.notifications_daily_reports}
+                                        onChange={e => setSettings({ ...settings, notifications_daily_reports: e.target.checked })}
+                                    />
+                                    <span className="slider"></span>
+                                </label>
+                            </div>
+
+                            <div className="setting-item-premium glass">
+                                <div className="si-icon"><Activity size={20} color="#f59e0b" /></div>
+                                <div className="si-content">
+                                    <h4>Live Event Alerts</h4>
+                                    <p>Real-time notifications for purchases and inventory additions (2h window).</p>
+                                </div>
+                                <label className="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        checked={settings.notifications_live_alerts || false}
+                                        onChange={e => setSettings({ ...settings, notifications_live_alerts: e.target.checked })}
+                                    />
+                                    <span className="slider"></span>
+                                </label>
                             </div>
                         </div>
-                        <button className="prime-btn" onClick={handleUpdateProfile} style={{ marginTop: '2rem' }}>Save Preferences</button>
+                        <div className="form-actions" style={{ marginTop: '2rem' }}>
+                            <button className="prime-btn" onClick={handleUpdateProfile}>
+                                <Save size={18} /> Save Preferences
+                            </button>
+                        </div>
                     </div>
                 );
             case 'appearance':

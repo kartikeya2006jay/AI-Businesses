@@ -9,14 +9,13 @@ router = APIRouter()
 # --- NEW: Robust Path Handling ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, "data")
+TRANSACTIONS_FILE = os.path.join(DATA_DIR, "transactions.csv")
+INVENTORY_FILE = os.path.join(DATA_DIR, "inventory.csv")
+SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
+from app.utils.logger import log_event, NOTIFICATIONS_JSON
 
 def get_data_path(filename):
     return os.path.join(DATA_DIR, filename)
-
-TRANSACTIONS_FILE = get_data_path("transactions.csv")
-EXPENSES_FILE = get_data_path("expenses.csv")
-INVENTORY_FILE = get_data_path("inventory.csv")
-SETTINGS_FILE = get_data_path("settings.json")
 
 @router.get("/reports/profit-loss")
 def get_profit_loss():
@@ -152,72 +151,90 @@ def get_cash_drawer():
 @router.get("/reports/daily-notification")
 def get_daily_notification():
     # 1. Check settings
-    enabled = True
+    enabled_daily = True
+    enabled_live = True
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, "r") as f:
                 sets = json.load(f)
-                enabled = sets.get("notifications_daily_reports", True)
+                enabled_daily = sets.get("notifications_daily_reports", True)
+                enabled_live = sets.get("notifications_live_alerts", True)
         except:
-            enabled = True
+            pass
     
-    if not enabled:
+    if not enabled_daily and not enabled_live:
         return {"show": False}
 
-    # 2. Identify "Yesterday"
-    now = datetime.now()
-    yesterday = now - timedelta(days=1)
-    yesterday_date = yesterday.strftime("%Y-%m-%d")
-    
-    # 3. Calculate metrics for yesterday
-    revenue = 0
-    top_product = "N/A"
-    total_items = 0
-    
-    if os.path.exists(TRANSACTIONS_FILE):
-        df = pd.read_csv(TRANSACTIONS_FILE)
-        # Ensure date comparison is robust (using datetime objects)
-        df['date_dt'] = pd.to_datetime(df['date']).dt.date
-        yesterday_dt = pd.to_datetime(yesterday_date).date()
+    # 2. Daily Summary (if enabled)
+    daily_data = None
+    if enabled_daily:
+        now = datetime.now()
+        yesterday = now - timedelta(days=1)
+        yesterday_date = yesterday.strftime("%Y-%m-%d")
         
-        yesterday_df = df[df['date_dt'] == yesterday_dt]
-        if not yesterday_df.empty:
-            revenue = yesterday_df['amount'].sum()
-            total_items = len(yesterday_df)
-            counts = yesterday_df['product'].value_counts()
-            if not counts.empty:
-                top_product = counts.index[0]
+        revenue = 0
+        top_product = "N/A"
+        total_items = 0
+        
+        if os.path.exists(TRANSACTIONS_FILE):
+            df = pd.read_csv(TRANSACTIONS_FILE)
+            df['date_dt'] = pd.to_datetime(df['date']).dt.date
+            yesterday_dt = pd.to_datetime(yesterday_date).date()
+            
+            yesterday_df = df[df['date_dt'] == yesterday_dt]
+            if not yesterday_df.empty:
+                revenue = yesterday_df['amount'].sum()
+                total_items = len(yesterday_df)
+                counts = yesterday_df['product'].value_counts()
+                if not counts.empty:
+                    top_product = counts.index[0]
 
-    # 4. Low stock count
-    low_stock_count = 0
-    if os.path.exists(INVENTORY_FILE):
-        idf = pd.read_csv(INVENTORY_FILE)
-        low_stock_count = len(idf[idf['quantity'] < 20])
-        
-    # 5. Generate "Intelligence" message
-    status = "NEUTRAL"
-    if revenue > 5000:
-        intel = f"Strategic Peak: Yesterday saw exceptionally high liquidity with ₹{revenue:,.0f} inflow. Top performing asset: {top_product}."
-        status = "SUCCESS"
-    elif revenue > 0:
-        intel = f"Stable Operations: ₹{revenue:,.0f} captured across {total_items} sessions. {top_product} maintains its lead."
-        status = "INFO"
-    else:
-        intel = "Market Quiet: No transaction telemetry recorded for yesterday. Neural core remains on standby."
-        status = "WARNING"
+        low_stock_count = 0
+        if os.path.exists(INVENTORY_FILE):
+            idf = pd.read_csv(INVENTORY_FILE)
+            low_stock_count = len(idf[idf['quantity'] < 20])
+            
+        status = "NEUTRAL"
+        if revenue > 5000:
+            intel = f"Strategic Peak: Yesterday saw exceptionally high liquidity with ₹{revenue:,.0f} inflow. Top performing asset: {top_product}."
+            status = "SUCCESS"
+        elif revenue > 0:
+            intel = f"Stable Operations: ₹{revenue:,.0f} captured across {total_items} sessions. {top_product} maintains its lead."
+            status = "INFO"
+        else:
+            intel = "Market Quiet: No transaction telemetry recorded for yesterday."
+            status = "WARNING"
 
-    if low_stock_count > 0:
-        intel += f" Critical: {low_stock_count} units require immediate replenishment."
+        if low_stock_count > 0:
+            intel += f" Critical: {low_stock_count} units require immediate replenishment."
         
+        daily_data = {
+            "date": yesterday_date,
+            "status": status,
+            "message": intel
+        }
+
+    # 3. Live Alerts (Last 2 Hours)
+    live_alerts = []
+    if enabled_live:
+        if os.path.exists(NOTIFICATIONS_JSON):
+            try:
+                with open(NOTIFICATIONS_JSON, "r") as f:
+                    all_events = json.load(f)
+                
+                two_hours_ago = datetime.now() - timedelta(hours=2)
+                for event in all_events:
+                    evt_time = datetime.fromisoformat(event["timestamp"])
+                    if evt_time > two_hours_ago:
+                        live_alerts.append(event)
+                
+                # Sort newest first
+                live_alerts = sorted(live_alerts, key=lambda x: x["timestamp"], reverse=True)
+            except:
+                pass
+
     return {
         "show": True,
-        "date": yesterday_date,
-        "status": status,
-        "metrics": {
-            "revenue": float(revenue),
-            "top_product": top_product,
-            "total_items": int(total_items),
-            "low_stock_count": int(low_stock_count)
-        },
-        "message": intel
+        "daily": daily_data,
+        "live": live_alerts
     }

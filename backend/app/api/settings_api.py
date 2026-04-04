@@ -31,6 +31,7 @@ async def get_settings():
             "currency": "INR",
             "notifications_low_stock": True,
             "notifications_daily_reports": True,
+            "notifications_live_alerts": True,
             "theme": "glass"
         }
     with open(SETTINGS_FILE, "r") as f:

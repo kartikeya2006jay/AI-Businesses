@@ -1,0 +1,30 @@
+[
+  {
+    "id": "evt_1775300239.616495",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "ujjwal purchased oreo biscuit (Added to Khata)",
+    "timestamp": "2026-04-04T16:27:19.616507"
+  },
+  {
+    "id": "evt_1775301144.551806",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "vipin purchased hammer headset",
+    "timestamp": "2026-04-04T16:42:24.551820"
+  },
+  {
+    "id": "evt_1775301144.601519",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "vipin purchased Takatak Chatpata Masala",
+    "timestamp": "2026-04-04T16:42:24.601529"
+  },
+  {
+    "id": "evt_1775301144.610177",
+    "type": "PURCHASE",
+    "title": "New Sale Captured",
+    "text": "vipin purchased red label tea",
+    "timestamp": "2026-04-04T16:42:24.610193"
+  }
+]
