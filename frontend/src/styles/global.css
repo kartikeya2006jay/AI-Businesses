@@ -3,35 +3,49 @@
 /* ─── Design Tokens ─── */
 :root,
 [data-theme='glass'] {
-    --primary: #00baf2;
-    --primary-dark: #0099cc;
-    --secondary: #ffffff;
-    --bg: #111318;
-    --bg-secondary: #1a1d27;
-    --card-bg: rgba(26, 29, 39, 0.85);
-    --accent: #ffb800;
-    --success: #10b981;
-    --error: #ef4444;
-    --text-main: #e8eaf0;
-    --text-muted: #636b80;
-    --glass: rgba(26, 29, 39, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.06);
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.35);
-    --shadow-bold: 0 8px 40px rgba(0, 0, 0, 0.55);
-    --radius-lg: 20px;
-    --radius-md: 14px;
-    --radius-sm: 10px;
-    --grad-1: rgba(0, 186, 242, 0.08);
-    --grad-2: rgba(0, 46, 110, 0.05);
-    --sidebar-bg: #0e1017;
+    /* Core Palette — Lo-Fi Dusk | Warm Earthy Analog */
+    --primary: #89c4af;
+    --primary-dark: #68a893;
+    --secondary: #eedfc4;
+    --accent: #d9956a;
+    --success: #88c4a0;
+    --error: #cc7878;
+
+    /* Backgrounds — warm dark, like a dim candlelit room */
+    --bg: #14110d;
+    --bg-secondary: #201c15;
+    --card-bg: rgba(255, 248, 235, 0.06);
+    --sidebar-bg: #0f0d09;
+
+    /* Text — warm cream, readable on dark warm tones */
+    --text-main: #e2d8c0;
+    --text-muted: #9e9080;
+    --text-bright: #f4ecda;
+
+    /* Glass — warm translucent panels with amber shimmer */
+    --glass: rgba(255, 248, 235, 0.055);
+    --glass-border: rgba(220, 200, 165, 0.2);
+    --border-glass: rgba(220, 200, 165, 0.2);
+
+    /* Shadows — warm soft depth */
+    --shadow-soft: 0 2px 14px rgba(0, 0, 0, 0.5);
+    --shadow-bold: 0 6px 28px rgba(0, 0, 0, 0.65);
+
+    /* Lo-fi gradient overlays — rich amber warmth */
+    --grad-1: rgba(217, 149, 106, 0.1);
+    --grad-2: rgba(137, 196, 175, 0.06);
+
     --sidebar-w: 260px;
     --sidebar-w-collapsed: 68px;
     --header-h: 70px;
-    --input-bg: rgba(255, 255, 255, 0.03);
-    --panel-bg: rgba(255, 255, 255, 0.03);
-    --text-bright: #ffffff;
-    --border-glass: rgba(255, 255, 255, 0.1);
-    --shimmer-bg: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+
+    /* Inputs & Panels */
+    --input-bg: rgba(255, 248, 235, 0.06);
+    --panel-bg: rgba(217, 149, 106, 0.05);
+    --shimmer-bg: linear-gradient(90deg, rgba(220, 200, 165, 0.03) 25%, rgba(220, 200, 165, 0.08) 50%, rgba(220, 200, 165, 0.03) 75%);
 }
 
 [data-theme='dark'] {
@@ -110,39 +124,80 @@
 }
 
 [data-theme='royal'] {
-    --bg: #08082a;
-    --bg-secondary: #10103c;
-    --card-bg: rgba(16, 16, 60, 0.85);
-    --primary: #fbbf24;
-    --primary-dark: #d97706;
-    --secondary: #ffffff;
-    --text-main: #fef3c7;
-    --text-muted: #a8a890;
-    --glass: rgba(10, 10, 42, 0.9);
-    --glass-border: rgba(251, 191, 36, 0.15);
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --shadow-bold: 0 10px 50px rgba(0, 0, 0, 0.6);
-    --grad-1: rgba(251, 191, 36, 0.07);
-    --grad-2: rgba(10, 10, 42, 0.5);
-    --sidebar-bg: #04041a;
+    /* Core Palette — Obsidian Pro */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #fafafa;
+    --accent: #f59e0b;
+    --success: #22c55e;
+    --error: #ef4444;
+
+    /* Backgrounds — warm charcoal, zero blue cast */
+    --bg: #18181b;
+    --bg-secondary: #1c1c1f;
+    --card-bg: #27272a;
+    --sidebar-bg: #111113;
+
+    /* Text — crisp and high contrast */
+    --text-main: #d4d4d8;
+    --text-muted: #71717a;
+    --text-bright: #fafafa;
+
+    /* Glass / Cards */
+    --glass: #27272a;
+    --glass-border: rgba(255, 255, 255, 0.07);
+    --border-glass: rgba(255, 255, 255, 0.07);
+
+    /* Shadows */
+    --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-bold: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+    /* Gradient overlays */
+    --grad-1: rgba(99, 102, 241, 0.07);
+    --grad-2: rgba(245, 158, 11, 0.04);
+
+    /* Inputs & Panels */
+    --input-bg: #3f3f46;
+    --panel-bg: rgba(255, 255, 255, 0.03);
 }
 
 [data-theme='sunset'] {
-    --bg: #160a08;
-    --bg-secondary: #1e0f0e;
-    --card-bg: rgba(35, 15, 12, 0.9);
-    --primary: #f97316;
-    --primary-dark: #ea580c;
-    --secondary: #fff7ed;
-    --text-main: #fde9d4;
-    --text-muted: #a07060;
-    --glass: rgba(26, 12, 10, 0.9);
-    --glass-border: rgba(249, 115, 22, 0.15);
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --shadow-bold: 0 10px 50px rgba(0, 0, 0, 0.6);
-    --grad-1: rgba(249, 115, 22, 0.08);
-    --grad-2: rgba(67, 20, 7, 0.3);
-    --sidebar-bg: #0e0604;
+    /* Core Palette — Titanium Elite Plus | Obsidion Black, Luminous Silver & Brushed Gold */
+    --primary: #e2e8f0;
+    --primary-dark: #cbd5e1;
+    --secondary: #ffffff;
+    --accent: #c5a34a;
+    --success: #10b981;
+    --error: #ef4444;
+
+    /* Backgrounds — deepest OLED ink black */
+    --bg: #020204;
+    --bg-secondary: #0a0a0c;
+    --card-bg: #101012;
+    --sidebar-bg: #020202;
+
+    /* Text — pure white and silver */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-bright: #ffffff;
+
+    /* Glass — obsidian panels with silver shimmer */
+    --glass: rgba(10, 10, 15, 0.96);
+    --glass-border: rgba(226, 232, 240, 0.16);
+    --border-glass: rgba(226, 232, 240, 0.16);
+
+    /* Shadows — ultimate contrast */
+    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.85);
+    --shadow-bold: 0 12px 64px rgba(0, 0, 0, 1);
+
+    /* Titanium Elite gradient overlays — luminous silver & ghost gold */
+    --grad-1: rgba(226, 232, 240, 0.1);
+    --grad-2: rgba(197, 163, 74, 0.04);
+
+    /* Inputs & Panels */
+    --input-bg: #0c0c0e;
+    --panel-bg: rgba(226, 232, 240, 0.04);
+    --shimmer-bg: linear-gradient(90deg, rgba(226, 232, 240, 0.02) 25%, rgba(226, 232, 240, 0.06) 50%, rgba(226, 232, 240, 0.02) 75%);
 }
 
 [data-theme='cream'] {
