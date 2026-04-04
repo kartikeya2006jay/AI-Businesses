@@ -258,7 +258,12 @@ const SettingsView = ({ initialTab = 'general' }) => {
                                     <input
                                         type="checkbox"
                                         checked={settings.notifications_live_alerts || false}
-                                        onChange={e => setSettings({ ...settings, notifications_live_alerts: e.target.checked })}
+                                        onChange={e => {
+                                            const newVal = e.target.checked;
+                                            setSettings({ ...settings, notifications_live_alerts: newVal });
+                                            // Auto-save notification changes
+                                            updateSettings({ ...settings, notifications_live_alerts: newVal });
+                                        }}
                                     />
                                     <span className="slider"></span>
                                 </label>

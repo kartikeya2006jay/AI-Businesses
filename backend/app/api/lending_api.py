@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import pandas as pd
 import os
 import json
+from app.utils.logger import log_event
 
 router = APIRouter()
 LENDING_FILE = "data/lending.csv"
@@ -28,8 +29,14 @@ async def pay_lending(payment: LendingUpdate):
         raise HTTPException(status_code=404, detail="Customer not found")
     
     idx = df[df['customer_name'] == payment.customer_name].index[0]
+    old_balance = float(df.at[idx, 'balance'])
     df.at[idx, 'balance'] -= payment.amount_paid
+    new_balance = float(df.at[idx, 'balance'])
     
-    # If balance is 0 or less, maybe we keep it or remove it? Let's keep for history
     df.to_csv(LENDING_FILE, index=False)
-    return {"status": "success", "new_balance": float(df.at[idx, 'balance'])}
+    
+    # Log Khata Settlement Event
+    status_text = "Fully Settled" if new_balance <= 0 else f"Paid ₹{payment.amount_paid}"
+    log_event("KHATA", "Balance Settlement", f"{payment.customer_name} {status_text}. Remaining: ₹{new_balance}")
+    
+    return {"status": "success", "new_balance": new_balance}

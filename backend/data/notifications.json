@@ -47,5 +47,19 @@
     "title": "New Sale Captured",
     "text": "abhi purchased realme headset. Total: \u20b91300",
     "timestamp": "2026-04-04T21:28:07.643543"
+  },
+  {
+    "id": "evt_1775318666.700847",
+    "type": "KHATA",
+    "title": "Balance Settlement",
+    "text": "ujjwal Paid \u20b950.0. Remaining: \u20b910.0",
+    "timestamp": "2026-04-04T21:34:26.700868"
+  },
+  {
+    "id": "evt_1775319103.396922",
+    "type": "KHATA",
+    "title": "Balance Settlement",
+    "text": "Rahul Sharma Paid \u20b920.0. Remaining: \u20b9480.0",
+    "timestamp": "2026-04-04T21:41:43.396938"
   }
 ]

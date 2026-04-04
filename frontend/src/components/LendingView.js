@@ -194,7 +194,9 @@ const LendingView = () => {
                                         placeholder="Enter settlement amount..."
                                         autoFocus
                                     />
-                                    <p className="input-hint">Maximum allowable: ₹{payModal.balance}</p>
+                                    <div className="input-hint">
+                                        Maximum allowable: <strong>₹{payModal.balance}</strong>
+                                    </div>
                                 </div>
                                 <div className="modal-actions">
                                     <button type="button" className="action-btn" style={{ width: 'auto', padding: '0.8rem 1.5rem' }} onClick={() => setPayModal(null)}>Cancel</button>

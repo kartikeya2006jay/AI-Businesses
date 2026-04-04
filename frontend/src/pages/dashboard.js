@@ -263,7 +263,10 @@ const Dashboard = () => {
                             </button>
 
                             {showNotifications && (
-                                <div className="notification-dropdown glass shadow-bold animate-in">
+                                <div
+                                    className="notification-dropdown glass shadow-bold animate-in"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
                                     <div className="noti-header">
                                         <h3>Notification Intelligence</h3>
                                         <div className="noti-header-actions">

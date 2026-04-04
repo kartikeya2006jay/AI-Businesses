@@ -241,6 +241,19 @@
     font-size: 0.75rem;
     color: var(--text-muted);
     margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(239, 68, 68, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+[data-theme='sunset'] .input-hint,
+[data-theme='royal'] .input-hint,
+[data-theme='midnight'] .input-hint,
+[data-theme='dark'] .input-hint {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-muted);
+    border-color: var(--glass-border);
 }
 
 .loading-state {
